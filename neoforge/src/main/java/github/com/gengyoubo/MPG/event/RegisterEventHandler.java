@@ -29,6 +29,7 @@ import github.com.gengyoubo.MPG.item.MPGGodSwordItem;
 import github.com.gengyoubo.MPG.entity.RenderManaitaArrow;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
+import github.com.gengyoubo.common.util.MPGTypeHelper;
 
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaArrow;
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaLightningBolt;
@@ -93,10 +94,9 @@ public class RegisterEventHandler {
     private static void acceptTypePropertyFunction(Item... items) {
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(MPG.MODID, MPGNBTData.Type);
         ItemPropertyFunction typePropertyFunction = (stack, level, entity, seed) ->
-                MPGItemStackData.getInt(stack, MPGNBTData.ItemType);
+                MPGTypeHelper.toModelPredicate(MPGItemStackData.getInt(stack, MPGNBTData.ItemType));
         for (Item item : items) {
             ItemProperties.register(item, location, typePropertyFunction);
         }
     }
 }
-

@@ -99,59 +99,66 @@
 [Architectury Transformer DEBUG]  - C:\Users\gengy\.gradle\caches\modules-2\files-2.1\io.netty\netty-transport-native-epoll\4.1.97.Final\54188f271e388e7f313aea995e82f58ce2cdb809\netty-transport-native-epoll-4.1.97.Final-linux-x86_64.jar
 [Architectury Transformer DEBUG]  - C:\Users\gengy\.gradle\caches\modules-2\files-2.1\io.netty\netty-transport-native-epoll\4.1.97.Final\5514744c588190ffda076b35a9b8c9f24946a960\netty-transport-native-epoll-4.1.97.Final-linux-aarch_64.jar
 [Architectury Transformer DEBUG]  - C:\Users\gengy\Desktop\NewMPG\.gradle\loom-cache\remapped_mods\remapped\dev\architectury\architectury-neoforge-5cf78f99\13.0.11\architectury-neoforge-5cf78f99-13.0.11.jar
-[Architectury Transformer] Read classpath in 1.374 s
+[Architectury Transformer] Read classpath in 1.381 s
 [Architectury Transformer DEBUG] Closed File Systems for C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar
-[Architectury Transformer DEBUG] Transforming 6 transformer(s) from C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar to C:\Users\gengy\AppData\Local\Temp\14010605933936016058.jar: 
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@c0c2f8d
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@305b7c14
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@6913c1fb
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@66d18979
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@bccb269
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@609cd4d8
-[Architectury Transformer DEBUG] Transforming from C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar to C:\Users\gengy\AppData\Local\Temp\14010605933936016058.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming 6 transformer(s) from C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar to C:\Users\gengy\AppData\Local\Temp\8607787119701989758.jar: 
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@175b9425
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@3098cf3b
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@610f7aa
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@6a03bcb1
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@21b2e768
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@57250572
+[Architectury Transformer DEBUG] Transforming from C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar to C:\Users\gengy\AppData\Local\Temp\8607787119701989758.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/MPGCommon with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBrewingStandBlockBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGHookBlockBase$1 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGTypedBlockDrops with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGHookBlockBase$1 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBlockData$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGFurnaceBlockBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGHookBlockBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGFurnaceBlockBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGCraftingBlockBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBlockData with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGPortableBrewingBlockEntityBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGPortableFurnaceBlockEntityBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGFurnaceLogic with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGPortableFurnaceBlockEntityBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/item/MPGHookBlockItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase$1 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/config/MPGConfigValues with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/entity/MPGEntityArrowBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/entity/MPGLightningBoltBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/entity/MPGEntityData with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/event/MPGEventLogic with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/event/MPGClientEventLogic with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/integration/jei/MPGSourceCopyRecipeCategory with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/integration/jei/MPGSourceCopyRecipe with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/integration/jei/MPGJeiRecipeFactory with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/integration/jei/MPGJeiSubtypeInterpreter with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSwordItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSourceItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGPortableItemBase$PortableMenuFactory with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGPortableItemBase$PortableMenuFactory with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGHookItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGPortableItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGBowItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet with maxs=true frames=true
@@ -162,445 +169,570 @@
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGShearsItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGToolItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGCraftingMenuBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGFurnaceMenuBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGFurnaceMenuBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGFurnaceMenuBase$UnlimitedFurnaceResultSlot with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGCraftingMenuBase with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGFurnaceMenuBase$UnlimitedSimpleContainer with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/MPGKeyPressLogic with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/MPGClientPayloadHandler with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGKeyPressPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGKeyPressPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPGSourceCopyRecipeBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$IngredientSpec with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/registry/MPGEntityTypeFactory with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/registry/MPGRegistryIds with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/trades/MPGSingleItemTrade with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/trades/MPGTwoItemTrade with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPGItemStackData with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPGNBTData with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPGTypeHelper with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPText with maxs=true frames=true
-[Architectury Transformer DEBUG] Closed File Systems for C:\Users\gengy\AppData\Local\Temp\14010605933936016058.jar
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPGTypeHelper with maxs=true frames=true
+[Architectury Transformer DEBUG] Closed File Systems for C:\Users\gengy\AppData\Local\Temp\8607787119701989758.jar
 [Architectury Transformer] Listening at C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar
-[Architectury Transformer DEBUG] Temporary jar [C:\Users\gengy\AppData\Local\Temp\14010605933936016058.jar] contains packages: github.com.gengyoubo.common.item.armor, github.com.gengyoubo.common.item.tool, github.com.gengyoubo.common.client.gui, github.com.gengyoubo.common.item, github.com.gengyoubo.common.block.item, github.com.gengyoubo.common.entity, github.com.gengyoubo.common.item.data, github.com.gengyoubo.common.item.tier, github.com.gengyoubo.common.config, github.com.gengyoubo.common.block.entity, github.com.gengyoubo.common.menu, github.com.gengyoubo.common.client.renderer, github.com.gengyoubo.common.util, github.com.gengyoubo.common, github.com.gengyoubo.common.block
+[Architectury Transformer DEBUG] Temporary jar [C:\Users\gengy\AppData\Local\Temp\8607787119701989758.jar] contains packages: github.com.gengyoubo.common.item.armor, github.com.gengyoubo.common.item.tool, github.com.gengyoubo.common.client.gui, github.com.gengyoubo.common.recipe, github.com.gengyoubo.common.item, github.com.gengyoubo.common.trades, github.com.gengyoubo.common.block.item, github.com.gengyoubo.common.entity, github.com.gengyoubo.common.item.data, github.com.gengyoubo.common.item.tier, github.com.gengyoubo.common.config, github.com.gengyoubo.common.block.entity, github.com.gengyoubo.common.network.payload, github.com.gengyoubo.common.integration.jei, github.com.gengyoubo.common.menu, github.com.gengyoubo.common.client.renderer, github.com.gengyoubo.common.event, github.com.gengyoubo.common.util, github.com.gengyoubo.common, github.com.gengyoubo.common.registry, github.com.gengyoubo.common.network, github.com.gengyoubo.common.block
 [Architectury Transformer DEBUG] Closed File Systems for C:\Users\gengy\Desktop\NewMPG\common\build\devlibs\ManaitaPlusGeneral-common-3.0.0-dev.jar
-[Architectury Transformer DEBUG] Classpath entry [C:\Users\gengy\Desktop\NewMPG\neoforge\build\classes\java\main] contains packages: github.com.gengyoubo.MPG.item.portable, github.com.gengyoubo.MPG, github.com.gengyoubo.MPG.blockEntity, github.com.gengyoubo.MPG.recipe.ingredient, github.com.gengyoubo.MPG.item, github.com.gengyoubo.MPG.gui, github.com.gengyoubo.MPG.item.tool, github.com.gengyoubo.MPG.entity, github.com.gengyoubo.MPG.network, github.com.gengyoubo.MPG.util.wrapper, github.com.gengyoubo.MPG.jei, github.com.gengyoubo.MPG.block, github.com.gengyoubo.MPG.network.client, github.com.gengyoubo.MPG.menu, github.com.gengyoubo.MPG.trades, github.com.gengyoubo.MPG.core, github.com.gengyoubo.MPG.block.item, github.com.gengyoubo.MPG.item.ring, github.com.gengyoubo.MPG.item.tool.base, github.com.gengyoubo.MPG.mixin, github.com.gengyoubo.MPG.block.entity, github.com.gengyoubo.MPG.event, github.com.gengyoubo.MPG.block.data, github.com.gengyoubo.MPG.loottable, github.com.gengyoubo.MPG.datagen, github.com.gengyoubo.MPG.util, github.com.gengyoubo.MPG.recipe.condition, github.com.gengyoubo.MPG.item.tier, github.com.gengyoubo.MPG.item.armor, github.com.gengyoubo.MPG.network.server, github.com.gengyoubo.MPG.recipe
+[Architectury Transformer DEBUG] Classpath entry [C:\Users\gengy\Desktop\NewMPG\neoforge\build\classes\java\main] contains packages: github.com.gengyoubo.MPG.item.portable, github.com.gengyoubo.MPG, github.com.gengyoubo.MPG.blockEntity, github.com.gengyoubo.MPG.item, github.com.gengyoubo.MPG.gui, github.com.gengyoubo.MPG.item.tool, github.com.gengyoubo.MPG.entity, github.com.gengyoubo.MPG.network, github.com.gengyoubo.MPG.util.wrapper, github.com.gengyoubo.MPG.jei, github.com.gengyoubo.MPG.block, github.com.gengyoubo.MPG.menu, github.com.gengyoubo.MPG.core, github.com.gengyoubo.MPG.block.item, github.com.gengyoubo.MPG.item.ring, github.com.gengyoubo.MPG.item.tool.base, github.com.gengyoubo.MPG.mixin, github.com.gengyoubo.MPG.block.entity, github.com.gengyoubo.MPG.event, github.com.gengyoubo.MPG.block.data, github.com.gengyoubo.MPG.loottable, github.com.gengyoubo.MPG.datagen, github.com.gengyoubo.MPG.util, github.com.gengyoubo.MPG.recipe.condition, github.com.gengyoubo.MPG.item.tier, github.com.gengyoubo.MPG.item.armor, github.com.gengyoubo.MPG.recipe
 [Architectury Transformer DEBUG] Classpath entry [C:\Users\gengy\Desktop\NewMPG\neoforge\build\resources\main] contains packages: 
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/MPGCommon.class to github/com/gengyoubo/common/MPGCommon.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping with Dirty Mappings...
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/MPGCommon with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/MPGCommon in 78.72 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/MPGCommon in 81.76 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGCraftingBlockBase.class to github/com/gengyoubo/common/block/MPGCraftingBlockBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGCraftingBlockBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGCraftingBlockBase in 36.09 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGCraftingBlockBase in 33.16 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGCraftingMenuBase.class to github/com/gengyoubo/common/menu/MPGCraftingMenuBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGCraftingMenuBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGCraftingMenuBase in 21.44 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGCraftingMenuBase in 15.87 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase.class to github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase in 19.75 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGCraftingBlockEntityBase in 12.87 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase.class to github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase in 19.26 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/item/MPGTypedBlockItemBase in 13.93 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGFurnaceBlockBase.class to github/com/gengyoubo/common/block/MPGFurnaceBlockBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGFurnaceBlockBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGFurnaceBlockBase in 16.69 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGFurnaceBlockBase in 18.83 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase.class to github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase in 10.62 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGFurnaceBlockEntityBase in 12.61 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGBrewingStandBlockBase.class to github/com/gengyoubo/common/block/MPGBrewingStandBlockBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBrewingStandBlockBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBrewingStandBlockBase in 12.43 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBrewingStandBlockBase in 13.19 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase.class to github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase in 11.68 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/entity/MPGBrewingStandBlockEntityBase in 50.43 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGHookBlockBase.class to github/com/gengyoubo/common/block/MPGHookBlockBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGHookBlockBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGHookBlockBase in 11.09 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGHookBlockBase in 12.82 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/item/MPGHookBlockItemBase.class to github/com/gengyoubo/common/block/item/MPGHookBlockItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/item/MPGHookBlockItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/item/MPGHookBlockItemBase in 16.01 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/item/MPGHookBlockItemBase in 12.16 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/data/IMPGKey.class to github/com/gengyoubo/common/item/data/IMPGKey.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/data/IMPGKey with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGKey in 9.906 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGKey in 14.05 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/data/IMPGDoubling.class to github/com/gengyoubo/common/item/data/IMPGDoubling.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/data/IMPGDoubling with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGDoubling in 8.196 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGDoubling in 9.045 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/entity/MPGLightningBoltBase.class to github/com/gengyoubo/common/entity/MPGLightningBoltBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/entity/MPGLightningBoltBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/entity/MPGLightningBoltBase in 9.416 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/entity/MPGLightningBoltBase in 11.74 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGSwordItemBase.class to github/com/gengyoubo/common/item/MPGSwordItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSwordItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSwordItemBase in 11.08 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSwordItemBase in 11.46 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGBowItemBase.class to github/com/gengyoubo/common/item/MPGBowItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGBowItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGBowItemBase in 9.593 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGBowItemBase in 10.92 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/entity/MPGEntityArrowBase.class to github/com/gengyoubo/common/entity/MPGEntityArrowBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/entity/MPGEntityArrowBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/entity/MPGEntityArrowBase in 6.313 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/entity/MPGEntityArrowBase in 8.506 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase.class to github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase in 6.692 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGTaggedToolItemBase in 8.963 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/tool/MPGToolItemBase.class to github/com/gengyoubo/common/item/tool/MPGToolItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGToolItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGToolItemBase in 7.991 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGToolItemBase in 9.258 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/data/IMPGDestroy.class to github/com/gengyoubo/common/item/data/IMPGDestroy.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/data/IMPGDestroy with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGDestroy in 5.650 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/data/IMPGDestroy in 8.579 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/tool/MPGShearsItemBase.class to github/com/gengyoubo/common/item/tool/MPGShearsItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tool/MPGShearsItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGShearsItemBase in 7.725 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tool/MPGShearsItemBase in 10.28 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGHookItemBase.class to github/com/gengyoubo/common/item/MPGHookItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGHookItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGHookItemBase in 5.613 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGHookItemBase in 6.618 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet.class to github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet in 6.942 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Helmet in 7.785 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/armor/MPGArmorItemBase.class to github/com/gengyoubo/common/item/armor/MPGArmorItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase in 6.231 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase in 5.863 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate.class to github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate in 9.755 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Chestplate in 6.807 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings.class to github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings in 8.290 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Leggings in 6.049 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots.class to github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots in 7.994 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/armor/MPGArmorItemBase$Boots in 6.642 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGSourceItemBase.class to github/com/gengyoubo/common/item/MPGSourceItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSourceItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSourceItemBase in 6.078 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSourceItemBase in 6.170 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGPortableItemBase.class to github/com/gengyoubo/common/item/MPGPortableItemBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGPortableItemBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGPortableItemBase in 4.365 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGPortableItemBase in 5.540 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer.class to github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer in 8.920 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer$1.class to github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe$Serializer$1 in 7.982 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/config/MPGConfigValues.class to github/com/gengyoubo/common/config/MPGConfigValues.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/config/MPGConfigValues with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/config/MPGConfigValues in 4.719 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/config/MPGConfigValues in 6.425 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGBlockData.class to github/com/gengyoubo/common/block/MPGBlockData.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBlockData with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBlockData in 5.671 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBlockData in 6.672 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/registry/MPGEntityTypeFactory.class to github/com/gengyoubo/common/registry/MPGEntityTypeFactory.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/registry/MPGEntityTypeFactory with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/registry/MPGEntityTypeFactory in 4.542 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/tier/MPGToolTierBase.class to github/com/gengyoubo/common/item/tier/MPGToolTierBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/tier/MPGToolTierBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tier/MPGToolTierBase in 3.855 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/tier/MPGToolTierBase in 4.864 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier.class to github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier in 3.504 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/item/MPGSwordItemBase$ItemManaitaSwordTier in 3.503 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGFurnaceMenuBase.class to github/com/gengyoubo/common/menu/MPGFurnaceMenuBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGFurnaceMenuBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGFurnaceMenuBase in 4.333 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGFurnaceMenuBase in 6.463 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase.class to github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase in 4.701 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase in 3.351 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot.class to github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot in 4.181 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$PotionSlot in 7.539 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot.class to github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot in 5.072 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$IngredientsSlot in 6.511 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot.class to github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot in 4.017 ms
-[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGBlockData$1.class to github/com/gengyoubo/common/block/MPGBlockData$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/menu/MPGBrewingStandMenuBase$FuelSlot in 6.758 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/recipe/MPGSourceCopyRecipeBase.class to github/com/gengyoubo/common/recipe/MPGSourceCopyRecipeBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBlockData$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBlockData$1 in 4.608 ms
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPGSourceCopyRecipeBase with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/recipe/MPGSourceCopyRecipeBase in 7.613 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe.class to github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/recipe/MPNBTCraftingRecipe in 6.826 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGHookBlockBase$1.class to github/com/gengyoubo/common/block/MPGHookBlockBase$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGHookBlockBase$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGHookBlockBase$1 in 5.520 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGHookBlockBase$1 in 4.799 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/block/MPGBlockData$1.class to github/com/gengyoubo/common/block/MPGBlockData$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/block/MPGBlockData$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/block/MPGBlockData$1 in 4.641 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase.class to github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase in 5.256 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGCraftingScreenBase in 6.528 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase.class to github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase in 3.643 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGFurnaceScreenBase in 3.009 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase.class to github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase in 5.408 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/gui/MPGBrewingStandScreenBase in 3.939 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase.class to github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase in 5.315 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGLightningBoltRendererBase in 6.528 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase.class to github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase in 3.219 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGArrowRendererBase in 4.010 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase.class to github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase in 4.663 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/client/renderer/MPGBlockEntityRendererBase in 4.053 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGKeyPressPayload.class to github/com/gengyoubo/common/network/payload/MPGKeyPressPayload.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGKeyPressPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGKeyPressPayload in 6.275 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGKeyPressPayload$1.class to github/com/gengyoubo/common/network/payload/MPGKeyPressPayload$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGKeyPressPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGKeyPressPayload$1 in 5.030 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload.class to github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload in 7.051 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload$1.class to github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGDestroyBlockPayload$1 in 7.655 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload.class to github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload in 7.197 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload$1.class to github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload$1.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload$1 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/network/payload/MPGChangeEntityDataPayload$1 in 6.897 ms
 [Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/util/MPGItemStackData.class to github/com/gengyoubo/common/util/MPGItemStackData.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@4961f6af
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/util/MPGItemStackData with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/util/MPGItemStackData in 7.343 ms
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/util/MPGItemStackData in 4.982 ms
+[Architectury Transformer DEBUG] Transforming from github/com/gengyoubo/common/event/MPGClientEventLogic.class to github/com/gengyoubo/common/event/MPGClientEventLogic.class with 6 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000000025084920@2b4bac49
+[Architectury Transformer DEBUG] Remapping Classes:
+[Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
+[Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing github/com/gengyoubo/common/event/MPGClientEventLogic with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed github/com/gengyoubo/common/event/MPGClientEventLogic in 4.027 ms

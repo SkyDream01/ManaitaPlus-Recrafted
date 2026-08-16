@@ -85,7 +85,6 @@ public class MPGSourceCopyRecipeCategory implements IRecipeCategory<MPGSourceCop
     public void createRecipeExtras(@NotNull IRecipeExtrasBuilder builder, @NotNull MPGSourceCopyRecipe recipe,
                                    @NotNull IFocusGroup focuses) {
         builder.addRecipeArrow().setPosition(66, 20);
-        builder.addText(Component.literal("x" + recipe.multiplier()), 101, 7);
     }
 
     @Override

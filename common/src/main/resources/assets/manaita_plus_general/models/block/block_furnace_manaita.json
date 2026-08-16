@@ -4,49 +4,49 @@
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.1",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 1.0
+        "manaita_plus_general:manaita_plus_general_type": 0.125
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.2",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 2.0
+        "manaita_plus_general:manaita_plus_general_type": 0.25
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.3",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 3.0
+        "manaita_plus_general:manaita_plus_general_type": 0.375
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.4",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 4.0
+        "manaita_plus_general:manaita_plus_general_type": 0.5
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.5",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 5.0
+        "manaita_plus_general:manaita_plus_general_type": 0.625
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.6",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 6.0
+        "manaita_plus_general:manaita_plus_general_type": 0.75
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.7",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 7.0
+        "manaita_plus_general:manaita_plus_general_type": 0.875
       }
     },
     {
       "model": "manaita_plus_general:item/furnace/furnace_manaita.8",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 8.0
+        "manaita_plus_general:manaita_plus_general_type": 1.0
       }
     }
   ],

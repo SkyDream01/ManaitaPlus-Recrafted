@@ -19,6 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import github.com.gengyoubo.MPG.gui.BrewingStandScreen;
+import github.com.gengyoubo.MPG.gui.BaublesScreen;
 import github.com.gengyoubo.MPG.gui.CraftingManaitaScreen;
 import github.com.gengyoubo.MPG.gui.FurnaceManaitaScreen;
 import github.com.gengyoubo.MPG.blockEntity.RenderBrewingManaitaBlockEntity;
@@ -28,6 +29,7 @@ import github.com.gengyoubo.MPG.entity.MPLightningBoltRenderer;
 import github.com.gengyoubo.MPG.entity.RenderManaitaArrow;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
+import github.com.gengyoubo.common.util.MPGTypeHelper;
 
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaArrow;
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaLightningBolt;
@@ -41,6 +43,9 @@ public class RegisterEventHandler {
             MenuScreens.register(MPGMenuCore.CraftingManaita.get(), CraftingManaitaScreen::new);
             MenuScreens.register(MPGMenuCore.FurnaceManaita.get(), FurnaceManaitaScreen::new);
             MenuScreens.register(MPGMenuCore.BrewingStandManaita.get(), BrewingStandScreen::new);
+            if (BaublesCapability.isEnabled()) {
+                MenuScreens.register(MPGMenuCore.Baubles.get(), BaublesScreen::new);
+            }
             acceptTypePropertyFunction(
                     MPGBlockCore.CraftingBlockItem.get(),
                     MPGBlockCore.FurnaceBlockItem.get(),
@@ -83,7 +88,7 @@ public class RegisterEventHandler {
     private static void acceptTypePropertyFunction(Item... items) {
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(MPG.MODID, MPGNBTData.Type);
         ItemPropertyFunction typePropertyFunction = (stack, level, entity, seed) ->
-                MPGItemStackData.getInt(stack, MPGNBTData.ItemType);
+                MPGTypeHelper.toModelPredicate(MPGItemStackData.getInt(stack, MPGNBTData.ItemType));
         for (Item item : items) {
             ItemProperties.register(item, location, typePropertyFunction);
         }

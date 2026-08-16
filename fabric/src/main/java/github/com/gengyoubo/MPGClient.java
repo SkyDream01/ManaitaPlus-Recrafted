@@ -14,6 +14,8 @@ import github.com.gengyoubo.gui.MPFurnaceScreen;
 import github.com.gengyoubo.common.network.MPGClientPayloadHandler;
 import github.com.gengyoubo.network.MPNetworking;
 import github.com.gengyoubo.common.util.MPGNBTData;
+import github.com.gengyoubo.common.util.MPGItemStackData;
+import github.com.gengyoubo.common.util.MPGTypeHelper;
 import github.com.gengyoubo.common.registry.MPGRegistryIds;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
@@ -77,16 +79,6 @@ public class MPGClient implements ClientModInitializer {
     }
 
     private static float readTypeValue(ItemStack stack, net.minecraft.client.multiplayer.ClientLevel level, net.minecraft.world.entity.LivingEntity entity, int seed) {
-        if (!github.com.gengyoubo.common.util.MPGItemStackData.hasTag(stack) || github.com.gengyoubo.common.util.MPGItemStackData.getTag(stack) == null) {
-            return 0.0F;
-        }
-        return normalizeTypeValue(github.com.gengyoubo.common.util.MPGItemStackData.getTag(stack).getInt(MPGNBTData.ItemType));
-    }
-
-    private static float normalizeTypeValue(int type) {
-        return switch (type) {
-            case 1, 2, 3, 4, 5, 6, 7, 8 -> type / 8.0F;
-            default -> 0.0F;
-        };
+        return MPGTypeHelper.toModelPredicate(MPGItemStackData.getInt(stack, MPGNBTData.ItemType));
     }
 }

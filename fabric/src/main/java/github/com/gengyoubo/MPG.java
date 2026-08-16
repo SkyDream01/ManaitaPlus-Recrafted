@@ -69,7 +69,7 @@ public class MPG implements ModInitializer {
 
         MANAITA_PLUS_TAB = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB, github.com.gengyoubo.util.MPResource.id(MODID, "manaita_plus_tab"), FabricItemGroup.builder()
             .icon(() -> MPBlockCore.CraftingBlockItem.get().getDefaultInstance())
-            .title(Component.translatable("itemGroup.MPTab"))
+            .title(Component.translatable("itemGroup.ManaitaPlusTab"))
             .displayItems((context, entries) -> {
                 acceptMPGType(MPBlockCore.CraftingBlockItem.get(), entries, 8);
                 acceptMPGType(MPBlockCore.FurnaceBlockItem.get(), entries, 8);

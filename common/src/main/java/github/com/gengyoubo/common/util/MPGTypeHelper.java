@@ -13,4 +13,9 @@ public final class MPGTypeHelper {
     public static String getTypes(int type) {
         return type >= 1 && type < TYPES.length ? TYPES[type] : "";
     }
+
+    /** Maps the stored tier id (0-8) to Minecraft's clamped item-model predicate range. */
+    public static float toModelPredicate(int type) {
+        return type >= 1 && type < TYPES.length ? type / (float) (TYPES.length - 1) : 0.0F;
+    }
 }

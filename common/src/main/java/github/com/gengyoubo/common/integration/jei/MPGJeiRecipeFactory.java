@@ -35,12 +35,17 @@ public final class MPGJeiRecipeFactory {
         typedInputs.stream().map(ItemStack::copy).forEach(inputs::add);
 
         List<ItemStack> normalized = inputs.stream().map(MPGJeiRecipeFactory::normalizeInput).toList();
-        List<ItemStack> outputs = normalized.stream().map(stack -> createOutput(stack, multiplier)).toList();
-        List<ItemStack> sources = new ArrayList<>(normalized.size());
-        for (int i = 0; i < normalized.size(); i++) {
-            sources.add(source.getDefaultInstance());
+        List<MPGSourceCopyRecipe> recipes = new ArrayList<>(normalized.size());
+        for (ItemStack input : normalized) {
+            ItemStack sourceStack = normalizeInput(source.getDefaultInstance());
+            ItemStack output = input.copy();
+            output.setCount(Math.max(1, multiplier));
+            // Keeping one candidate per JEI slot prevents its "+99 more candidates"
+            // tooltip while the stack count itself renders the recipe multiplier.
+            recipes.add(new MPGSourceCopyRecipe(
+                    List.of(sourceStack), List.of(input), List.of(output), multiplier));
         }
-        return List.of(new MPGSourceCopyRecipe(sources, normalized, outputs, multiplier));
+        return List.copyOf(recipes);
     }
 
     public static List<ItemStack> createTypedStacks(Item item, int maxType) {
@@ -59,9 +64,4 @@ public final class MPGJeiRecipeFactory {
         return result;
     }
 
-    private static ItemStack createOutput(ItemStack input, int multiplier) {
-        ItemStack result = input.copy();
-        result.setCount(Math.max(1, multiplier));
-        return result;
-    }
 }

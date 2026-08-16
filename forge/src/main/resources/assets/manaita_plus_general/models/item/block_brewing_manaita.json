@@ -4,49 +4,49 @@
     {
       "model": "manaita_plus_general:item/brewing_manaita_wooden",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 1.0
+        "manaita_plus_general:manaita_plus_general_type": 0.125
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_stone",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 2.0
+        "manaita_plus_general:manaita_plus_general_type": 0.25
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_iron",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 3.0
+        "manaita_plus_general:manaita_plus_general_type": 0.375
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_gold",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 4.0
+        "manaita_plus_general:manaita_plus_general_type": 0.5
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_diamond",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 5.0
+        "manaita_plus_general:manaita_plus_general_type": 0.625
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_emerald",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 6.0
+        "manaita_plus_general:manaita_plus_general_type": 0.75
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_redstone",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 7.0
+        "manaita_plus_general:manaita_plus_general_type": 0.875
       }
     },
     {
       "model": "manaita_plus_general:item/brewing_manaita_netherite",
       "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 8.0
+        "manaita_plus_general:manaita_plus_general_type": 1.0
       }
     }
   ],
