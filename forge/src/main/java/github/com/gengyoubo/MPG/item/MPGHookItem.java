@@ -1,9 +1,6 @@
 package github.com.gengyoubo.MPG.item;
 
-import net.minecraft.world.item.Item;
+import github.com.gengyoubo.common.item.MPGHookItemBase;
 
-public class MPGHookItem extends Item {
-    public MPGHookItem() {
-        super(new Item.Properties().fireResistant());
-    }
+public class MPGHookItem extends MPGHookItemBase {
 }
