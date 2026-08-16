@@ -3,6 +3,10 @@
 This workspace consolidates the Minecraft 1.21.1 Fabric, Forge, and NeoForge
 sources into one Gradle build.
 
+## Regarding Source Code Prior to Version 3.0
+This is the source code repository for version 3.0 and later. If you want to view the source code repository for versions prior to 3.0, please follow this link:
+https://github.com/gengyoubo/ManaitaPlusGeneral
+
 ## Modules
 
 - `common`: shared Architectury bootstrap and future shared game logic.

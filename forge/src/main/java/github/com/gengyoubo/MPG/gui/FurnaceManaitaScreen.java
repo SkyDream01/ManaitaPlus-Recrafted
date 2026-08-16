@@ -1,34 +1,25 @@
 package github.com.gengyoubo.MPG.gui;
 
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractFurnaceScreen;
-import net.minecraft.client.gui.screens.recipebook.SmeltingRecipeBookComponent;
+import github.com.gengyoubo.MPG.MPGConfig;
+import github.com.gengyoubo.MPG.menu.MPGFurnaceMenu;
+import github.com.gengyoubo.common.client.gui.MPGFurnaceScreenBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import github.com.gengyoubo.MPG.MPGConfig;
-import github.com.gengyoubo.MPG.menu.MPGFurnaceMenu;
 
 @OnlyIn(Dist.CLIENT)
-public class FurnaceManaitaScreen extends AbstractFurnaceScreen<MPGFurnaceMenu> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/gui/container/furnace.png");
-    private static final ResourceLocation LIT_PROGRESS_SPRITE = ResourceLocation.withDefaultNamespace("container/furnace/lit_progress");
-    private static final ResourceLocation BURN_PROGRESS_SPRITE = ResourceLocation.withDefaultNamespace("container/furnace/burn_progress");
-    private static final ResourceLocation UNIFORM_FONT = ResourceLocation.withDefaultNamespace("uniform");
-    private final String doubling_text;
+public class FurnaceManaitaScreen extends MPGFurnaceScreenBase<MPGFurnaceMenu> {
+    private static final ResourceLocation UNIFORM_FONT =
+            ResourceLocation.withDefaultNamespace("uniform");
 
-    public FurnaceManaitaScreen(MPGFurnaceMenu p_98776_, Inventory p_98777_, Component p_98778_) {
-        super(p_98776_, new SmeltingRecipeBookComponent(), p_98777_, p_98778_, TEXTURE, LIT_PROGRESS_SPRITE, BURN_PROGRESS_SPRITE);
-        doubling_text = MPGConfig.furnace_doubling_value + "x";
+    public FurnaceManaitaScreen(MPGFurnaceMenu menu, Inventory inventory, Component title) {
+        super(menu, inventory, title, MPGConfig.furnace_doubling_value);
     }
 
-
-    protected void renderLabels(GuiGraphics p_281635_, int p_282681_, int p_283686_) {
-        p_281635_.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
-        p_281635_.drawString(this.font, this.playerInventoryTitle, this.inventoryLabelX, this.inventoryLabelY, 4210752, false);
-        p_281635_.drawString(this.font, Component.literal(doubling_text).withStyle(style -> style.withFont(UNIFORM_FONT)), 118, 22, 4210752, false);
+    @Override
+    protected Component getDoublingComponent() {
+        return super.getDoublingComponent().copy().withStyle(style -> style.withFont(UNIFORM_FONT));
     }
-
 }

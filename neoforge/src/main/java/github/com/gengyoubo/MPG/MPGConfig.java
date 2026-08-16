@@ -1,5 +1,6 @@
 package github.com.gengyoubo.MPG;
 
+import github.com.gengyoubo.common.config.MPGConfigValues;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -8,7 +9,7 @@ import net.neoforged.fml.event.config.ModConfigEvent;
 // An example config class. This is not required, but it's a good idea to have one to keep your config organized.
 // Demonstrates how to use Forge's config APIs
 @EventBusSubscriber(modid = MPG.MODID)
-public class MPGConfig
+public class MPGConfig extends MPGConfigValues
 {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
@@ -50,15 +51,6 @@ public class MPGConfig
 
     public static final ModConfigSpec SPEC = BUILDER.build();
 
-    public static boolean creative_range_destroy_value = false;
-    public static boolean easy_mode_value = false;
-    public static int item_drops_doubling_value = 4;
-    public static int experience_drops_doubling_value = 4;
-    public static int crafting_doubling_value = 64;
-    public static int furnace_doubling_value = 64;
-    public static int brewing_doubling_value = 64;
-    public static int destroy_doubling_value = 4;
-    public static int source_doubling_value = 64;
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event)
     {
@@ -73,4 +65,3 @@ public class MPGConfig
         source_doubling_value = source_doubling.get();
     }
 }
-
