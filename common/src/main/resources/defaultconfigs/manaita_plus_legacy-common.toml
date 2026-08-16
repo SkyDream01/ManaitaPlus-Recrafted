@@ -6,11 +6,26 @@ creative_range_destroy = false
 # Easy mode: simplify recipes (for example, use diamond block instead of cobblestone)
 easy_mode = false
 
+# Enables night vision while wearing the Manaita helmet
+helmet_night_vision = false
+
+# Enables invisibility while wearing the Manaita leggings
+leggings_invisibility = false
+
+# Makes the Manaita boots jump automatically when walking into an obstacle
+boots_auto_jump = false
+
+# Initial Manaita boots speed level (1-8)
+boots_speed_level = 1
+
+# Initial Manaita boots jump level (1-8)
+boots_jump_level = 1
+
 # ExperienceDropsDoubling
 experience_drops_doubling_value = 4
 
 # ItemDropsDoubling
-item_drops_doubling_value = 4
+item_drops_doubling_value = 64
 
 # CraftingDoubling
 crafting_doubling_value = 64
@@ -22,7 +37,7 @@ furnace_doubling_value = 64
 brewing_doubling_value = 64
 
 # DestroyDoubling
-destroy_doubling_value = 4
+destroy_doubling_value = 64
 
 # SourceDoubling
 source_doubling_value = 64

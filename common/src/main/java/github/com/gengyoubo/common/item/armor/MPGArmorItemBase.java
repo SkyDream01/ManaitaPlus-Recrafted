@@ -1,5 +1,7 @@
 package github.com.gengyoubo.common.item.armor;
 
+import github.com.gengyoubo.common.config.MPGConfigValues;
+import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPText;
@@ -8,11 +10,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
@@ -22,13 +29,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class MPGArmorItemBase extends ArmorItem {
     public static final Holder<ArmorMaterial> MANAITA_ARMOR_MATERIAL = Holder.direct(
@@ -50,8 +55,22 @@ public class MPGArmorItemBase extends ArmorItem {
             )
     );
 
-    private static final float DEFAULT_WALKING_SPEED = 0.1F;
-    private static final float DEFAULT_FLYING_SPEED = 0.05F;
+    private static final int FAST_REGENERATION_DURATION = 60;
+    private static final int FAST_REGENERATION_AMPLIFIER = 4;
+    private static final double[] BOOTS_JUMP_STRENGTH = {
+            0.0D, 0.4635D, 0.6175D, 0.6850D, 0.8030D, 0.9095D, 1.0075D, 1.0985D, 1.1850D
+    };
+    private static final String HELMET_REGENERATION_TAG = "manaita_plus_general.helmet_regeneration";
+    private static final String HELMET_WATER_BREATHING_TAG = "manaita_plus_general.helmet_water_breathing";
+    private static final String HELMET_NIGHT_VISION_TAG = "manaita_plus_general.helmet_night_vision";
+    private static final String CHESTPLATE_FLIGHT_TAG = "manaita_plus_general.chestplate_flight";
+    private static final String CHESTPLATE_FALL_TAG = "manaita_plus_general.chestplate_fall";
+    private static final String CHESTPLATE_BIG_FALL_TAG = "manaita_plus_general.chestplate_big_fall";
+    private static final String LEGGINGS_INVISIBILITY_TAG = "manaita_plus_general.leggings_invisibility";
+    private static final ResourceLocation BOOTS_SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(
+            "manaita_plus_general", "boots_speed");
+    private static final ResourceLocation BOOTS_JUMP_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(
+            "manaita_plus_general", "boots_jump");
 
     protected MPGArmorItemBase(Holder<ArmorMaterial> material, Type type) {
         super(material, type, new Item.Properties().fireResistant());
@@ -64,43 +83,224 @@ public class MPGArmorItemBase extends ArmorItem {
     }
 
     public static void syncArmorState(Player player) {
-        ItemStack helmet = player.getInventory().armor.get(3);
-        ItemStack leggings = player.getInventory().armor.get(1);
-        ItemStack boots = player.getInventory().armor.get(0);
+        ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+        ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
+        ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
+        ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if (!(helmet.getItem() instanceof Helmet) && player.hasEffect(MobEffects.NIGHT_VISION)) {
-            player.removeEffect(MobEffects.NIGHT_VISION);
-        }
-
-        if (!(leggings.getItem() instanceof Leggings) && !player.hasEffect(MobEffects.INVISIBILITY)) {
-            player.setInvisible(false);
-        }
-
-        if (!(boots.getItem() instanceof Boots)) {
-            boolean abilityChanged = false;
-            if (!player.isCreative() && !player.isSpectator()) {
-                if (player.getAbilities().mayfly) {
-                    player.getAbilities().mayfly = false;
-                    abilityChanged = true;
-                }
-                if (player.getAbilities().flying) {
-                    player.getAbilities().flying = false;
-                    abilityChanged = true;
-                }
+        if (!player.level().isClientSide) {
+            if (helmet.getItem() instanceof Helmet) {
+                applyHelmetEffects(player);
+            } else {
+                removeHelmetEffects(player);
             }
-
-            Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED))
-                    .setBaseValue(DEFAULT_WALKING_SPEED);
-            player.getAbilities().setWalkingSpeed(DEFAULT_WALKING_SPEED);
-            player.getAbilities().setFlyingSpeed(DEFAULT_FLYING_SPEED);
-
-            if (abilityChanged && player instanceof ServerPlayer serverPlayer) {
-                serverPlayer.onUpdateAbilities();
-            }
+            syncChestplate(player, chestplate);
+            syncLeggings(player, leggings);
+            syncBoots(player, boots);
         }
     }
 
-    public static class Helmet extends MPGArmorItemBase implements IMPGKey {
+    public static boolean hasManaitaHelmet(Player player) {
+        return player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof Helmet;
+    }
+
+    public static boolean hasManaitaChestplate(Player player) {
+        return player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof Chestplate;
+    }
+
+    public static boolean hasManaitaLeggings(Player player) {
+        return player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof Leggings;
+    }
+
+    public static boolean hasManaitaBoots(Player player) {
+        return player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof Boots;
+    }
+
+    public static boolean hasManaitaArmorPiece(Player player) {
+        return hasManaitaHelmet(player) || hasManaitaChestplate(player)
+                || hasManaitaLeggings(player) || hasManaitaBoots(player);
+    }
+
+    public static boolean shouldCancelDamage(Player player, DamageSource source) {
+        if (!hasManaitaArmorPiece(player)) {
+            return false;
+        }
+        boolean onlyLeggings = hasManaitaLeggings(player)
+                && !hasManaitaHelmet(player)
+                && !hasManaitaChestplate(player)
+                && !hasManaitaBoots(player);
+        return !onlyLeggings || !source.is(DamageTypeTags.IS_FIRE) || !isTouchingFire(player);
+    }
+
+    private static void syncChestplate(Player player, ItemStack chestplate) {
+        if (chestplate.getItem() instanceof Chestplate) {
+            removeHarmfulEffects(player);
+            syncChestplateLandingSound(player);
+            if (!player.isCreative() && !player.isSpectator()) {
+                player.addTag(CHESTPLATE_FLIGHT_TAG);
+            }
+            if (!player.getAbilities().mayfly) {
+                player.getAbilities().mayfly = true;
+                updateAbilities(player);
+            }
+            return;
+        }
+
+        if (player.getTags().contains(CHESTPLATE_FLIGHT_TAG)) {
+            player.removeTag(CHESTPLATE_FLIGHT_TAG);
+            if (!player.isCreative() && !player.isSpectator()
+                    && !MPGEntityData.manaita.accept(player)) {
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+                updateAbilities(player);
+            }
+        }
+        player.removeTag(CHESTPLATE_FALL_TAG);
+        player.removeTag(CHESTPLATE_BIG_FALL_TAG);
+    }
+
+    private static void syncChestplateLandingSound(Player player) {
+        if (!player.onGround() && player.fallDistance > 3.0F) {
+            player.addTag(CHESTPLATE_FALL_TAG);
+            if (player.fallDistance > 7.0F) {
+                player.addTag(CHESTPLATE_BIG_FALL_TAG);
+            }
+            return;
+        }
+        if (player.onGround() && player.getTags().contains(CHESTPLATE_FALL_TAG)) {
+            if (!hasManaitaBoots(player)) {
+                boolean bigFall = player.getTags().contains(CHESTPLATE_BIG_FALL_TAG);
+                player.playSound(bigFall ? SoundEvents.GENERIC_BIG_FALL : SoundEvents.GENERIC_SMALL_FALL,
+                        1.0F, 1.0F);
+            }
+            player.removeTag(CHESTPLATE_FALL_TAG);
+            player.removeTag(CHESTPLATE_BIG_FALL_TAG);
+        }
+    }
+
+    private static void removeHarmfulEffects(Player player) {
+        List<Holder<MobEffect>> harmfulEffects = new ArrayList<>();
+        for (MobEffectInstance effect : player.getActiveEffects()) {
+            if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
+                harmfulEffects.add(effect.getEffect());
+            }
+        }
+        harmfulEffects.forEach(player::removeEffect);
+    }
+
+    private static void syncLeggings(Player player, ItemStack leggings) {
+        if (!(leggings.getItem() instanceof Leggings)) {
+            removeHelmetEffect(player, MobEffects.INVISIBILITY, LEGGINGS_INVISIBILITY_TAG);
+            return;
+        }
+
+        if (!isTouchingFire(player)) {
+            player.setRemainingFireTicks(0);
+        }
+
+        if (MPGConfigValues.leggings_invisibility_value) {
+            addHelmetEffect(player, MobEffects.INVISIBILITY, MobEffectInstance.INFINITE_DURATION,
+                    0, LEGGINGS_INVISIBILITY_TAG);
+        } else {
+            removeHelmetEffect(player, MobEffects.INVISIBILITY, LEGGINGS_INVISIBILITY_TAG);
+        }
+    }
+
+    private static boolean isTouchingFire(Player player) {
+        return player.isInLava()
+                || player.level().getBlockState(player.blockPosition()).is(BlockTags.FIRE)
+                || player.level().getBlockState(player.blockPosition().above()).is(BlockTags.FIRE);
+    }
+
+    private static void syncBoots(Player player, ItemStack boots) {
+        AttributeInstance speedAttribute = player.getAttribute(Attributes.MOVEMENT_SPEED);
+        AttributeInstance jumpAttribute = player.getAttribute(Attributes.JUMP_STRENGTH);
+        if (!(boots.getItem() instanceof Boots bootsItem)) {
+            if (speedAttribute != null) {
+                speedAttribute.removeModifier(BOOTS_SPEED_MODIFIER_ID);
+            }
+            if (jumpAttribute != null) {
+                jumpAttribute.removeModifier(BOOTS_JUMP_MODIFIER_ID);
+            }
+            return;
+        }
+
+        int speedLevel = bootsItem.getSpeed(boots);
+        int jumpLevel = bootsItem.getJump(boots);
+        if (speedAttribute != null) {
+            speedAttribute.addOrUpdateTransientModifier(new AttributeModifier(
+                    BOOTS_SPEED_MODIFIER_ID, speedLevel * 0.2D,
+                    AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
+        }
+        if (jumpAttribute != null) {
+            double jumpIncrease = BOOTS_JUMP_STRENGTH[jumpLevel] - 0.42D;
+            jumpAttribute.addOrUpdateTransientModifier(new AttributeModifier(
+                    BOOTS_JUMP_MODIFIER_ID, jumpIncrease, AttributeModifier.Operation.ADD_VALUE));
+        }
+
+        if (MPGConfigValues.boots_auto_jump_value
+                && player.onGround()
+                && player.horizontalCollision
+                && !player.isShiftKeyDown()
+                && (Math.abs(player.xxa) > 0.01F || Math.abs(player.zza) > 0.01F)) {
+            player.jumpFromGround();
+        }
+    }
+
+    private static void updateAbilities(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            serverPlayer.onUpdateAbilities();
+        }
+    }
+
+    private static void applyHelmetEffects(Player player) {
+        player.setAirSupply(player.getMaxAirSupply());
+
+        FoodData foodData = player.getFoodData();
+        foodData.setFoodLevel(20);
+        foodData.setSaturation(20.0F);
+        foodData.setExhaustion(0.0F);
+
+        addHelmetEffect(player, MobEffects.REGENERATION, FAST_REGENERATION_DURATION,
+                FAST_REGENERATION_AMPLIFIER, HELMET_REGENERATION_TAG);
+        addHelmetEffect(player, MobEffects.WATER_BREATHING, MobEffectInstance.INFINITE_DURATION,
+                0, HELMET_WATER_BREATHING_TAG);
+
+        if (MPGConfigValues.helmet_night_vision_value) {
+            addHelmetEffect(player, MobEffects.NIGHT_VISION, MobEffectInstance.INFINITE_DURATION,
+                    0, HELMET_NIGHT_VISION_TAG);
+        } else {
+            removeHelmetEffect(player, MobEffects.NIGHT_VISION, HELMET_NIGHT_VISION_TAG);
+        }
+    }
+
+    private static void addHelmetEffect(Player player, Holder<MobEffect> effect, int duration,
+                                        int amplifier, String ownerTag) {
+        MobEffectInstance current = player.getEffect(effect);
+        boolean needsRefresh = current == null
+                || current.getAmplifier() < amplifier
+                || duration == MobEffectInstance.INFINITE_DURATION && !current.isInfiniteDuration()
+                || duration != MobEffectInstance.INFINITE_DURATION && current.getDuration() <= 20;
+        if (needsRefresh) {
+            player.addEffect(new MobEffectInstance(effect, duration, amplifier, false, false, true));
+            player.addTag(ownerTag);
+        }
+    }
+
+    private static void removeHelmetEffects(Player player) {
+        removeHelmetEffect(player, MobEffects.REGENERATION, HELMET_REGENERATION_TAG);
+        removeHelmetEffect(player, MobEffects.WATER_BREATHING, HELMET_WATER_BREATHING_TAG);
+        removeHelmetEffect(player, MobEffects.NIGHT_VISION, HELMET_NIGHT_VISION_TAG);
+    }
+
+    private static void removeHelmetEffect(Player player, Holder<MobEffect> effect, String ownerTag) {
+        if (player.getTags().contains(ownerTag)) {
+            player.removeEffect(effect);
+            player.removeTag(ownerTag);
+        }
+    }
+
+    public static class Helmet extends MPGArmorItemBase {
         public Helmet(Holder<ArmorMaterial> material) {
             super(material, Type.HELMET);
         }
@@ -110,7 +310,8 @@ public class MPGArmorItemBase extends ArmorItem {
                                     List<Component> tooltip, @NotNull TooltipFlag flag) {
             tooltip.add(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.nightvision") + ": "
-                            + (getNightVision(stack) ? text("info.on") : text("info.off")))));
+                            + (MPGConfigValues.helmet_night_vision_value
+                            ? text("info.on") : text("info.off")))));
             super.appendHoverText(stack, context, tooltip, flag);
         }
 
@@ -119,50 +320,6 @@ public class MPGArmorItemBase extends ArmorItem {
             return Component.translatable("item.helmet.name");
         }
 
-        @Override
-        public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity,
-                                  int slot, boolean selected) {
-            if (slot == 3 && entity instanceof Player player) {
-                player.setAirSupply(300);
-                FoodData foodData = player.getFoodData();
-                if (foodData.getFoodLevel() < 20) {
-                    foodData.setFoodLevel(20);
-                }
-                if (foodData.getSaturationLevel() < 20) {
-                    foodData.setSaturation(20);
-                }
-                foodData.setExhaustion(0);
-                if (getNightVision(stack)) {
-                    player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 400, 0, false, false));
-                }
-            }
-        }
-
-        public static boolean getNightVision(ItemStack itemStack) {
-            return MPGItemStackData.getBoolean(itemStack, "NightVision");
-        }
-
-        @Override
-        public void onManaitaKeyPress(ItemStack itemStack) {
-            MPGItemStackData.putBoolean(itemStack, "NightVision", !getNightVision(itemStack));
-        }
-
-        @Override
-        public void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
-            onManaitaKeyPress(itemStack);
-            showMessage(player, String.format("[%s] %s: %s",
-                    text("item.helmet.name"), text("mode.nightvision"),
-                    getNightVision(itemStack) ? text("info.on") : text("info.off")));
-        }
-
-        protected void showMessage(Player player, String message) {
-            player.displayClientMessage(Component.literal(MPText.manaita_mode.formatting(message)),
-                    messageUsesOverlay());
-        }
-
-        protected boolean messageUsesOverlay() {
-            return true;
-        }
     }
 
     public static class Chestplate extends MPGArmorItemBase {
@@ -175,22 +332,9 @@ public class MPGArmorItemBase extends ArmorItem {
             return Component.translatable("item.chestplate.name");
         }
 
-        @Override
-        public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity,
-                                  int slot, boolean selected) {
-            if (slot == 2 && entity instanceof Player player) {
-                List<Holder<MobEffect>> harmfulEffects = new ArrayList<>();
-                for (MobEffectInstance effect : player.getActiveEffects()) {
-                    if (effect.getEffect().value().getCategory() == MobEffectCategory.HARMFUL) {
-                        harmfulEffects.add(effect.getEffect());
-                    }
-                }
-                harmfulEffects.forEach(player::removeEffect);
-            }
-        }
     }
 
-    public static class Leggings extends MPGArmorItemBase implements IMPGKey {
+    public static class Leggings extends MPGArmorItemBase {
         public Leggings(Holder<ArmorMaterial> material) {
             super(material, Type.LEGGINGS);
         }
@@ -201,47 +345,13 @@ public class MPGArmorItemBase extends ArmorItem {
         }
 
         @Override
-        public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity,
-                                  int slot, boolean selected) {
-            if (slot == 1 && entity instanceof Player player) {
-                player.setRemainingFireTicks(0);
-                if (getInvisibility(stack)) {
-                    player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 400, 0, false, false));
-                    player.setInvisible(true);
-                } else {
-                    player.setInvisible(false);
-                }
-            }
-        }
-
-        @Override
         public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
                                     List<Component> tooltip, @NotNull TooltipFlag flag) {
             tooltip.add(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.invisibility") + ": "
-                            + (getInvisibility(stack) ? text("info.on") : text("info.off")))));
+                            + (MPGConfigValues.leggings_invisibility_value
+                            ? text("info.on") : text("info.off")))));
             super.appendHoverText(stack, context, tooltip, flag);
-        }
-
-        public static boolean getInvisibility(ItemStack itemStack) {
-            return MPGItemStackData.getBoolean(itemStack, "Invisibility");
-        }
-
-        @Override
-        public void onManaitaKeyPress(ItemStack itemStack) {
-            MPGItemStackData.putBoolean(itemStack, "Invisibility", !getInvisibility(itemStack));
-        }
-
-        @Override
-        public void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
-            onManaitaKeyPress(itemStack);
-            player.displayClientMessage(Component.literal(MPText.manaita_mode.formatting(String.format(
-                    "[%s] %s: %s", text("item.leggings.name"), text("mode.invisibility"),
-                    getInvisibility(itemStack) ? text("info.on") : text("info.off")))), messageUsesOverlay());
-        }
-
-        protected boolean messageUsesOverlay() {
-            return true;
         }
     }
 
@@ -255,38 +365,50 @@ public class MPGArmorItemBase extends ArmorItem {
             return Component.translatable("item.boots.name");
         }
 
-        @Override
-        public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity,
-                                  int slot, boolean selected) {
-            if (slot == 0 && entity instanceof Player player) {
-                if (!player.getAbilities().mayfly) {
-                    player.getAbilities().mayfly = true;
-                    player.onUpdateAbilities();
-                }
-                int speed = getSpeed(stack);
-                float baseSpeed = 0.1F * speed;
-                Objects.requireNonNull(player.getAttribute(Attributes.MOVEMENT_SPEED)).setBaseValue(baseSpeed);
-                player.getAbilities().setWalkingSpeed(baseSpeed);
-                player.getAbilities().setFlyingSpeed(baseSpeed / 2.0F);
-            }
+        public static int getSpeed(ItemStack itemStack) {
+            int storedLevel = MPGItemStackData.getInt(itemStack, "Speed");
+            return clampLevel(storedLevel > 0 ? storedLevel : MPGConfigValues.boots_speed_level_value);
         }
 
-        public static int getSpeed(ItemStack itemStack) {
-            return Math.max(MPGItemStackData.getInt(itemStack, "Speed"), 1);
+        public static int getJump(ItemStack itemStack) {
+            int storedLevel = MPGItemStackData.getInt(itemStack, "Jump");
+            return clampLevel(storedLevel > 0 ? storedLevel : MPGConfigValues.boots_jump_level_value);
         }
 
         @Override
         public void onManaitaKeyPress(ItemStack itemStack) {
-            int next = Math.max(1, MPGItemStackData.getInt(itemStack, "Speed") + 1) % 10;
-            MPGItemStackData.putInt(itemStack, "Speed", next == 0 ? 1 : next);
+            MPGItemStackData.putInt(itemStack, "Speed", nextLevel(getSpeed(itemStack)));
+            MPGItemStackData.putInt(itemStack, "Jump", nextLevel(getJump(itemStack)));
         }
 
         @Override
         public void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
             onManaitaKeyPress(itemStack);
             player.displayClientMessage(Component.literal(MPText.manaita_mode.formatting(String.format(
-                    "[%s] %s: %d", text("item.boots.name"), text("mode.speed"), getSpeed(itemStack)))),
+                    "[%s] %s: %d, %s: %d", text("item.boots.name"),
+                    text("mode.speed"), getSpeed(itemStack), text("mode.jump"), getJump(itemStack)))),
                     messageUsesOverlay());
+        }
+
+        @Override
+        public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
+                                    List<Component> tooltip, @NotNull TooltipFlag flag) {
+            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                    text("mode.autojump") + ": "
+                            + (MPGConfigValues.boots_auto_jump_value ? text("info.on") : text("info.off")))));
+            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                    text("mode.speed") + ": " + getSpeed(stack))));
+            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                    text("mode.jump") + ": " + getJump(stack))));
+            super.appendHoverText(stack, context, tooltip, flag);
+        }
+
+        private static int nextLevel(int level) {
+            return level >= 8 ? 1 : level + 1;
+        }
+
+        private static int clampLevel(int level) {
+            return Math.max(1, Math.min(8, level));
         }
 
         protected boolean messageUsesOverlay() {

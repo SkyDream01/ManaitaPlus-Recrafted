@@ -39,6 +39,10 @@ public class ClientEventHandler {
             MPGClientEventLogic.handleArmorKey(MINECRAFT.player);
             Networking.sendToServer(new MPGKeyPressPayload((byte) 1));
         }
+        while (MPGKeyBoardCore.PAXEL_KEY != null && MPGKeyBoardCore.PAXEL_KEY.consumeClick()) {
+            MPGClientEventLogic.handlePaxelKey(MINECRAFT.player);
+            Networking.sendToServer(new MPGKeyPressPayload((byte) 2));
+        }
         while (BaublesCapability.isEnabled()
                 && MPGKeyBoardCore.BAUBLES_KEY != null
                 && MPGKeyBoardCore.BAUBLES_KEY.consumeClick()) {

@@ -15,9 +15,14 @@ public abstract class MPGTaggedToolItemBase extends MPGToolItemBase {
         this.mineableTag = mineableTag;
     }
 
+    protected MPGTaggedToolItemBase(Tier tier, TagKey<Block> mineableTag, MPGToolProfile profile) {
+        super(tier, mineableTag, profile);
+        this.mineableTag = mineableTag;
+    }
+
     @Override
     public boolean isCorrectToolForDrops(@NotNull ItemStack stack, BlockState state) {
-        return state.is(mineableTag);
+        return canHarvest(stack) && state.is(mineableTag);
     }
 
     @Override

@@ -9,10 +9,11 @@ import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyTaggedToolItem;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPGHoeItem extends ManaitaPlusLegacyTaggedToolItem {
     public MPGHoeItem() {
-        super(BlockTags.MINEABLE_WITH_HOE);
+        super(BlockTags.MINEABLE_WITH_HOE, MPGToolProfile.HOE);
     }
 
     @Override

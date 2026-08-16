@@ -26,7 +26,13 @@ public final class MPGKeyBindings {
         MPKeyBoardCore.MESSAGE_ARMOR_KEY = KeyBindingHelper.registerKeyBinding(new KeyMapping(
                 "key.manaita.armor",
                 InputConstants.Type.KEYSYM,
-                GLFW.GLFW_KEY_Y,
+                GLFW.GLFW_KEY_V,
+                "key.categories.misc"
+        ));
+        MPKeyBoardCore.PAXEL_KEY = KeyBindingHelper.registerKeyBinding(new KeyMapping(
+                "key.manaita.doubling",
+                InputConstants.Type.KEYSYM,
+                GLFW.GLFW_KEY_C,
                 "key.categories.misc"
         ));
 
@@ -46,6 +52,11 @@ public final class MPGKeyBindings {
         while (MPKeyBoardCore.MESSAGE_ARMOR_KEY.consumeClick()) {
             MPGClientEventLogic.handleArmorKey(client.player);
             sendKeyPacket((byte) 1);
+        }
+
+        while (MPKeyBoardCore.PAXEL_KEY.consumeClick()) {
+            MPGClientEventLogic.handlePaxelKey(client.player);
+            sendKeyPacket((byte) 2);
         }
     }
 

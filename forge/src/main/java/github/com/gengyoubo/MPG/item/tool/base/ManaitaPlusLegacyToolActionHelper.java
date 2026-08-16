@@ -42,17 +42,16 @@ public final class ManaitaPlusLegacyToolActionHelper {
         Level level = context.getLevel();
         BlockPos center = context.getClickedPos();
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        int xM = center.getX() + range;
-        int yM = center.getY() + range;
-        int zM = center.getZ() + range;
         boolean changed = false;
 
-        for (int x = center.getX() - range; x <= xM; x++) {
-            for (int y = center.getY() - range; y <= yM; y++) {
-                for (int z = center.getZ() - range; z <= zM; z++) {
-                    mutableBlockPos.set(x, y, z);
-                    changed |= action.apply(mutableBlockPos, level.getBlockState(mutableBlockPos));
+        for (int first = -range; first <= range; first++) {
+            for (int second = -range; second <= range; second++) {
+                switch (context.getClickedFace().getAxis()) {
+                    case X -> mutableBlockPos.set(center.getX(), center.getY() + first, center.getZ() + second);
+                    case Y -> mutableBlockPos.set(center.getX() + first, center.getY(), center.getZ() + second);
+                    case Z -> mutableBlockPos.set(center.getX() + first, center.getY() + second, center.getZ());
                 }
+                changed |= action.apply(mutableBlockPos, level.getBlockState(mutableBlockPos));
             }
         }
         return changed;

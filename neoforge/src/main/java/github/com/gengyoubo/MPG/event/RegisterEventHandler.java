@@ -85,9 +85,11 @@ public class RegisterEventHandler {
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event)
     {
         MPGKeyBoardCore.MESSAGE_KEY = new KeyMapping("key.manaita", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 88, "key.categories.misc");
-        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 89, "key.categories.misc");
+        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 86, "key.categories.misc");
+        MPGKeyBoardCore.PAXEL_KEY = new KeyMapping("key.manaita.doubling", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 67, "key.categories.misc");
         event.register(MPGKeyBoardCore.MESSAGE_KEY);
         event.register(MPGKeyBoardCore.MESSAGE_ARMOR_KEY);
+        event.register(MPGKeyBoardCore.PAXEL_KEY);
     }
 
     @SuppressWarnings("deprecation")

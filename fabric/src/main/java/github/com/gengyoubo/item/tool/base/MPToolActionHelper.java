@@ -11,6 +11,11 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ShovelItem;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -19,12 +24,18 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import github.com.gengyoubo.common.util.MPText;
 
 import java.util.List;
 import java.util.function.IntConsumer;
 
 public final class MPToolActionHelper {
+    private static final HoeItem VANILLA_HOE = new HoeItem(Tiers.WOOD, new Item.Properties());
+    private static final AxeItem VANILLA_AXE = new AxeItem(Tiers.WOOD, new Item.Properties());
+    private static final ShovelItem VANILLA_SHOVEL = new ShovelItem(Tiers.WOOD, new Item.Properties());
+
     private MPToolActionHelper() {
     }
 
@@ -37,24 +48,23 @@ public final class MPToolActionHelper {
         Level level = context.getLevel();
         BlockPos center = context.getClickedPos();
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        int xM = center.getX() + range;
-        int yM = center.getY() + range;
-        int zM = center.getZ() + range;
         boolean changed = false;
 
-        for (int x = center.getX() - range; x <= xM; x++) {
-            for (int y = center.getY() - range; y <= yM; y++) {
-                for (int z = center.getZ() - range; z <= zM; z++) {
-                    mutableBlockPos.set(x, y, z);
-                    changed |= action.apply(mutableBlockPos, level.getBlockState(mutableBlockPos));
+        for (int first = -range; first <= range; first++) {
+            for (int second = -range; second <= range; second++) {
+                switch (context.getClickedFace().getAxis()) {
+                    case X -> mutableBlockPos.set(center.getX(), center.getY() + first, center.getZ() + second);
+                    case Y -> mutableBlockPos.set(center.getX() + first, center.getY(), center.getZ() + second);
+                    case Z -> mutableBlockPos.set(center.getX() + first, center.getY() + second, center.getZ());
                 }
+                changed |= action.apply(mutableBlockPos, level.getBlockState(mutableBlockPos));
             }
         }
         return changed;
     }
 
     public static boolean applyHoeTillAction(UseOnContext context, BlockPos pos, BlockState blockState) {
-        return true;
+        return VANILLA_HOE.useOn(contextAt(context, pos)) != net.minecraft.world.InteractionResult.PASS;
     }
 
     public static void handleRangeOrEnchantmentUse(Level level, Player player, ItemStack itemInHand, int nextRange, IntConsumer rangeSetter) {
@@ -86,7 +96,7 @@ public final class MPToolActionHelper {
     }
 
     public static boolean applyAxeActions(UseOnContext context, BlockPos pos, BlockState blockState) {
-        return false;
+        return VANILLA_AXE.useOn(contextAt(context, pos)) != net.minecraft.world.InteractionResult.PASS;
     }
 
     public static boolean applyGrowPlantAction(UseOnContext context, BlockPos pos, BlockState blockState) {
@@ -110,28 +120,14 @@ public final class MPToolActionHelper {
     }
 
     public static boolean applyShovelAction(UseOnContext context, BlockPos pos, BlockState blockState) {
-        if (context.getClickedFace() == Direction.DOWN) {
-            return false;
-        }
-        Level level = context.getLevel();
-        BlockState targetState = null;
-        if (blockState.getBlock() instanceof CampfireBlock && blockState.getValue(CampfireBlock.LIT)) {
-            if (!level.isClientSide()) {
-                level.levelEvent(null, 1009, pos, 0);
-            }
-            CampfireBlock.dowse(context.getPlayer(), level, pos, blockState);
-            targetState = blockState.setValue(CampfireBlock.LIT, Boolean.FALSE);
-        }
-        if (targetState == null) {
-            return false;
-        }
-        Player player = context.getPlayer();
-        if (!level.isClientSide) {
-            level.setBlock(pos, targetState, 11);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, targetState));
-            damageHeldItem(context, player, context.getItemInHand());
-        }
-        return true;
+        return VANILLA_SHOVEL.useOn(contextAt(context, pos)) != net.minecraft.world.InteractionResult.PASS;
+    }
+
+    private static UseOnContext contextAt(UseOnContext original, BlockPos pos) {
+        BlockHitResult hit = new BlockHitResult(Vec3.atCenterOf(pos), original.getClickedFace(), pos,
+                original.isInside());
+        return new UseOnContext(original.getLevel(), original.getPlayer(), original.getHand(),
+                original.getItemInHand(), hit);
     }
 
     private static void damageHeldItem(UseOnContext context, Player player, ItemStack itemStack) {
@@ -140,4 +136,3 @@ public final class MPToolActionHelper {
         }
     }
 }
-

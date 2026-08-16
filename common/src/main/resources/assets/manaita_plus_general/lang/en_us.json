@@ -137,6 +137,13 @@
   "info.off": "Off",
 
   "mode.doubling": "Doubling",
+  "mode.silk_touch": "SilkTouch",
+  "mode.can_harvest": "CanHarvest",
+  "mode.dig_range": "DigRange",
+  "mode.dig_depth": "DigDepth",
+  "mode.dig_under_player": "DigUnderPlayer",
+  "mode.attack_area": "AttackArea",
+  "mode.attack_friendly_mob": "AttackFriendlyMob",
   "mode.manaita_sword": "AttackRange",
   "mode.manaita_tool": "DestroyRange",
   "mode.range.name": "Range",
@@ -144,9 +151,12 @@
   "mode.nightvision": "NightVision",
   "mode.invisibility": "Invisibility",
   "mode.speed": "Speed Level",
+  "mode.jump": "Jump Level",
+  "mode.autojump": "Auto Jump",
 
   "key.manaita":"Cutting Board",
   "key.manaita.armor":"Cutting Board Armor",
+  "key.manaita.doubling":"Cutting Board Doubling",
   "key.manaita.baubles":"Cutting Board Accessories",
 
   "enchantments.fortune": "Fortune",

@@ -52,6 +52,11 @@ public final class MPGItemStackData {
         return tag != null && tag.getBoolean(key);
     }
 
+    public static boolean contains(ItemStack stack, String key) {
+        CompoundTag tag = getTag(stack);
+        return tag != null && tag.contains(key);
+    }
+
     public static void putInt(ItemStack stack, String key, int value) {
         editTag(stack, tag -> tag.putInt(key, value));
     }

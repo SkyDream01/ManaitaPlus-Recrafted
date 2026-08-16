@@ -6,10 +6,11 @@ import net.minecraft.world.item.context.UseOnContext;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.item.tool.base.MPTaggedToolItem;
 import github.com.gengyoubo.item.tool.base.MPToolActionHelper;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPAxeItem extends MPTaggedToolItem {
     public MPAxeItem() {
-        super(BlockTags.MINEABLE_WITH_AXE);
+        super(BlockTags.MINEABLE_WITH_AXE, MPGToolProfile.AXE);
     }
 
     @Override
@@ -19,4 +20,3 @@ public class MPAxeItem extends MPTaggedToolItem {
         return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
     }
 }
-

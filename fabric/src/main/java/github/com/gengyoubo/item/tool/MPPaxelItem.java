@@ -17,6 +17,7 @@ import github.com.gengyoubo.item.tool.base.MPToolActionHelper;
 import github.com.gengyoubo.item.tool.base.MPToolBase;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPText;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class MPPaxelItem extends MPToolBase {
     public static final net.minecraft.tags.TagKey<Block> MINEABLE = BlockTags.MINEABLE_WITH_PICKAXE;
 
     public MPPaxelItem() {
-        super(MINEABLE);
+        super(MINEABLE, MPGToolProfile.PAXEL);
     }
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
@@ -43,6 +44,7 @@ public class MPPaxelItem extends MPToolBase {
 
     @Override
     public void inventoryTick(ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
         stack.setPopTime(0);
     }
 
@@ -56,4 +58,3 @@ public class MPPaxelItem extends MPToolBase {
         return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
     }
 }
-

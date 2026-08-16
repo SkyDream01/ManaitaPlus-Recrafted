@@ -7,4 +7,20 @@ public interface IMPGDestroy {
     boolean accept(BlockState state);
 
     int getRange(ItemStack itemStack);
+
+    default int getDepth(ItemStack itemStack) {
+        return 1;
+    }
+
+    default boolean canHarvest(ItemStack itemStack) {
+        return true;
+    }
+
+    default boolean canDigUnderPlayer(ItemStack itemStack) {
+        return true;
+    }
+
+    default boolean requiresShiftForDoubling() {
+        return true;
+    }
 }

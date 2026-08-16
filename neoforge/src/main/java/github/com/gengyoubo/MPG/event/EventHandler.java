@@ -7,6 +7,9 @@ import github.com.gengyoubo.MPG.core.MPGItemCore;
 import github.com.gengyoubo.MPG.util.MPUtils;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.event.MPGEventLogic;
+import github.com.gengyoubo.common.event.MPGToolMiningLogic;
+import github.com.gengyoubo.common.item.data.IMPGDestroy;
+import github.com.gengyoubo.common.item.armor.MPGArmorItemBase;
 import github.com.gengyoubo.common.trades.MPGSingleItemTrade;
 import github.com.gengyoubo.common.trades.MPGTwoItemTrade;
 import net.minecraft.world.entity.npc.VillagerProfession;
@@ -14,9 +17,12 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
@@ -25,7 +31,7 @@ import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.village.VillagerTradesEvent;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 import java.util.List;
 
@@ -40,7 +46,19 @@ public class EventHandler {
     public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START) {
             Player player = event.getEntity();
-            MPUtils.destroyBlocks(player.getMainHandItem(), event.getLevel(), event.getPos(), player);
+            ItemStack stack = player.getMainHandItem();
+            if (stack.getItem() instanceof IMPGDestroy destroyItem && !destroyItem.canHarvest(stack)) {
+                event.setCanceled(true);
+                return;
+            }
+            if (event.getLevel() instanceof ServerLevel level && player instanceof ServerPlayer serverPlayer) {
+                MPGToolMiningLogic.Result result = MPGToolMiningLogic.destroyBlocks(level, serverPlayer, stack,
+                        event.getPos(), event.getFace(), MPGConfig.destroy_doubling_value,
+                        MPGConfig.creative_range_destroy_value);
+                if (result != MPGToolMiningLogic.Result.PASS) {
+                    event.setCanceled(true);
+                }
+            }
         }
     }
 
@@ -52,13 +70,12 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
-        MPGEventLogic.findKiller(event.getEntity(), event.getSource().getEntity()).ifPresent(player ->
-                MPGEventLogic.copyDrops(player, event.getDrops(), MPGConfig.item_drops_doubling_value)
-                        .ifPresent(copies -> {
-                            copies.forEach(stack -> ItemHandlerHelper.giveItemToPlayer(player, stack));
-                            event.getDrops().clear();
-                            event.setCanceled(true);
-                        }));
+        MPGEventLogic.findKiller(event.getEntity(), event.getSource().getEntity()).ifPresent(player -> {
+            MPGEventLogic.createBeheadingDrop(event.getEntity(), player).ifPresent(stack ->
+                    event.getDrops().add(new net.minecraft.world.entity.item.ItemEntity(event.getEntity().level(),
+                            event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack)));
+            MPGEventLogic.multiplyDrops(player, event.getDrops(), MPGConfig.item_drops_doubling_value);
+        });
     }
 
     @SubscribeEvent
@@ -77,18 +94,31 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLivingFall(LivingFallEvent event) {
-        if (event.getEntity() instanceof Player player
-                && (MPUtils.isManaitaArmorPart(player) || MPUtils.isManaita(player))) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+        if (MPGArmorItemBase.hasManaitaBoots(player)) {
             event.setCanceled(true);
-            MPGEventLogic.resetPlayerDamageState(player);
+            MPGEventLogic.resetPlayerFallState(player);
+        } else if (MPGArmorItemBase.hasManaitaChestplate(player) || MPUtils.isManaita(player)) {
+            event.setDamageMultiplier(0.0F);
         }
     }
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
         if (event.getEntity() instanceof Player player
-                && (MPUtils.isManaitaArmor(player) || MPUtils.isManaita(player))) {
+                && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
             event.setCanceled(true);
+            MPGEventLogic.resetPlayerDamageState(player);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (event.getEntity() instanceof Player player
+                && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
+            event.setNewDamage(0.0F);
             MPGEventLogic.resetPlayerDamageState(player);
         }
     }
@@ -96,10 +126,15 @@ public class EventHandler {
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof Player player
-                && (MPUtils.isManaitaArmor(player) || MPUtils.isManaita(player))) {
+                && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
             event.setCanceled(true);
             MPGEventLogic.resetPlayerDamageState(player);
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTick(PlayerTickEvent.Post event) {
+        MPGArmorItemBase.syncArmorState(event.getEntity());
     }
 
     @SubscribeEvent

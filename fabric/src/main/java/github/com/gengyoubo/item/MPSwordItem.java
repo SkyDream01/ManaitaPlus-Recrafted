@@ -12,7 +12,7 @@ public class MPSwordItem extends MPGSwordItemBase {
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target,
                              @NotNull LivingEntity attacker) {
         if (attacker instanceof Player player) {
-            performSweep(player, stack);
+            performPlayerAttack(player, stack, target);
         }
         return super.hurtEnemy(stack, target, attacker);
     }

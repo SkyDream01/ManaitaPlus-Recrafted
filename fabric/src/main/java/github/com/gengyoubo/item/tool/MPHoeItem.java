@@ -6,10 +6,11 @@ import net.minecraft.world.item.context.UseOnContext;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.item.tool.base.MPTaggedToolItem;
 import github.com.gengyoubo.item.tool.base.MPToolActionHelper;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPHoeItem extends MPTaggedToolItem {
     public MPHoeItem() {
-        super(BlockTags.MINEABLE_WITH_HOE);
+        super(BlockTags.MINEABLE_WITH_HOE, MPGToolProfile.HOE);
     }
 
     @Override
@@ -19,4 +20,3 @@ public class MPHoeItem extends MPTaggedToolItem {
         return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
     }
 }
-

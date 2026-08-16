@@ -9,10 +9,11 @@ import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyTaggedToolItem;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPGAxeItem extends ManaitaPlusLegacyTaggedToolItem {
     public MPGAxeItem() {
-        super(BlockTags.MINEABLE_WITH_AXE);
+        super(BlockTags.MINEABLE_WITH_AXE, MPGToolProfile.AXE);
     }
 
     @Override

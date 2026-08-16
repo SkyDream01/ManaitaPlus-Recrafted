@@ -11,10 +11,25 @@ public final class MPGKeyPressLogic {
 
     public static void handle(ServerPlayer player, byte keyCode) {
         switch (keyCode) {
-            case 0 -> invoke(player.getMainHandItem(), player);
+            case 0 -> invokeStandardMainHand(player);
             case 1 -> player.getInventory().armor.forEach(stack -> invoke(stack, player));
+            case 2 -> invokePaxel(player);
             default -> {
             }
+        }
+    }
+
+    private static void invokeStandardMainHand(ServerPlayer player) {
+        ItemStack stack = player.getMainHandItem();
+        if (!(stack.getItem() instanceof IMPGKey keyItem) || keyItem.usesStandardModeKey()) {
+            invoke(stack, player);
+        }
+    }
+
+    private static void invokePaxel(ServerPlayer player) {
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getItem() instanceof IMPGKey keyItem && keyItem.usesDedicatedDoublingKey()) {
+            keyItem.onDedicatedDoublingKey(stack, player);
         }
     }
 

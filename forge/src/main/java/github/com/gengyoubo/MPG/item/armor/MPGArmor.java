@@ -16,10 +16,6 @@ public class MPGArmor extends MPGArmorItemBase {
             return "manaita_plus_general:textures/models/armor/manaita_armor_layer_1.png";
         }
 
-        @Override
-        protected boolean messageUsesOverlay() {
-            return false;
-        }
     }
 
     public static class Chestplate extends MPGArmorItemBase.Chestplate {
@@ -41,10 +37,6 @@ public class MPGArmor extends MPGArmorItemBase {
             return "manaita_plus_general:textures/models/armor/manaita_armor_layer_2.png";
         }
 
-        @Override
-        protected boolean messageUsesOverlay() {
-            return false;
-        }
     }
 
     public static class Boots extends MPGArmorItemBase.Boots {

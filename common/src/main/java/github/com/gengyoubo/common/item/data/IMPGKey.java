@@ -13,4 +13,20 @@ public interface IMPGKey {
 
     default void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
     }
+
+    default boolean usesDedicatedDoublingKey() {
+        return false;
+    }
+
+    default boolean usesStandardModeKey() {
+        return true;
+    }
+
+    default void onDedicatedDoublingKey(ItemStack itemStack, Player player) {
+        onManaitaKeyPress(itemStack, player);
+    }
+
+    default void onDedicatedDoublingKeyOnClient(ItemStack itemStack, Player player) {
+        onManaitaKeyPressOnClient(itemStack, player);
+    }
 }

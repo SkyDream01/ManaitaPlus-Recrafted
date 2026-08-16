@@ -22,6 +22,7 @@ import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolBase;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPText;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class MPGPaxelItem extends ManaitaPlusLegacyToolBase {
     public static final TagKey<Block> MINEABLE =
             BlockTags.create(ResourceLocation.withDefaultNamespace("mineable"));
     public MPGPaxelItem() {
-        super(MINEABLE);
+        super(MINEABLE, MPGToolProfile.PAXEL);
     }
 
     @Override
@@ -61,6 +62,7 @@ public class MPGPaxelItem extends ManaitaPlusLegacyToolBase {
 
     @Override
     public void inventoryTick(ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slot, boolean selected) {
+        super.inventoryTick(stack, level, entity, slot, selected);
         stack.setPopTime(0);
     }
 

@@ -24,6 +24,17 @@ import github.com.gengyoubo.core.*;
 import github.com.gengyoubo.network.MPNetworking;
 import github.com.gengyoubo.resource.EasyModeResourceCondition;
 import github.com.gengyoubo.common.util.MPGNBTData;
+import github.com.gengyoubo.common.event.MPGToolMiningLogic;
+import github.com.gengyoubo.common.item.data.IMPGDestroy;
+import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
+import net.fabricmc.fabric.api.event.player.AttackEntityCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import github.com.gengyoubo.common.event.MPGEventLogic;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
+import github.com.gengyoubo.common.item.MPGSwordItemBase;
 
 public class MPG implements ModInitializer {
     public static final String MODID = MPGCommon.MOD_ID;
@@ -58,6 +69,9 @@ public class MPG implements ModInitializer {
         registerResourceConditions();
         MPNetworking.initCommon();
         MPNetworking.initServer();
+        registerToolMining();
+        registerLivingDrops();
+        registerSwordAttacks();
 
         BLOCKS.registerAll();
         ITEMS.registerAll();
@@ -93,12 +107,51 @@ public class MPG implements ModInitializer {
                 entries.accept(MPItemCore.ManaitaChestplate.get());
                 entries.accept(MPItemCore.ManaitaLeggings.get());
                 entries.accept(MPItemCore.ManaitaBoots.get());
+                entries.accept(MPItemCore.ManaitaHook.get());
                 entries.accept(MPItemCore.ManaitaSource.get());
             }).build());
     }
 
     private static void registerResourceConditions() {
         ResourceConditions.register(EasyModeResourceCondition.TYPE);
+    }
+
+    private static void registerToolMining() {
+        AttackBlockCallback.EVENT.register((player, level, hand, pos, direction) -> {
+            ItemStack stack = player.getItemInHand(hand);
+            if (!(stack.getItem() instanceof IMPGDestroy destroyItem)) {
+                return InteractionResult.PASS;
+            }
+            if (!destroyItem.canHarvest(stack)) {
+                return InteractionResult.FAIL;
+            }
+            if (level.isClientSide || !(level instanceof ServerLevel serverLevel)
+                    || !(player instanceof ServerPlayer serverPlayer)) {
+                return InteractionResult.PASS;
+            }
+            MPGToolMiningLogic.Result result = MPGToolMiningLogic.destroyBlocks(serverLevel, serverPlayer, stack,
+                    pos, direction, MPGConfig.destroy_doubling_value, MPGConfig.creative_range_destroy_value);
+            return result == MPGToolMiningLogic.Result.PASS ? InteractionResult.PASS : InteractionResult.SUCCESS;
+        });
+    }
+
+    private static void registerLivingDrops() {
+        ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) ->
+                MPGEventLogic.handleFabricDeathDrops(entity, source, MPGConfig.item_drops_doubling_value));
+    }
+
+    private static void registerSwordAttacks() {
+        AttackEntityCallback.EVENT.register((player, level, hand, entity, hitResult) -> {
+            ItemStack stack = player.getItemInHand(hand);
+            if (!(stack.getItem() instanceof MPGSwordItemBase sword) || !(entity instanceof LivingEntity living)) {
+                return InteractionResult.PASS;
+            }
+            if (level.isClientSide) {
+                return InteractionResult.PASS;
+            }
+            sword.performPlayerAttack(player, stack, living);
+            return InteractionResult.SUCCESS;
+        });
     }
 
     private static void acceptMPGType(Item item, CreativeModeTab.Output entries, int maxType) {

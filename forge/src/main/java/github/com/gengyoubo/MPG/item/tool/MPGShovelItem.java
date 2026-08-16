@@ -12,10 +12,11 @@ import net.minecraftforge.common.ToolActions;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyTaggedToolItem;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper;
+import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPGShovelItem extends ManaitaPlusLegacyTaggedToolItem {
     public MPGShovelItem() {
-        super(BlockTags.MINEABLE_WITH_SHOVEL);
+        super(BlockTags.MINEABLE_WITH_SHOVEL, MPGToolProfile.SHOVEL);
     }
 
     @Override
@@ -26,9 +27,10 @@ public class MPGShovelItem extends ManaitaPlusLegacyTaggedToolItem {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        BlockPos blockPos = context.getClickedPos();
-        BlockState blockState = level.getBlockState(blockPos);
-        if (ManaitaPlusLegacyToolActionHelper.applyShovelAction(context, blockPos, blockState)) {
+        int range = getRange(context.getItemInHand()) >> 1;
+        boolean changed = ManaitaPlusLegacyToolActionHelper.applyInRange(context, range,
+                (pos, state) -> ManaitaPlusLegacyToolActionHelper.applyShovelAction(context, pos, state));
+        if (changed) {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;

@@ -21,7 +21,17 @@ public final class MPGClientEventLogic {
     }
 
     public static void handleMainHandKey(Player player) {
-        invokeClient(player.getMainHandItem(), player);
+        ItemStack stack = player.getMainHandItem();
+        if (!(stack.getItem() instanceof IMPGKey keyItem) || keyItem.usesStandardModeKey()) {
+            invokeClient(stack, player);
+        }
+    }
+
+    public static void handlePaxelKey(Player player) {
+        ItemStack stack = player.getMainHandItem();
+        if (stack.getItem() instanceof IMPGKey keyItem && keyItem.usesDedicatedDoublingKey()) {
+            keyItem.onDedicatedDoublingKeyOnClient(stack, player);
+        }
     }
 
     public static void handleArmorKey(Player player) {

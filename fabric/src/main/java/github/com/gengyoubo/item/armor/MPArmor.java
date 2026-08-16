@@ -5,11 +5,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 
 public class MPArmor extends MPGArmorItemBase {
-    private static final Holder<ArmorMaterial> MATERIAL = ArmorMaterials.NETHERITE;
+    private static final Holder<ArmorMaterial> MATERIAL = MANAITA_ARMOR_MATERIAL;
 
     protected MPArmor(Type type) {
         super(MATERIAL, type);

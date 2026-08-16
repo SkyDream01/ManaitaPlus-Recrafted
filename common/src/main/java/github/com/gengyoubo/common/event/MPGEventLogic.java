@@ -9,7 +9,14 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.world.item.component.ResolvableProfile;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import github.com.gengyoubo.common.item.MPGSwordItemBase;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -54,7 +61,10 @@ public final class MPGEventLogic {
         if (!(weapon.getItem() instanceof IMPGDoubling doublingItem)) {
             return Optional.empty();
         }
-        int factor = doublingItem.isDoubling(weapon) ? multiplier : 1;
+        if (!doublingItem.shouldMultiplyDrops(weapon, player)) {
+            return Optional.empty();
+        }
+        int factor = Math.max(1, multiplier);
         List<ItemStack> copies = new ArrayList<>(drops.size());
         for (ItemEntity drop : drops) {
             ItemStack copy = drop.getItem().copy();
@@ -65,20 +75,82 @@ public final class MPGEventLogic {
         return Optional.of(copies);
     }
 
+    public static boolean multiplyDrops(Player player, Collection<ItemEntity> drops, int multiplier) {
+        ItemStack weapon = player.getMainHandItem();
+        if (!(weapon.getItem() instanceof IMPGDoubling doublingItem)
+                || !doublingItem.shouldMultiplyDrops(weapon, player)) {
+            return false;
+        }
+        int factor = Math.max(1, multiplier);
+        for (ItemEntity drop : drops) {
+            ItemStack stack = drop.getItem();
+            long count = (long) stack.getCount() * factor;
+            stack.setCount((int) Math.min(Integer.MAX_VALUE, count));
+        }
+        return true;
+    }
+
+    public static Optional<ItemStack> createBeheadingDrop(LivingEntity target, Player killer) {
+        if (!(killer.getMainHandItem().getItem() instanceof MPGSwordItemBase)
+                || target.getRandom().nextFloat() >= 0.10F) {
+            return Optional.empty();
+        }
+
+        ItemStack head;
+        if (target instanceof Player playerTarget) {
+            head = new ItemStack(Items.PLAYER_HEAD);
+            head.set(DataComponents.PROFILE, new ResolvableProfile(playerTarget.getGameProfile()));
+        } else if (target.getType() == EntityType.WITHER_SKELETON) {
+            head = new ItemStack(Items.WITHER_SKELETON_SKULL);
+        } else if (target.getType() == EntityType.SKELETON) {
+            head = new ItemStack(Items.SKELETON_SKULL);
+        } else if (target.getType() == EntityType.ZOMBIE) {
+            head = new ItemStack(Items.ZOMBIE_HEAD);
+        } else if (target.getType() == EntityType.CREEPER) {
+            head = new ItemStack(Items.CREEPER_HEAD);
+        } else if (target.getType() == EntityType.PIGLIN || target.getType() == EntityType.PIGLIN_BRUTE) {
+            head = new ItemStack(Items.PIGLIN_HEAD);
+        } else if (target.getType() == EntityType.ENDER_DRAGON) {
+            head = new ItemStack(Items.DRAGON_HEAD);
+        } else {
+            return Optional.empty();
+        }
+        return Optional.of(head);
+    }
+
+    public static void handleFabricDeathDrops(LivingEntity target, DamageSource source, int multiplier) {
+        if (!(target.level() instanceof ServerLevel level)) {
+            return;
+        }
+        findKiller(target, source.getEntity()).ifPresent(player -> {
+            createBeheadingDrop(target, player).ifPresent(target::spawnAtLocation);
+            List<ItemEntity> freshDrops = level.getEntitiesOfClass(ItemEntity.class,
+                    target.getBoundingBox().inflate(2.0D), item -> item.tickCount <= 1);
+            multiplyDrops(player, freshDrops, multiplier);
+        });
+    }
+
     public static OptionalInt redirectedExperience(Player player, int experience, int multiplier) {
         ItemStack weapon = player.getMainHandItem();
         if (!(weapon.getItem() instanceof IMPGDoubling doublingItem)) {
             return OptionalInt.empty();
         }
-        int factor = doublingItem.isDoubling(weapon) ? multiplier : 1;
+        if (!doublingItem.shouldMultiplyExperience(weapon, player)) {
+            return OptionalInt.empty();
+        }
+        int factor = Math.max(1, multiplier);
         long result = (long) experience * factor;
         return OptionalInt.of((int) Math.min(Integer.MAX_VALUE, result));
     }
 
     public static void resetPlayerDamageState(Player player) {
         player.setHealth(player.getMaxHealth());
-        player.fallDistance = 0;
+        resetPlayerFallState(player);
         player.hurtTime = 0;
         player.deathTime = 0;
+    }
+
+    public static void resetPlayerFallState(Player player) {
+        player.fallDistance = 0;
     }
 }

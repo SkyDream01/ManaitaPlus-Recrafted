@@ -20,13 +20,33 @@ public class MPGConfig extends MPGConfigValues
             .comment("Easy mode: simplify recipes (for example, use diamond block instead of cobblestone)")
             .define("easy_mode", false);
 
+    private static final net.minecraftforge.common.ForgeConfigSpec.BooleanValue helmet_night_vision = BUILDER
+            .comment("Enables night vision while wearing the Manaita helmet")
+            .define("helmet_night_vision", false);
+
+    private static final net.minecraftforge.common.ForgeConfigSpec.BooleanValue leggings_invisibility = BUILDER
+            .comment("Enables invisibility while wearing the Manaita leggings")
+            .define("leggings_invisibility", false);
+
+    private static final net.minecraftforge.common.ForgeConfigSpec.BooleanValue boots_auto_jump = BUILDER
+            .comment("Makes the Manaita boots jump automatically when walking into an obstacle")
+            .define("boots_auto_jump", false);
+
+    private static final net.minecraftforge.common.ForgeConfigSpec.IntValue boots_speed_level = BUILDER
+            .comment("Initial Manaita boots speed level (1-8)")
+            .defineInRange("boots_speed_level", 1, 1, 8);
+
+    private static final net.minecraftforge.common.ForgeConfigSpec.IntValue boots_jump_level = BUILDER
+            .comment("Initial Manaita boots jump level (1-8)")
+            .defineInRange("boots_jump_level", 1, 1, 8);
+
     private static final net.minecraftforge.common.ForgeConfigSpec.IntValue experience_drops_doubling = BUILDER
             .comment("ExperienceDropsDoubling")
             .defineInRange("experience_drops_doubling_value", 4, 1, Integer.MAX_VALUE);
 
     private static final net.minecraftforge.common.ForgeConfigSpec.IntValue item_drops_doubling = BUILDER
             .comment("ItemDropsDoubling")
-            .defineInRange("item_drops_doubling_value", 4, 1, Integer.MAX_VALUE);
+            .defineInRange("item_drops_doubling_value", 64, 1, Integer.MAX_VALUE);
     
     private static final net.minecraftforge.common.ForgeConfigSpec.IntValue crafting_doubling = BUILDER
             .comment("CraftingDoubling")
@@ -42,7 +62,7 @@ public class MPGConfig extends MPGConfigValues
 
     private static final net.minecraftforge.common.ForgeConfigSpec.IntValue destroy_doubling = BUILDER
             .comment("DestroyDoubling")
-            .defineInRange("destroy_doubling_value", 4, 1, Integer.MAX_VALUE);
+            .defineInRange("destroy_doubling_value", 64, 1, Integer.MAX_VALUE);
 
     private static final net.minecraftforge.common.ForgeConfigSpec.IntValue source_doubling = BUILDER
             .comment("SourceDoubling")
@@ -55,6 +75,11 @@ public class MPGConfig extends MPGConfigValues
     {
         creative_range_destroy_value = creative_range_destroy.get();
         easy_mode_value = easy_mode.get();
+        helmet_night_vision_value = helmet_night_vision.get();
+        leggings_invisibility_value = leggings_invisibility.get();
+        boots_auto_jump_value = boots_auto_jump.get();
+        boots_speed_level_value = boots_speed_level.get();
+        boots_jump_level_value = boots_jump_level.get();
         item_drops_doubling_value = item_drops_doubling.get();
         experience_drops_doubling_value = experience_drops_doubling.get();
         crafting_doubling_value = crafting_doubling.get();

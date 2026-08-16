@@ -3,6 +3,7 @@ package github.com.gengyoubo.common.item.data;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 
 public interface IMPGDoubling {
     default boolean isDoubling(ItemStack itemStack) {
@@ -17,5 +18,13 @@ public interface IMPGDoubling {
         boolean doubling = !isDoubling(itemStack);
         setDoubling(itemStack, doubling);
         return doubling;
+    }
+
+    default boolean shouldMultiplyDrops(ItemStack itemStack, Player player) {
+        return isDoubling(itemStack);
+    }
+
+    default boolean shouldMultiplyExperience(ItemStack itemStack, Player player) {
+        return isDoubling(itemStack);
     }
 }
