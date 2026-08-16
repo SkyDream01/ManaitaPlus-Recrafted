@@ -1,0 +1,26 @@
+{
+  "key": {
+    "1": {
+      "item": "manaita_plus_general:block_brewing_manaita",
+      "type": 0
+    },
+    "0": {
+      "item": "manaita_plus_general:block_hook_manaita",
+      "type": 2
+    }
+  },
+  "category": "misc",
+  "pattern": [
+    "01 ",
+    "   ",
+    "   "
+  ],
+  "result": {
+    "item": "manaita_plus_general:manaita_brewing_portable",
+    "count": 1,
+    "nbt": {
+      "ManaitaType": 3
+    }
+  },
+  "type": "manaita_plus_general:manaita_crafting_type"
+}

@@ -1,0 +1,48 @@
+{
+  "variants": {
+    "facing=north,types=0": { "model": "manaita_plus_general:block/hook/fixed_hook_wooden" },
+    "facing=east,types=0": { "model": "manaita_plus_general:block/hook/fixed_hook_wooden", "y": 90 },
+    "facing=south,types=0": { "model": "manaita_plus_general:block/hook/fixed_hook_wooden", "y": 180 },
+    "facing=west,types=0": { "model": "manaita_plus_general:block/hook/fixed_hook_wooden", "y": 270 },
+
+    "facing=north,types=1": { "model": "manaita_plus_general:block/hook/fixed_hook_stone" },
+    "facing=east,types=1": { "model": "manaita_plus_general:block/hook/fixed_hook_stone", "y": 90 },
+    "facing=south,types=1": { "model": "manaita_plus_general:block/hook/fixed_hook_stone", "y": 180 },
+    "facing=west,types=1": { "model": "manaita_plus_general:block/hook/fixed_hook_stone", "y": 270 },
+
+    "facing=north,types=2": { "model": "manaita_plus_general:block/hook/fixed_hook_iron" },
+    "facing=east,types=2": { "model": "manaita_plus_general:block/hook/fixed_hook_iron", "y": 90 },
+    "facing=south,types=2": { "model": "manaita_plus_general:block/hook/fixed_hook_iron", "y": 180 },
+    "facing=west,types=2": { "model": "manaita_plus_general:block/hook/fixed_hook_iron", "y": 270 },
+
+    "facing=north,types=3": { "model": "manaita_plus_general:block/hook/fixed_hook_gold" },
+    "facing=east,types=3": { "model": "manaita_plus_general:block/hook/fixed_hook_gold", "y": 90 },
+    "facing=south,types=3": { "model": "manaita_plus_general:block/hook/fixed_hook_gold", "y": 180 },
+    "facing=west,types=3": { "model": "manaita_plus_general:block/hook/fixed_hook_gold", "y": 270 },
+
+    "facing=north,types=4": { "model": "manaita_plus_general:block/hook/fixed_hook_diamond" },
+    "facing=east,types=4": { "model": "manaita_plus_general:block/hook/fixed_hook_diamond", "y": 90 },
+    "facing=south,types=4": { "model": "manaita_plus_general:block/hook/fixed_hook_diamond", "y": 180 },
+    "facing=west,types=4": { "model": "manaita_plus_general:block/hook/fixed_hook_diamond", "y": 270 },
+
+    "facing=north,types=5": { "model": "manaita_plus_general:block/hook/fixed_hook_emerald" },
+    "facing=east,types=5": { "model": "manaita_plus_general:block/hook/fixed_hook_emerald", "y": 90 },
+    "facing=south,types=5": { "model": "manaita_plus_general:block/hook/fixed_hook_emerald", "y": 180 },
+    "facing=west,types=5": { "model": "manaita_plus_general:block/hook/fixed_hook_emerald", "y": 270 },
+
+    "facing=north,types=6": { "model": "manaita_plus_general:block/hook/fixed_hook_redstone" },
+    "facing=east,types=6": { "model": "manaita_plus_general:block/hook/fixed_hook_redstone", "y": 90 },
+    "facing=south,types=6": { "model": "manaita_plus_general:block/hook/fixed_hook_redstone", "y": 180 },
+    "facing=west,types=6": { "model": "manaita_plus_general:block/hook/fixed_hook_redstone", "y": 270 },
+
+    "facing=north,types=7": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite" },
+    "facing=east,types=7": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 90 },
+    "facing=south,types=7": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 180 },
+    "facing=west,types=7": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 270 },
+
+    "facing=north,types=8": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite" },
+    "facing=east,types=8": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 90 },
+    "facing=south,types=8": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 180 },
+    "facing=west,types=8": { "model": "manaita_plus_general:block/hook/fixed_hook_netherite", "y": 270 }
+  }
+}

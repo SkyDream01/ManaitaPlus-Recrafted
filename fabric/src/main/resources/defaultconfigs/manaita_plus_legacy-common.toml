@@ -1,0 +1,28 @@
+# ManaitaPlus Legacy common config defaults
+
+# This determines whether the creative can use range mining
+creative_range_destroy = false
+
+# Easy mode: simplify recipes (for example, use diamond block instead of cobblestone)
+easy_mode = false
+
+# ExperienceDropsDoubling
+experience_drops_doubling_value = 4
+
+# ItemDropsDoubling
+item_drops_doubling_value = 4
+
+# CraftingDoubling
+crafting_doubling_value = 64
+
+# FurnaceDoubling
+furnace_doubling_value = 64
+
+# BrewingDoubling
+brewing_doubling_value = 64
+
+# DestroyDoubling
+destroy_doubling_value = 4
+
+# SourceDoubling
+source_doubling_value = 64

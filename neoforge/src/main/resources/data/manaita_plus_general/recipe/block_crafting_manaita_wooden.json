@@ -1,0 +1,48 @@
+{
+  "type": "manaita_plus_general:manaita_crafting_type",
+  "category": "misc",
+  "pattern": [
+    "01 ",
+    "   ",
+    "   "
+  ],
+  "key": {
+    "0": [
+      {
+        "item": "minecraft:oak_planks"
+      },
+      {
+        "item": "minecraft:spruce_planks"
+      },
+      {
+        "item": "minecraft:birch_planks"
+      },
+      {
+        "item": "minecraft:jungle_planks"
+      },
+      {
+        "item": "minecraft:acacia_planks"
+      },
+      {
+        "item": "minecraft:dark_oak_planks"
+      },
+      {
+        "item": "minecraft:mangrove_planks"
+      },
+      {
+        "item": "minecraft:bamboo_planks"
+      }
+    ],
+    "1": {
+      "item": "manaita_plus_general:block_crafting_manaita",
+      "type": 0
+    }
+  },
+  "result": {
+    "count": 1,
+    "nbt": {
+      "ManaitaType": 1
+    },
+    "id": "manaita_plus_general:block_crafting_manaita"
+  }
+}

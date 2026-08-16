@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "manaita_plus_general:item/crafting/manaita_crafting_ring.0"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 8
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.8"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 7
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.7"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 6
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.6"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 5
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.5"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 4
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.4"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 3
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.3"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 2
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.2"
+    },
+    {
+      "predicate": {
+        "manaita_plus_general:manaita_plus_general_type": 1
+      },
+      "model": "manaita_plus_general:item/crafting/manaita_crafting_ring.1"
+    }
+  ]
+}

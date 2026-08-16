@@ -1,0 +1,25 @@
+{
+  "type": "manaita_plus_general:manaita_crafting_type",
+  "category": "misc",
+  "pattern": [
+    "01 ",
+    "   ",
+    "   "
+  ],
+  "key": {
+    "0": {
+      "tag": "minecraft:planks"
+    },
+    "1": {
+      "item": "manaita_plus_general:block_furnace_manaita",
+      "type": 0
+    }
+  },
+  "result": {
+    "item": "manaita_plus_general:block_furnace_manaita",
+    "count": 1,
+    "nbt": {
+      "ManaitaType": 1
+    }
+  }
+}

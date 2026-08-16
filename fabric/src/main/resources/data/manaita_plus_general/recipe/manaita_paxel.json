@@ -1,0 +1,29 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    " d ",
+    " e "
+  ],
+  "key": {
+    "a": {
+      "item": "manaita_plus_general:manaita_shovel"
+    },
+    "b": {
+      "item": "manaita_plus_general:manaita_pickaxe"
+    },
+    "c": {
+      "item": "manaita_plus_general:manaita_axe"
+    },
+    "d": {
+      "item": "manaita_plus_general:manaita_hook"
+    },
+    "e": {
+      "item": "manaita_plus_general:manaita_sword"
+    }
+  },
+  "result": {
+    "id": "manaita_plus_general:manaita_paxel",
+    "count": 1
+  }
+}

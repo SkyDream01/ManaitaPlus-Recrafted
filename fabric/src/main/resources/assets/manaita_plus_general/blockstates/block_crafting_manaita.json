@@ -1,0 +1,76 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "types": "0"
+      },
+      "apply": {
+        "model": "manaita_plus_general:block/block_crafting_manaita"
+      }
+    },
+    {
+      "when": {
+        "types": "1"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.1"
+      }
+    },
+    {
+      "when": {
+        "types": "2"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.2"
+      }
+    },
+    {
+      "when": {
+        "types": "3"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.3"
+      }
+    },
+    {
+      "when": {
+        "types": "4"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.4"
+      }
+    },
+    {
+      "when": {
+        "types": "5"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.5"
+      }
+    },
+    {
+      "when": {
+        "types": "6"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.6"
+      }
+    },
+    {
+      "when": {
+        "types": "7"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.7"
+      }
+    },
+    {
+      "when": {
+        "types": "8"
+      },
+      "apply": {
+        "model": "manaita_plus_general:item/crafting/crafting_manaita.8"
+      }
+    }
+  ]
+}

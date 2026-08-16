@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "manaita_plus_general:manaita_crafting_ring",
+      "required": false
+    },
+    {
+      "id": "manaita_plus_general:manaita_furnace_ring",
+      "required": false
+    },
+    {
+      "id": "manaita_plus_general:manaita_brewing_ring",
+      "required": false
+    }
+  ]
+}

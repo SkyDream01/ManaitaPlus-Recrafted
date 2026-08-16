@@ -1,0 +1,26 @@
+{
+  "key": {
+    "0": {
+      "item": "manaita_plus_general:block_hook_manaita",
+      "type": 5
+    },
+    "1": {
+      "item": "manaita_plus_general:block_crafting_manaita",
+      "type": 0
+    }
+  },
+  "category": "misc",
+  "pattern": [
+    "01 ",
+    "   ",
+    "   "
+  ],
+  "result": {
+    "count": 1,
+    "nbt": {
+      "ManaitaType": 6
+    },
+    "id": "manaita_plus_general:manaita_crafting_portable"
+  },
+  "type": "manaita_plus_general:manaita_crafting_type"
+}

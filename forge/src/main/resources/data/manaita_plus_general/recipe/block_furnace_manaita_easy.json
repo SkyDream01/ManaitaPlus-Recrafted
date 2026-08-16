@@ -1,0 +1,26 @@
+﻿{
+  "forge:condition": {
+    "type": "manaita_plus_general:easy_mode",
+    "value": true
+  },
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "000",
+    "1 1",
+    "000"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:cobblestone"
+    },
+    "1": {
+      "item": "minecraft:furnace"
+    }
+  },
+  "result": {
+    "id": "manaita_plus_general:block_furnace_manaita",
+    "count": 1
+  }
+}
+

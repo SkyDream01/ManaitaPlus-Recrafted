@@ -1,0 +1,32 @@
+#This determines whether the creative can use range mining
+creative_range_destroy = false
+#Easy mode: simplify recipes (for example, use diamond block instead of cobblestone)
+easy_mode = false
+#ExperienceDropsDoubling
+# Default: 4
+# Range: > 1
+experience_drops_doubling_value = 4
+#ItemDropsDoubling
+# Default: 4
+# Range: > 1
+item_drops_doubling_value = 4
+#CraftingDoubling
+# Default: 64
+# Range: > 1
+crafting_doubling_value = 64
+#FurnaceDoubling
+# Default: 64
+# Range: > 1
+furnace_doubling_value = 64
+#BrewingDoubling
+# Default: 64
+# Range: > 1
+brewing_doubling_value = 64
+#DestroyDoubling
+# Default: 4
+# Range: > 1
+destroy_doubling_value = 4
+#SourceDoubling
+# Default: 64
+# Range: > 1
+source_doubling_value = 64

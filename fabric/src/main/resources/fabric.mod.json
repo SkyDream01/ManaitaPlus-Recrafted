@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [
+    "Rikuto0204",
+    "RealSenPhent",
+    "gengyoubo"
+  ],
+  "contact": {
+    "homepage": "https://github.com/gengyoubo/ManaitaPlusGeneral",
+    "sources": "https://github.com/gengyoubo/ManaitaPlusGeneral"
+  },
+  "license": "${mod_license}",
+  "icon": "assets/manaita_plus_general/textures/logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "github.com.gengyoubo.MPG"
+    ],
+    "client": [
+      "github.com.gengyoubo.MPGClient"
+    ]
+  },
+  "mixins": [
+    "manaita_plus_general.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
