@@ -4,8 +4,10 @@ import github.com.gengyoubo.common.item.data.IMPGDoubling;
 import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.item.tier.MPToolTier;
 import github.com.gengyoubo.network.MPNetworking;
-import github.com.gengyoubo.network.server.MPChangeEntityDataPacket;
-import github.com.gengyoubo.util.MPEntityData;
+import github.com.gengyoubo.common.network.payload.MPGChangeEntityDataPayload;
+import github.com.gengyoubo.common.entity.MPGEntityData;
+import github.com.gengyoubo.core.MPEntityCore;
+import github.com.gengyoubo.entity.MPGLightningBolt;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPText;
 import net.minecraft.network.chat.Component;
@@ -15,7 +17,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -45,7 +46,7 @@ public class MPGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling {
             player.getAbilities().mayfly = true;
             player.setHealth(player.getMaxHealth());
         }
-        MPEntityData.manaita.add(entity);
+        MPGEntityData.manaita.add(entity);
     }
 
     @Override
@@ -173,12 +174,12 @@ public class MPGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling {
             return;
         }
 
-        MPEntityData.death.add(target);
-        MPNetworking.sendToSameLevelPlayers(player.level(), new MPChangeEntityDataPacket(target.getId(), MPEntityData.death.getFlag()));
+        MPGEntityData.death.add(target);
+        MPNetworking.sendToSameLevelPlayers(player.level(), new MPGChangeEntityDataPayload(target.getId(), MPGEntityData.death.getFlag()));
 
         if (remove) {
-            MPEntityData.remove.add(target);
-            MPNetworking.sendToSameLevelPlayers(player.level(), new MPChangeEntityDataPacket(target.getId(), MPEntityData.remove.getFlag()));
+            MPGEntityData.remove.add(target);
+            MPNetworking.sendToSameLevelPlayers(player.level(), new MPGChangeEntityDataPayload(target.getId(), MPGEntityData.remove.getFlag()));
             target.discard();
             return;
         }
@@ -195,7 +196,7 @@ public class MPGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling {
     private static void summonLightning(Level level, Vec3 position) {
         Random random = new Random();
         for (int i = 0; i < 100; i++) {
-            LightningBolt bolt = net.minecraft.world.entity.EntityType.LIGHTNING_BOLT.create(level);
+            MPGLightningBolt bolt = MPEntityCore.ManaitaLightningBolt.get().create(level);
             if (bolt == null) {
                 continue;
             }
@@ -211,4 +212,3 @@ public class MPGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling {
         }
     }
 }
-

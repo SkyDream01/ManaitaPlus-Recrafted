@@ -27,8 +27,8 @@ import github.com.gengyoubo.common.item.data.IMPGDoubling;
 import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.MPG.item.tier.MPGToolTier;
 import github.com.gengyoubo.MPG.network.Networking;
-import github.com.gengyoubo.MPG.network.server.ChangeEntityDataPacket;
-import github.com.gengyoubo.MPG.util.MPGEntityData;
+import github.com.gengyoubo.common.network.payload.MPGChangeEntityDataPayload;
+import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPText;
@@ -83,7 +83,7 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
     @Override
     public boolean onDroppedByPlayer(ItemStack item, Player player) {
         MPGEntityData.manaita.remove(player);
-        Networking.sendToSameLevelPlayers(player.level(), new ChangeEntityDataPacket(player.getId(), -MPGEntityData.death.getFlag()));
+        Networking.sendToSameLevelPlayers(player.level(), new MPGChangeEntityDataPayload(player.getId(), -MPGEntityData.death.getFlag()));
         return super.onDroppedByPlayer(item, player);
     }
 

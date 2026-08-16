@@ -1,5 +1,7 @@
 package github.com.gengyoubo.MPG.util;
 
+import github.com.gengyoubo.common.entity.MPGEntityData;
+
 import github.com.gengyoubo.MPG.item.armor.MPGArmor;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.BlockPos;
@@ -27,7 +29,7 @@ import github.com.gengyoubo.MPG.MPGConfig;
 import github.com.gengyoubo.common.item.data.IMPGDestroy;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.MPG.network.Networking;
-import github.com.gengyoubo.MPG.network.server.DestroyBlockPacket;
+import github.com.gengyoubo.common.network.payload.MPGDestroyBlockPayload;
 import github.com.gengyoubo.MPG.util.wrapper.EntitiesWrapper;
 
 import java.util.ArrayList;
@@ -210,7 +212,7 @@ public class MPUtils {
                 return;
             }
             if (level instanceof ServerLevel serverLevel) {
-                Networking.sendToTrackBySeen(serverLevel,player,new DestroyBlockPacket(blockPos,range,stack.getItem()));
+                Networking.sendToTrackBySeen(serverLevel, player, new MPGDestroyBlockPayload(blockPos, range, stack.getItem()));
                 int xM = blockPos.getX() + range;
                 int yM = blockPos.getY() + range;
                 int zM = blockPos.getZ() + range;

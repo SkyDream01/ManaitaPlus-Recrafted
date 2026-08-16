@@ -1,0 +1,81 @@
+package github.com.gengyoubo.common.event;
+
+import github.com.gengyoubo.common.item.data.IMPGKey;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.LevelStorageException;
+import net.minecraft.world.level.storage.LevelSummary;
+import net.minecraft.world.level.storage.LevelStorageSource;
+import org.slf4j.Logger;
+
+import java.util.List;
+
+/** Loader-neutral client event actions. */
+public final class MPGClientEventLogic {
+    private static boolean autoLoadRequested;
+    private static boolean autoLoadCheckLogged;
+
+    private MPGClientEventLogic() {
+    }
+
+    public static void handleMainHandKey(Player player) {
+        invokeClient(player.getMainHandItem(), player);
+    }
+
+    public static void handleArmorKey(Player player) {
+        player.getInventory().armor.forEach(stack -> invokeClient(stack, player));
+    }
+
+    private static void invokeClient(ItemStack stack, Player player) {
+        if (!stack.isEmpty() && stack.getItem() instanceof IMPGKey keyItem) {
+            keyItem.onManaitaKeyPressOnClient(stack, player);
+        }
+    }
+
+    public static void tickDevWorldAutoLoad(boolean production, Logger logger) {
+        if (production) {
+            return;
+        }
+        Minecraft minecraft = Minecraft.getInstance();
+        if (minecraft.level != null || !(minecraft.screen instanceof TitleScreen)) {
+            return;
+        }
+        if (!autoLoadCheckLogged) {
+            autoLoadCheckLogged = true;
+            logger.info("Detected title screen in dev environment, checking for first-world auto-load");
+        }
+        if (autoLoadRequested) {
+            return;
+        }
+        autoLoadRequested = true;
+        tryAutoLoadFirstWorld(minecraft, logger);
+    }
+
+    private static void tryAutoLoadFirstWorld(Minecraft minecraft, Logger logger) {
+        LevelStorageSource levelSource = minecraft.getLevelSource();
+        LevelStorageSource.LevelCandidates candidates;
+        try {
+            candidates = levelSource.findLevelCandidates();
+        } catch (LevelStorageException exception) {
+            logger.warn("Failed to enumerate local worlds for dev auto-load", exception);
+            return;
+        }
+
+        if (candidates.isEmpty()) {
+            logger.info("No local worlds found, skipping dev auto-load");
+            return;
+        }
+        levelSource.loadLevelSummaries(candidates)
+                .thenAccept(summaries -> minecraft.execute(() -> logFirstWorld(minecraft, summaries, logger)));
+    }
+
+    private static void logFirstWorld(Minecraft minecraft, List<LevelSummary> summaries, Logger logger) {
+        if (minecraft.level != null || !(minecraft.screen instanceof TitleScreen) || summaries.isEmpty()) {
+            return;
+        }
+        logger.info("Dev auto-loading first world: {}", summaries.getFirst().getLevelId());
+        logger.info("Skipping dev auto-load on 1.21.1 until WorldOpenFlows migration is finished");
+    }
+}

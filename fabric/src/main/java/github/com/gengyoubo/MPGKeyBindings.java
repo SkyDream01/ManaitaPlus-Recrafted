@@ -2,15 +2,14 @@ package github.com.gengyoubo;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import github.com.gengyoubo.core.MPKeyBoardCore;
-import github.com.gengyoubo.common.item.data.IMPGKey;
+import github.com.gengyoubo.common.event.MPGClientEventLogic;
 import github.com.gengyoubo.network.MPNetworking;
-import github.com.gengyoubo.network.client.MPKeyPressPacket;
+import github.com.gengyoubo.common.network.payload.MPGKeyPressPayload;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.ItemStack;
 import org.lwjgl.glfw.GLFW;
 
 public final class MPGKeyBindings {
@@ -40,24 +39,17 @@ public final class MPGKeyBindings {
         }
 
         while (MPKeyBoardCore.MESSAGE_KEY.consumeClick()) {
-            ItemStack mainHandItem = client.player.getMainHandItem();
-            if (!mainHandItem.isEmpty() && mainHandItem.getItem() instanceof IMPGKey keyItem) {
-                keyItem.onManaitaKeyPressOnClient(mainHandItem, client.player);
-            }
+            MPGClientEventLogic.handleMainHandKey(client.player);
             sendKeyPacket((byte) 0);
         }
 
         while (MPKeyBoardCore.MESSAGE_ARMOR_KEY.consumeClick()) {
-            for (ItemStack itemStack : client.player.getInventory().armor) {
-                if (!itemStack.isEmpty() && itemStack.getItem() instanceof IMPGKey keyItem) {
-                    keyItem.onManaitaKeyPressOnClient(itemStack, client.player);
-                }
-            }
+            MPGClientEventLogic.handleArmorKey(client.player);
             sendKeyPacket((byte) 1);
         }
     }
 
     private static void sendKeyPacket(byte keyCode) {
-        ClientPlayNetworking.send(new MPKeyPressPacket(keyCode));
+        ClientPlayNetworking.send(new MPGKeyPressPayload(keyCode));
     }
 }

@@ -5,19 +5,46 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import github.com.gengyoubo.MPG.network.client.KeyPressPacket;
-import github.com.gengyoubo.MPG.network.server.DestroyBlockPacket;
-import github.com.gengyoubo.MPG.network.server.ChangeEntityDataPacket;
+import github.com.gengyoubo.common.network.MPGKeyPressLogic;
+import github.com.gengyoubo.common.network.payload.MPGChangeEntityDataPayload;
+import github.com.gengyoubo.common.network.payload.MPGDestroyBlockPayload;
+import github.com.gengyoubo.common.network.payload.MPGKeyPressPayload;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
 
 public class Networking {
     public static final String VERSION = "1.0";
 
     public static void registerMessage(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(VERSION);
-        registrar.playToServer(KeyPressPacket.TYPE, KeyPressPacket.STREAM_CODEC, KeyPressPacket::handle);
-        registrar.playToClient(DestroyBlockPacket.TYPE, DestroyBlockPacket.STREAM_CODEC, DestroyBlockPacket::handle);
-        registrar.playToClient(ChangeEntityDataPacket.TYPE, ChangeEntityDataPacket.STREAM_CODEC, ChangeEntityDataPacket::handle);
+        registrar.playToServer(MPGKeyPressPayload.TYPE, MPGKeyPressPayload.STREAM_CODEC, Networking::handleKeyPress);
+        registrar.playToClient(MPGDestroyBlockPayload.TYPE, MPGDestroyBlockPayload.STREAM_CODEC, Networking::handleDestroyBlock);
+        registrar.playToClient(MPGChangeEntityDataPayload.TYPE, MPGChangeEntityDataPayload.STREAM_CODEC, Networking::handleChangeEntityData);
+    }
+
+    private static void handleKeyPress(MPGKeyPressPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (!context.flow().isClientbound() && context.player() instanceof ServerPlayer player) {
+                MPGKeyPressLogic.handle(player, payload.keyCode());
+            }
+        });
+    }
+
+    private static void handleDestroyBlock(MPGDestroyBlockPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.flow().isClientbound()) {
+                ClientPacketHandlers.handleDestroyBlock(payload);
+            }
+        });
+    }
+
+    private static void handleChangeEntityData(MPGChangeEntityDataPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (context.flow().isClientbound()) {
+                ClientPacketHandlers.handleChangeEntityData(payload);
+            }
+        });
     }
 
     public static void sendToSameLevelPlayers(Level level, Object packet) {
@@ -63,4 +90,3 @@ public class Networking {
         }
     }
 }
-

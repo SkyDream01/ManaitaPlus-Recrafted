@@ -20,7 +20,7 @@ import net.minecraftforge.common.ToolAction;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolBase;
-import github.com.gengyoubo.MPG.util.MPGEntityData;
+import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPText;
 
 import java.util.List;

@@ -1,7 +1,8 @@
 package github.com.gengyoubo.MPG.core;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
+import github.com.gengyoubo.common.registry.MPGEntityTypeFactory;
+import github.com.gengyoubo.common.registry.MPGRegistryIds;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import github.com.gengyoubo.MPG.entity.MPGEntityArrow;
 import github.com.gengyoubo.MPG.entity.MPGLightningBolt;
@@ -9,11 +10,12 @@ import github.com.gengyoubo.MPG.entity.MPGLightningBolt;
 import static github.com.gengyoubo.MPG.MPG.ENTITY_TYPES;
 
 public class MPGEntityCore {
-    public static final DeferredHolder<EntityType<?>, EntityType<MPGLightningBolt>> ManaitaLightningBolt = ENTITY_TYPES.register("manaita_lightning_bolt",() -> EntityType.Builder.of(MPGLightningBolt::new, MobCategory.MISC).noSave().sized(0.0F, 0.0F).clientTrackingRange(16).updateInterval(Integer.MAX_VALUE).build("manaita_lightning_bolt"));
-    public static final DeferredHolder<EntityType<?>, EntityType<MPGEntityArrow>> ManaitaArrow = ENTITY_TYPES.register("manaita_arrow",() -> EntityType.Builder.of(MPGEntityArrow::new, MobCategory.MISC).noSave().sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).build("manaita_arrow"));
+    public static final DeferredHolder<EntityType<?>, EntityType<MPGLightningBolt>> ManaitaLightningBolt =
+            ENTITY_TYPES.register(MPGRegistryIds.LIGHTNING, () -> MPGEntityTypeFactory.lightning(MPGLightningBolt::new));
+    public static final DeferredHolder<EntityType<?>, EntityType<MPGEntityArrow>> ManaitaArrow =
+            ENTITY_TYPES.register(MPGRegistryIds.ARROW, () -> MPGEntityTypeFactory.arrow(MPGEntityArrow::new));
 
     public static void init() {
     }
 
 }
-

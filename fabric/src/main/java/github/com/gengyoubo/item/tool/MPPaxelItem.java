@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import github.com.gengyoubo.item.tool.base.MPToolActionHelper;
 import github.com.gengyoubo.item.tool.base.MPToolBase;
-import github.com.gengyoubo.util.MPEntityData;
+import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPText;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class MPPaxelItem extends MPToolBase {
     }
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity target, @NotNull LivingEntity attacker) {
-        MPEntityData.death.add(target);
+        MPGEntityData.death.add(target);
         target.hurt(target.damageSources().mobAttack(attacker), 10000);
         target.setHealth(0F);
         return super.hurtEnemy(stack, target, attacker);
@@ -56,5 +56,4 @@ public class MPPaxelItem extends MPToolBase {
         return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
     }
 }
-
 

@@ -51,6 +51,7 @@ public class MPG implements ModInitializer {
         MPItemCore.init();
         MPBlockEntityCore.init();
         MPMenuCore.init();
+        MPEntityCore.init();
         MPAttributeCore.init();
         MPRecipeSerializerCore.init();
         MPSynchedDataCore.init();

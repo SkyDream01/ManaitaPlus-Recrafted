@@ -1,10 +1,12 @@
 package github.com.gengyoubo.MPG.network;
 
 import github.com.gengyoubo.MPG.MPG;
-import github.com.gengyoubo.MPG.network.client.KeyPressPacket;
+import github.com.gengyoubo.MPG.baubles.common.lib.PlayerHandler;
 import github.com.gengyoubo.MPG.network.client.OpenBaublesPacket;
-import github.com.gengyoubo.MPG.network.server.ChangeEntityDataPacket;
-import github.com.gengyoubo.MPG.network.server.DestroyBlockPacket;
+import github.com.gengyoubo.common.network.MPGKeyPressLogic;
+import github.com.gengyoubo.common.network.payload.MPGChangeEntityDataPayload;
+import github.com.gengyoubo.common.network.payload.MPGDestroyBlockPayload;
+import github.com.gengyoubo.common.network.payload.MPGKeyPressPayload;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.SimpleChannel;
+import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 
 public class Networking {
     public static final int VERSION = 1;
@@ -25,26 +30,60 @@ public class Networking {
             .simpleChannel();
 
     public static void registerMessage() {
-        CHANNEL.messageBuilder(KeyPressPacket.class, 0)
+        CHANNEL.messageBuilder(MPGKeyPressPayload.class, 0)
                 .direction(PacketFlow.SERVERBOUND)
-                .codec(KeyPressPacket.STREAM_CODEC)
-                .consumerMainThread(KeyPressPacket::handle)
+                .codec(MPGKeyPressPayload.STREAM_CODEC)
+                .consumerMainThread(Networking::handleKeyPress)
                 .add();
         CHANNEL.messageBuilder(OpenBaublesPacket.class, 1)
                 .direction(PacketFlow.SERVERBOUND)
                 .codec(OpenBaublesPacket.STREAM_CODEC)
                 .consumerMainThread(OpenBaublesPacket::handle)
                 .add();
-        CHANNEL.messageBuilder(DestroyBlockPacket.class, 2)
+        CHANNEL.messageBuilder(MPGDestroyBlockPayload.class, 2)
                 .direction(PacketFlow.CLIENTBOUND)
-                .codec(DestroyBlockPacket.STREAM_CODEC)
-                .consumerMainThread(DestroyBlockPacket::handle)
+                .codec(MPGDestroyBlockPayload.STREAM_CODEC)
+                .consumerMainThread(Networking::handleDestroyBlock)
                 .add();
-        CHANNEL.messageBuilder(ChangeEntityDataPacket.class, 3)
+        CHANNEL.messageBuilder(MPGChangeEntityDataPayload.class, 3)
                 .direction(PacketFlow.CLIENTBOUND)
-                .codec(ChangeEntityDataPacket.STREAM_CODEC)
-                .consumerMainThread(ChangeEntityDataPacket::handle)
+                .codec(MPGChangeEntityDataPayload.STREAM_CODEC)
+                .consumerMainThread(Networking::handleChangeEntityData)
                 .add();
+    }
+
+    private static void handleKeyPress(MPGKeyPressPayload payload, CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> {
+            if (context.isClientSide() || !(context.getSender() instanceof ServerPlayer player)) {
+                return;
+            }
+            if (payload.keyCode() == 0) {
+                ItemStack ring = PlayerHandler.getEquippedRing(player).orElse(ItemStack.EMPTY);
+                if (MPGKeyPressLogic.invoke(ring, player)) {
+                    return;
+                }
+            }
+            MPGKeyPressLogic.handle(player, payload.keyCode());
+        });
+        context.setPacketHandled(true);
+    }
+
+    private static void handleDestroyBlock(MPGDestroyBlockPayload payload, CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> {
+            if (context.isClientSide()) {
+                ClientPacketHandlers.handleDestroyBlock(payload);
+            }
+        });
+        context.setPacketHandled(true);
+    }
+
+    private static void handleChangeEntityData(MPGChangeEntityDataPayload payload, CustomPayloadEvent.Context context) {
+        context.enqueueWork(() -> {
+            if (context.isClientSide()) {
+                ClientPacketHandlers.handleChangeEntityData(payload);
+            }
+        });
+        context.setPacketHandled(true);
     }
 
     public static void sendToSameLevelPlayers(Level level, Object packet) {
