@@ -2,21 +2,14 @@ package github.com.gengyoubo.MPG.event;
 
 import github.com.gengyoubo.MPG.MPG;
 import github.com.gengyoubo.MPG.MPGConfig;
-import github.com.gengyoubo.MPG.core.MPGBlockCore;
-import github.com.gengyoubo.MPG.core.MPGItemCore;
 import github.com.gengyoubo.MPG.util.MPUtils;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.event.MPGEventLogic;
 import github.com.gengyoubo.common.event.MPGToolMiningLogic;
 import github.com.gengyoubo.common.item.data.IMPGDestroy;
 import github.com.gengyoubo.common.item.armor.MPGArmorItemBase;
-import github.com.gengyoubo.common.trades.MPGSingleItemTrade;
-import github.com.gengyoubo.common.trades.MPGTwoItemTrade;
-import net.minecraft.world.entity.npc.VillagerProfession;
-import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -30,11 +23,15 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
-import java.util.List;
-
+/**
+ * Villager trades are data-driven in MC 26.3 ({@code villager_trade}/{@code trade_set} registries),
+ * so the old {@code VillagerTradesEvent} hook (addCustomTrades) is gone. The manaita weaponsmith
+ * trades are now shipped as datapack entries instead; see
+ * {@code data/manaita_plus_general/villager_trade/manaita/*.json} and
+ * {@code data/minecraft/tags/villager_trade/weaponsmith/level_5.json}.
+ */
 @EventBusSubscriber(modid = MPG.MODID)
 public class EventHandler {
     @SubscribeEvent
@@ -137,19 +134,9 @@ public class EventHandler {
         MPGArmorItemBase.syncArmorState(event.getEntity());
     }
 
-    @SubscribeEvent
-    public static void addCustomTrades(VillagerTradesEvent event) {
-        if (event.getType() != VillagerProfession.WEAPONSMITH) {
-            return;
-        }
-        List<VillagerTrades.ItemListing> trades = event.getTrades().get(5);
-        trades.add(new MPGSingleItemTrade(new ItemStack(MPGBlockCore.CraftingBlockItem.get(), 64),
-                new ItemStack(MPGItemCore.ManaitaBow.get()), 1, 0, 1));
-        trades.add(new MPGSingleItemTrade(new ItemStack(MPGBlockCore.FurnaceBlockItem.get(), 64),
-                new ItemStack(MPGItemCore.ManaitaBow.get()), 1, 0, 1));
-        trades.add(new MPGSingleItemTrade(new ItemStack(MPGBlockCore.BrewingBlock.get(), 64),
-                new ItemStack(MPGItemCore.ManaitaBow.get()), 1, 0, 1));
-        trades.add(new MPGTwoItemTrade(new ItemStack(MPGItemCore.ManaitaBow.get()), new ItemStack(Items.NETHER_STAR),
-                new ItemStack(MPGItemCore.ManaitaSwordGod.get()), 1, 0, 1));
-    }
+    // addCustomTrades(VillagerTradesEvent) removed: VillagerTrades.ItemListing and the
+    // RegisterVillagerTradesEvent-style hook no longer exist in 26.3. The weaponsmith level-5
+    // trades (64 crafting/furnace/brewing blocks -> manaita bow, manaita bow + nether star ->
+    // god sword) are provided by the datapack villager_trade entries instead; the trade helper
+    // records keep getOffer() for mods that still want runtime MerchantOffers.
 }

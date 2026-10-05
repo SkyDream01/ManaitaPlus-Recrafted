@@ -2,12 +2,15 @@ package github.com.gengyoubo.common.block.entity;
 
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.TagValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 /** Shared item-backed brewing inventory used by the portable brewing stand. */
@@ -22,7 +25,7 @@ public abstract class MPGPortableBrewingBlockEntityBase extends MPGBrewingStandB
         this.backingStack = backingStack;
         CompoundTag tag = MPGItemStackData.getTag(backingStack);
         if (tag != null) {
-            loadAdditional(tag, owner.registryAccess());
+            loadAdditional(TagValueInput.create(ProblemReporter.DISCARDING, owner.registryAccess(), tag));
         }
     }
 
@@ -34,12 +37,11 @@ public abstract class MPGPortableBrewingBlockEntityBase extends MPGBrewingStandB
                 fuel = 20;
                 items.get(4).shrink(1);
             }
-            PotionBrewing potionBrewing = owner.level().potionBrewing();
-            if (isBrewable(potionBrewing, items) && fuel > 0) {
+            if (owner.level() instanceof ServerLevel serverLevel && isBrewable(serverLevel, items) && fuel > 0) {
                 fuel--;
                 brewTime = BREW_TIME;
                 ingredient = items.get(3).getItem();
-                performBrew(owner.level(), owner.getX(), owner.getY(), owner.getZ());
+                performBrew(serverLevel, owner.getX(), owner.getY(), owner.getZ());
                 brewTime = 0;
             }
         }
@@ -59,7 +61,9 @@ public abstract class MPGPortableBrewingBlockEntityBase extends MPGBrewingStandB
 
     private void saveToBackingStack() {
         CompoundTag tag = MPGItemStackData.getOrCreateTag(backingStack);
-        saveAdditional(tag, owner.registryAccess());
+        TagValueOutput output = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, owner.registryAccess());
+        saveAdditional(output);
+        tag.merge(output.buildResult());
         MPGItemStackData.setTag(backingStack, tag);
     }
 }

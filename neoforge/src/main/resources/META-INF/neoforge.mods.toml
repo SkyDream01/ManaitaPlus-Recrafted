@@ -9,7 +9,7 @@ displayName="${mod_name}"
 displayURL="${displayURL}"
 authors="${mod_authors}"
 description="${mod_description}"
-logoFile= "assets/manaita_plus_general/textures/logo.png"
+iconFile= "assets/manaita_plus_general/textures/logo.png"
 
 [[mixins]]
 config="manaita_plus_general.mixins.json"

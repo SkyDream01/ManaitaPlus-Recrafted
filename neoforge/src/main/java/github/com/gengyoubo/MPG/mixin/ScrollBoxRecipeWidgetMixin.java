@@ -5,7 +5,7 @@ import mezz.jei.api.gui.widgets.IScrollBoxWidget;
 import mezz.jei.common.gui.elements.DrawableWrappedText;
 import mezz.jei.library.gui.widgets.AbstractScrollWidget;
 import mezz.jei.library.gui.widgets.ScrollBoxRecipeWidget;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.FormattedText;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -43,7 +43,7 @@ public abstract class ScrollBoxRecipeWidgetMixin {
 
     @Inject(method = "drawContents", at = @At("HEAD"), cancellable = true)
     private void mpg$drawFullWidthWhenScrollbarIsHidden(
-            GuiGraphics guiGraphics,
+            GuiGraphicsExtractor guiGraphics,
             double mouseX,
             double mouseY,
             float scrollOffsetY,

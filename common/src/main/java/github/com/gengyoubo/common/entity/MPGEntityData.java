@@ -24,7 +24,7 @@ public enum MPGEntityData {
     }
 
     public boolean accept(Entity entity) {
-        return entity != null && entity.getTags().contains(name());
+        return entity != null && entity.entityTags().contains(name());
     }
 
     public int getFlag() {

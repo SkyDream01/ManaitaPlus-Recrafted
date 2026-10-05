@@ -1,5 +1,6 @@
 package github.com.gengyoubo.MPG.block.item;
 
+import net.minecraft.world.item.Item;
 import github.com.gengyoubo.MPG.block.MPHookBlock;
 import github.com.gengyoubo.common.block.item.MPGHookBlockItemBase;
 import net.minecraft.core.BlockPos;
@@ -12,8 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import static github.com.gengyoubo.MPG.core.MPGBlockCore.HookBlock;
 
 public class MPHookBlockItem extends MPGHookBlockItemBase {
-    public MPHookBlockItem() {
-        super(HookBlock.get(), MPHookBlock.class);
+    public MPHookBlockItem(Item.Properties props) {
+        super(HookBlock.get(), props, MPHookBlock.class);
     }
 
     @Override

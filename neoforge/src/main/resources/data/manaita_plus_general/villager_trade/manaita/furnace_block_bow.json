@@ -1,0 +1,11 @@
+{
+  "wants": {
+    "count": 64,
+    "id": "manaita_plus_general:block_furnace_manaita"
+  },
+  "gives": {
+    "id": "manaita_plus_general:manaita_bow"
+  },
+  "max_uses": 1,
+  "xp": 0
+}

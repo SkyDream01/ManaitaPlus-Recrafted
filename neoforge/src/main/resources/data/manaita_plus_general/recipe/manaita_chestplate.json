@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "tag": "manaita_plus_general:manaita_block_eq"
-    }
+    "#": "#manaita_plus_general:manaita_block_eq"
   },
   "result": {
     "count": 1,

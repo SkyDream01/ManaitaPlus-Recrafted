@@ -1,6 +1,6 @@
 package github.com.gengyoubo.common.menu;
 
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
@@ -193,12 +193,12 @@ public abstract class MPGBrewingStandMenuBase extends AbstractContainerMenu {
 
         @Override
         public void onTake(@NotNull Player player, @NotNull ItemStack stack) {
-            Optional<Holder<Potion>> potion = stack
-                    .getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY)
-                    .potion();
+            PotionContents potionContents = stack
+                    .getOrDefault(DataComponents.POTION_CONTENTS, PotionContents.EMPTY);
+            Optional<Holder<Potion>> potion = potionContents.potion();
             if (potion.isPresent() && player instanceof ServerPlayer serverPlayer) {
                 brewedPotionHook.accept(player, stack);
-                CriteriaTriggers.BREWED_POTION.trigger(serverPlayer, potion.get());
+                CriteriaTriggers.BREWED_POTION.trigger(serverPlayer, potionContents);
             }
             super.onTake(player, stack);
         }

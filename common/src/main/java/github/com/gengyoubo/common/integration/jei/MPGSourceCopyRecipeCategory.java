@@ -7,16 +7,16 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import mezz.jei.api.recipe.RecipeType;
+import mezz.jei.api.recipe.types.IRecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class MPGSourceCopyRecipeCategory implements IRecipeCategory<MPGSourceCopyRecipe> {
-    public static final RecipeType<MPGSourceCopyRecipe> TYPE =
-            RecipeType.create(MPGCommon.MOD_ID, "source_copying", MPGSourceCopyRecipe.class);
+    public static final IRecipeType<MPGSourceCopyRecipe> TYPE =
+            IRecipeType.create(MPGCommon.MOD_ID, "source_copying", MPGSourceCopyRecipe.class);
     private static final int GRID_X = 1;
     private static final int GRID_Y = 1;
     private static final int SLOT_SIZE = 18;
@@ -31,7 +31,7 @@ public class MPGSourceCopyRecipeCategory implements IRecipeCategory<MPGSourceCop
     }
 
     @Override
-    public @NotNull RecipeType<MPGSourceCopyRecipe> getRecipeType() {
+    public @NotNull IRecipeType<MPGSourceCopyRecipe> getRecipeType() {
         return TYPE;
     }
 
@@ -84,11 +84,11 @@ public class MPGSourceCopyRecipeCategory implements IRecipeCategory<MPGSourceCop
     @Override
     public void createRecipeExtras(@NotNull IRecipeExtrasBuilder builder, @NotNull MPGSourceCopyRecipe recipe,
                                    @NotNull IFocusGroup focuses) {
-        builder.addRecipeArrow().setPosition(66, 20);
+        builder.addRecipeArrowWidget().setPosition(66, 20);
     }
 
     @Override
-    public ResourceLocation getRegistryName(MPGSourceCopyRecipe recipe) {
-        return ResourceLocation.fromNamespaceAndPath(MPGCommon.MOD_ID, "source_copying");
+    public Identifier getIdentifier(MPGSourceCopyRecipe recipe) {
+        return Identifier.fromNamespaceAndPath(MPGCommon.MOD_ID, "source_copying");
     }
 }

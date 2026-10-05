@@ -111,7 +111,9 @@ public class MPG {
         RECIPE_SERIALIZER_DEFERRED_REGISTER.register(modEventBus);
         MPGConditionCore.CONDITION_CODECS.register(modEventBus);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, MPGConfig.SPEC);
+        // ModConfig.Type.COMMON is renamed to LOCAL in 26.3 (per-side, not synchronized;
+        // SYNCED is the successor of the old SERVER type).
+        modContainer.registerConfig(ModConfig.Type.LOCAL, MPGConfig.SPEC);
     }
 
     private static void acceptMPGType(Item item, CreativeModeTab.Output output, int maxType) {
@@ -134,7 +136,8 @@ public class MPG {
                 return;
             }
 
-            MinecraftServer server = player.getServer();
+            // ServerPlayer#getServer() is gone in 26.3; the server comes from the level.
+            MinecraftServer server = player.level().getServer();
             if (server == null) {
                 return;
             }

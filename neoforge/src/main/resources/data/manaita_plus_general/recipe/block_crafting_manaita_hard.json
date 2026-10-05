@@ -16,12 +16,8 @@
     "000"
   ],
   "key": {
-    "0": {
-      "item": "minecraft:diamond_block"
-    },
-    "1": {
-      "item": "minecraft:crafting_table"
-    }
+    "0": "minecraft:diamond_block",
+    "1": "minecraft:crafting_table"
   },
   "result": {
     "count": 1,

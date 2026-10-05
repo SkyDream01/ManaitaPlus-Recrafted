@@ -6,12 +6,17 @@ import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPText;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -23,36 +28,43 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.item.equipment.EquipmentAsset;
+import net.minecraft.world.item.equipment.EquipmentAssets;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
-public class MPGArmorItemBase extends ArmorItem {
-    public static final Holder<ArmorMaterial> MANAITA_ARMOR_MATERIAL = Holder.direct(
-            new ArmorMaterial(
-                    Map.of(
-                            Type.HELMET, 0,
-                            Type.CHESTPLATE, 0,
-                            Type.LEGGINGS, 0,
-                            Type.BOOTS, 0,
-                            Type.BODY, 0
-                    ),
-                    0,
-                    SoundEvents.ARMOR_EQUIP_TURTLE,
-                    () -> Ingredient.EMPTY,
-                    List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(
-                            "manaita_plus_general", "manaita_armor"))),
-                    0.0F,
-                    0.0F
-            )
+public class MPGArmorItemBase extends Item {
+    // enchantmentValue 1 replaces the old zero: Enchantable now rejects non-positive
+    // values, and 1 keeps isEnchantable() true as before.
+    public static final ArmorMaterial MANAITA_ARMOR_MATERIAL = new ArmorMaterial(
+            0,
+            Map.of(
+                    ArmorType.HELMET, 0,
+                    ArmorType.CHESTPLATE, 0,
+                    ArmorType.LEGGINGS, 0,
+                    ArmorType.BOOTS, 0,
+                    ArmorType.BODY, 0
+            ),
+            1,
+            SoundEvents.ARMOR_EQUIP_TURTLE,
+            0.0F,
+            0.0F,
+            // Repair used to be () -> Ingredient.EMPTY; the record wants a repair tag and
+            // an unpopulated tag repairs nothing, exactly like before.
+            TagKey.create(Registries.ITEM,
+                    Identifier.fromNamespaceAndPath("manaita_plus_general", "manaita_armor_repairable")),
+            ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(
+                    "manaita_plus_general", "manaita_armor"))
     );
 
     private static final int FAST_REGENERATION_DURATION = 60;
@@ -67,19 +79,27 @@ public class MPGArmorItemBase extends ArmorItem {
     private static final String CHESTPLATE_FALL_TAG = "manaita_plus_general.chestplate_fall";
     private static final String CHESTPLATE_BIG_FALL_TAG = "manaita_plus_general.chestplate_big_fall";
     private static final String LEGGINGS_INVISIBILITY_TAG = "manaita_plus_general.leggings_invisibility";
-    private static final ResourceLocation BOOTS_SPEED_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(
+    private static final Identifier BOOTS_SPEED_MODIFIER_ID = Identifier.fromNamespaceAndPath(
             "manaita_plus_general", "boots_speed");
-    private static final ResourceLocation BOOTS_JUMP_MODIFIER_ID = ResourceLocation.fromNamespaceAndPath(
+    private static final Identifier BOOTS_JUMP_MODIFIER_ID = Identifier.fromNamespaceAndPath(
             "manaita_plus_general", "boots_jump");
 
-    protected MPGArmorItemBase(Holder<ArmorMaterial> material, Type type) {
-        super(material, type, new Item.Properties().fireResistant());
+    protected MPGArmorItemBase(Item.Properties props, ArmorMaterial material, ArmorType type) {
+        // humanoidArmor always wires durability components now; UNBREAKABLE keeps the old
+        // "no damage components" never-breaks behaviour, with its vanilla tooltip line
+        // hidden to keep the previous tooltip.
+        super(props.fireResistant()
+                .humanoidArmor(material, type)
+                .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                .component(DataComponents.TOOLTIP_DISPLAY,
+                        TooltipDisplay.DEFAULT.withHidden(DataComponents.UNBREAKABLE, true)));
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
-                                List<Component> tooltip, @NotNull TooltipFlag flag) {
-        tooltip.add(Component.literal(MPText.manaita_infinity.formatting(text("info.armor"))));
+                                @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                @NotNull TooltipFlag flag) {
+        tooltip.accept(Component.literal(MPText.manaita_infinity.formatting(text("info.armor"))));
     }
 
     public static void syncArmorState(Player player) {
@@ -88,7 +108,7 @@ public class MPGArmorItemBase extends ArmorItem {
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
         ItemStack boots = player.getItemBySlot(EquipmentSlot.FEET);
 
-        if (!player.level().isClientSide) {
+        if (!player.level().isClientSide()) {
             if (helmet.getItem() instanceof Helmet) {
                 applyHelmetEffects(player);
             } else {
@@ -146,7 +166,7 @@ public class MPGArmorItemBase extends ArmorItem {
             return;
         }
 
-        if (player.getTags().contains(CHESTPLATE_FLIGHT_TAG)) {
+        if (player.entityTags().contains(CHESTPLATE_FLIGHT_TAG)) {
             player.removeTag(CHESTPLATE_FLIGHT_TAG);
             if (!player.isCreative() && !player.isSpectator()
                     && !MPGEntityData.manaita.accept(player)) {
@@ -167,9 +187,9 @@ public class MPGArmorItemBase extends ArmorItem {
             }
             return;
         }
-        if (player.onGround() && player.getTags().contains(CHESTPLATE_FALL_TAG)) {
+        if (player.onGround() && player.entityTags().contains(CHESTPLATE_FALL_TAG)) {
             if (!hasManaitaBoots(player)) {
-                boolean bigFall = player.getTags().contains(CHESTPLATE_BIG_FALL_TAG);
+                boolean bigFall = player.entityTags().contains(CHESTPLATE_BIG_FALL_TAG);
                 player.playSound(bigFall ? SoundEvents.GENERIC_BIG_FALL : SoundEvents.GENERIC_SMALL_FALL,
                         1.0F, 1.0F);
             }
@@ -259,7 +279,8 @@ public class MPGArmorItemBase extends ArmorItem {
         FoodData foodData = player.getFoodData();
         foodData.setFoodLevel(20);
         foodData.setSaturation(20.0F);
-        foodData.setExhaustion(0.0F);
+        // FoodData.setExhaustion no longer exists; pinning food and saturation each sync
+        // already keeps the player fed, only the exhaustion counter is no longer reset.
 
         addHelmetEffect(player, MobEffects.REGENERATION, FAST_REGENERATION_DURATION,
                 FAST_REGENERATION_AMPLIFIER, HELMET_REGENERATION_TAG);
@@ -294,25 +315,26 @@ public class MPGArmorItemBase extends ArmorItem {
     }
 
     private static void removeHelmetEffect(Player player, Holder<MobEffect> effect, String ownerTag) {
-        if (player.getTags().contains(ownerTag)) {
+        if (player.entityTags().contains(ownerTag)) {
             player.removeEffect(effect);
             player.removeTag(ownerTag);
         }
     }
 
     public static class Helmet extends MPGArmorItemBase {
-        public Helmet(Holder<ArmorMaterial> material) {
-            super(material, Type.HELMET);
+        public Helmet(Item.Properties props, ArmorMaterial material) {
+            super(props, material, ArmorType.HELMET);
         }
 
         @Override
         public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
-                                    List<Component> tooltip, @NotNull TooltipFlag flag) {
-            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                                    @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                    @NotNull TooltipFlag flag) {
+            tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.nightvision") + ": "
                             + (MPGConfigValues.helmet_night_vision_value
                             ? text("info.on") : text("info.off")))));
-            super.appendHoverText(stack, context, tooltip, flag);
+            super.appendHoverText(stack, context, display, tooltip, flag);
         }
 
         @Override
@@ -323,8 +345,8 @@ public class MPGArmorItemBase extends ArmorItem {
     }
 
     public static class Chestplate extends MPGArmorItemBase {
-        public Chestplate(Holder<ArmorMaterial> material) {
-            super(material, Type.CHESTPLATE);
+        public Chestplate(Item.Properties props, ArmorMaterial material) {
+            super(props, material, ArmorType.CHESTPLATE);
         }
 
         @Override
@@ -335,8 +357,8 @@ public class MPGArmorItemBase extends ArmorItem {
     }
 
     public static class Leggings extends MPGArmorItemBase {
-        public Leggings(Holder<ArmorMaterial> material) {
-            super(material, Type.LEGGINGS);
+        public Leggings(Item.Properties props, ArmorMaterial material) {
+            super(props, material, ArmorType.LEGGINGS);
         }
 
         @Override
@@ -346,18 +368,19 @@ public class MPGArmorItemBase extends ArmorItem {
 
         @Override
         public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
-                                    List<Component> tooltip, @NotNull TooltipFlag flag) {
-            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                                    @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                    @NotNull TooltipFlag flag) {
+            tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.invisibility") + ": "
                             + (MPGConfigValues.leggings_invisibility_value
                             ? text("info.on") : text("info.off")))));
-            super.appendHoverText(stack, context, tooltip, flag);
+            super.appendHoverText(stack, context, display, tooltip, flag);
         }
     }
 
     public static class Boots extends MPGArmorItemBase implements IMPGKey {
-        public Boots(Holder<ArmorMaterial> material) {
-            super(material, Type.BOOTS);
+        public Boots(Item.Properties props, ArmorMaterial material) {
+            super(props, material, ArmorType.BOOTS);
         }
 
         @Override
@@ -384,23 +407,28 @@ public class MPGArmorItemBase extends ArmorItem {
         @Override
         public void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
             onManaitaKeyPress(itemStack);
-            player.displayClientMessage(Component.literal(MPText.manaita_mode.formatting(String.format(
+            Component message = Component.literal(MPText.manaita_mode.formatting(String.format(
                     "[%s] %s: %d, %s: %d", text("item.boots.name"),
-                    text("mode.speed"), getSpeed(itemStack), text("mode.jump"), getJump(itemStack)))),
-                    messageUsesOverlay());
+                    text("mode.speed"), getSpeed(itemStack), text("mode.jump"), getJump(itemStack))));
+            if (messageUsesOverlay()) {
+                player.sendOverlayMessage(message);
+            } else {
+                player.sendSystemMessage(message);
+            }
         }
 
         @Override
         public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
-                                    List<Component> tooltip, @NotNull TooltipFlag flag) {
-            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+                                    @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                    @NotNull TooltipFlag flag) {
+            tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.autojump") + ": "
                             + (MPGConfigValues.boots_auto_jump_value ? text("info.on") : text("info.off")))));
-            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+            tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.speed") + ": " + getSpeed(stack))));
-            tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+            tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                     text("mode.jump") + ": " + getJump(stack))));
-            super.appendHoverText(stack, context, tooltip, flag);
+            super.appendHoverText(stack, context, display, tooltip, flag);
         }
 
         private static int nextLevel(int level) {

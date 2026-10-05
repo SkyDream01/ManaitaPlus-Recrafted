@@ -1,18 +1,22 @@
 package github.com.gengyoubo.MPG.item.tool.base;
 
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.BlockTransformer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.BlockTransformers;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -21,12 +25,10 @@ import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.GrowingPlantHeadBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.neoforged.neoforge.common.ItemAbilities;
 import github.com.gengyoubo.common.util.MPText;
 import github.com.gengyoubo.MPG.util.MPUtils;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.function.IntConsumer;
 
 public final class ManaitaPlusLegacyToolActionHelper {
@@ -36,6 +38,32 @@ public final class ManaitaPlusLegacyToolActionHelper {
     @FunctionalInterface
     public interface RangeBlockAction {
         boolean apply(BlockPos.MutableBlockPos mutableBlockPos, BlockState blockState);
+    }
+
+    /** The block transform entry that applies at a block together with the state it produces. */
+    private record ResolvedTransform(SoundEvent sound, BlockTransformer.TransformParticle particle, BlockState state) {
+    }
+
+    /**
+     * Resolves the data-driven block transform that applies at the given block. The deleted
+     * strip/till/flatten ItemAbilities are now the {@link BlockTransformers} registry entries;
+     * the first matching entry wins, matching the vanilla useOn priority.
+     */
+    private static ResolvedTransform findTransform(UseOnContext context, BlockPos pos, ResourceKey<BlockTransformer> transformerKey) {
+        Level level = context.getLevel();
+        Holder<BlockTransformer> transformer = level.registryAccess()
+                .lookupOrThrow(Registries.BLOCK_TRANSFORMER)
+                .getOrThrow(transformerKey);
+        for (BlockTransformer.BlockTransformData transformData : transformer.value().transforms()) {
+            if (transformData.disallowedFaces().contains(context.getClickedFace())) {
+                continue;
+            }
+            BlockState newState = transformData.blockStateProvider().value().getOptionalState(level, level.getRandom(), pos);
+            if (newState != null) {
+                return new ResolvedTransform(transformData.sound().value(), transformData.particle(), newState);
+            }
+        }
+        return null;
     }
 
     public static boolean applyInRange(UseOnContext context, int range, RangeBlockAction action) {
@@ -60,22 +88,24 @@ public final class ManaitaPlusLegacyToolActionHelper {
     public static boolean applyHoeTillAction(UseOnContext context, BlockPos pos, BlockState blockState) {
         Level level = context.getLevel();
         Player player = context.getPlayer();
-        BlockState tillState = blockState.getToolModifiedState(context, ItemAbilities.HOE_TILL, false);
-        if (tillState == null) {
+        // HOE_TILL is gone in 26.3: the hoe behaviour moved into the data-driven
+        // BlockTransformers.HOE registry entry, which is queried here instead.
+        ResolvedTransform till = findTransform(context, pos, BlockTransformers.HOE);
+        if (till == null) {
             return false;
         }
 
-        level.playSound(player, pos, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0F, 1.0F);
-        if (!level.isClientSide) {
-            level.setBlock(pos, tillState, 11);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, tillState));
+        level.playSound(player, pos, till.sound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        if (!level.isClientSide()) {
+            level.setBlock(pos, till.state(), 11);
+            level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, till.state()));
             damageHeldItem(context, player, context.getItemInHand());
         }
         return true;
     }
 
     public static void handleRangeOrEnchantmentUse(Level level, Player player, ItemStack itemInHand, int nextRange, IntConsumer rangeSetter) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return;
         }
         if (player.isShiftKeyDown()) {
@@ -112,33 +142,24 @@ public final class ManaitaPlusLegacyToolActionHelper {
         Player player = context.getPlayer();
         ItemStack itemStack = context.getItemInHand();
 
-        Optional<BlockState> stripped = Optional.ofNullable(blockState.getToolModifiedState(context, ItemAbilities.AXE_STRIP, false));
-        Optional<BlockState> scraped = stripped.isPresent() ? Optional.empty() : Optional.ofNullable(blockState.getToolModifiedState(context, ItemAbilities.AXE_SCRAPE, false));
-        Optional<BlockState> waxOff = stripped.isPresent() || scraped.isPresent() ? Optional.empty() : Optional.ofNullable(blockState.getToolModifiedState(context, ItemAbilities.AXE_WAX_OFF, false));
-        Optional<BlockState> targetState = Optional.empty();
-
-        if (stripped.isPresent()) {
-            level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-            targetState = stripped;
-        } else if (scraped.isPresent()) {
-            level.playSound(player, pos, SoundEvents.AXE_SCRAPE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.levelEvent(player, 3005, pos, 0);
-            targetState = scraped;
-        } else if (waxOff.isPresent()) {
-            level.playSound(player, pos, SoundEvents.AXE_WAX_OFF, SoundSource.BLOCKS, 1.0F, 1.0F);
-            level.levelEvent(player, 3004, pos, 0);
-            targetState = waxOff;
-        }
-
-        if (targetState.isEmpty()) {
+        // Strip, scrape and wax-off used to be the AXE_STRIP/AXE_SCRAPE/AXE_WAX_OFF ItemAbilities;
+        // in 26.3 they are the ordered entries of the data-driven BlockTransformers.AXE registry
+        // entry (stripping first, then scraping, then wax removal), so the first matching entry
+        // wins exactly like the old strip -> scrape -> wax-off priority. The per-entry sound and
+        // particle reproduce the old hard-coded sounds and the 3005/3004 level events.
+        ResolvedTransform resolved = findTransform(context, pos, BlockTransformers.AXE);
+        if (resolved == null) {
             return false;
         }
+
+        level.playSound(player, pos, resolved.sound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+        resolved.particle().send(level, player, pos);
 
         if (player instanceof ServerPlayer serverPlayer) {
             CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, itemStack);
         }
-        level.setBlock(pos, targetState.get(), 11);
-        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, targetState.get()));
+        level.setBlock(pos, resolved.state(), 11);
+        level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, resolved.state()));
         damageHeldItem(context, player, itemStack);
         return true;
     }
@@ -171,16 +192,19 @@ public final class ManaitaPlusLegacyToolActionHelper {
         Level level = context.getLevel();
         Player player = context.getPlayer();
 
-        BlockState flattenState = blockState.getToolModifiedState(context, ItemAbilities.SHOVEL_FLATTEN, false);
+        // SHOVEL_FLATTEN is gone in 26.3: path flattening moved into the data-driven
+        // BlockTransformers.SHOVEL registry entry (which also wants the block above to be free).
+        ResolvedTransform flatten = findTransform(context, pos, BlockTransformers.SHOVEL);
         BlockState targetState = null;
-        if (flattenState != null && level.isEmptyBlock(pos.above())) {
-            level.playSound(player, pos, SoundEvents.SHOVEL_FLATTEN, SoundSource.BLOCKS, 1.0F, 1.0F);
-            targetState = flattenState;
+        if (flatten != null && level.isEmptyBlock(pos.above())) {
+            level.playSound(player, pos, flatten.sound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+            targetState = flatten.state();
         } else if (blockState.getBlock() instanceof CampfireBlock && blockState.getValue(CampfireBlock.LIT)) {
             if (!level.isClientSide()) {
                 level.levelEvent(null, 1009, pos, 0);
             }
-            CampfireBlock.dowse(context.getPlayer(), level, pos, blockState);
+            // CampfireBlock#dowse is spelled douse in 26.3.
+            CampfireBlock.douse(context.getPlayer(), level, pos, blockState);
             targetState = blockState.setValue(CampfireBlock.LIT, Boolean.FALSE);
         }
 
@@ -188,7 +212,7 @@ public final class ManaitaPlusLegacyToolActionHelper {
             return false;
         }
 
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             level.setBlock(pos, targetState, 11);
             level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, targetState));
             damageHeldItem(context, player, context.getItemInHand());

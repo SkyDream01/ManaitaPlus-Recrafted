@@ -16,10 +16,4 @@ public final class MPGJeiSubtypeInterpreter implements ISubtypeInterpreter<ItemS
     public Object getSubtypeData(ItemStack ingredient, UidContext context) {
         return MPGItemStackData.getInt(ingredient, MPGNBTData.ItemType);
     }
-
-    @Override
-    @Deprecated(since = "19.9.0")
-    public String getLegacyStringSubtypeInfo(ItemStack ingredient, UidContext context) {
-        return "type:" + MPGItemStackData.getInt(ingredient, MPGNBTData.ItemType);
-    }
 }

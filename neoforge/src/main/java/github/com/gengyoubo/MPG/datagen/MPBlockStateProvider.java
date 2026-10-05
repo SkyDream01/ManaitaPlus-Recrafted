@@ -1,19 +1,24 @@
 package github.com.gengyoubo.MPG.datagen;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import github.com.gengyoubo.MPG.MPG;
 import github.com.gengyoubo.MPG.block.data.MPGBlockData;
 import github.com.gengyoubo.MPG.core.MPGBlockCore;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.MultiPartBlockStateBuilder;
-import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class MPBlockStateProvider extends BlockStateProvider {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+/** Writes blockstates and the empty models used by entity-rendered mounted blocks. */
+public class MPBlockStateProvider implements DataProvider {
     private static final String[] TYPE_MODEL_SUFFIXES = {
             "wooden",
             "stone",
@@ -26,50 +31,86 @@ public class MPBlockStateProvider extends BlockStateProvider {
             "netherite"
     };
 
-    public MPBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, MPG.MODID, exFileHelper);
+    private final PackOutput.PathProvider blockStates;
+    private final PackOutput.PathProvider models;
+    private final List<CompletableFuture<?>> saves = new ArrayList<>();
+
+    public MPBlockStateProvider(PackOutput output) {
+        this.blockStates = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "blockstates");
+        this.models = output.createPathProvider(PackOutput.Target.RESOURCE_PACK, "models");
     }
 
     @Override
-    protected void registerStatesAndModels() {
-        registerHookStates();
-        registerTypedMultipartStates(MPGBlockCore.CraftingBlock.get(), "block/block_crafting_manaita", "item/crafting/crafting_manaita.");
-        registerTypedMultipartStates(MPGBlockCore.FurnaceBlock.get(), "block/block_furnace_manaita", "item/furnace/furnace_manaita.");
-        registerTypedMultipartStates(MPGBlockCore.BrewingBlock.get(), "block/block_brewing_manaita", "item/brewing/brewing_manaita.");
+    public CompletableFuture<?> run(CachedOutput cache) {
+        saves.clear();
+        registerStatesAndModels(cache);
+        return CompletableFuture.allOf(saves.toArray(new CompletableFuture[0]));
     }
 
-    private void registerHookStates() {
-        VariantBlockStateBuilder builder = getVariantBuilder(MPGBlockCore.HookBlock.get());
+    @Override
+    public String getName() {
+        return "Block States : " + MPG.MODID;
+    }
+
+    private void registerStatesAndModels(CachedOutput cache) {
+        registerHookStates(cache);
+        registerEntityRenderedBlock(cache, MPGBlockCore.CraftingBlock.get(), "crafting_manaita");
+        registerEntityRenderedBlock(cache, MPGBlockCore.FurnaceBlock.get(), "furnace_manaita");
+        registerEntityRenderedBlock(cache, MPGBlockCore.BrewingBlock.get(), "brewing_manaita");
+    }
+
+    private void registerHookStates(CachedOutput cache) {
+        JsonObject variants = new JsonObject();
 
         for (int type = 0; type <= 8; type++) {
             String suffix = TYPE_MODEL_SUFFIXES[type];
-            ResourceLocation model = modLoc("block/hook/fixed_hook_" + suffix);
+            String model = modLoc("block/hook/fixed_hook_" + suffix);
 
             for (Direction facing : Direction.Plane.HORIZONTAL) {
-                builder.partialState()
-                        .with(MPGBlockData.TYPES, type)
-                        .with(MPGBlockData.FACING, facing)
-                        .addModels(new ConfiguredModel(models().getExistingFile(model), 0, yRotFromFacing(facing), false));
+                JsonObject variant = new JsonObject();
+                variant.addProperty("model", model);
+                int yRot = yRotFromFacing(facing);
+                if (yRot != 0) {
+                    variant.addProperty("y", yRot);
+                }
+                variants.add(MPGBlockData.FACING.getName() + "=" + facing.getName() + "," + MPGBlockData.TYPES.getName() + "=" + type, variant);
             }
         }
+
+        JsonObject json = new JsonObject();
+        json.add("variants", variants);
+        save(cache, MPGBlockCore.HookBlock.get(), json);
     }
 
-    private void registerTypedMultipartStates(Block block, String baseModelPath, String typedModelPrefix) {
-        MultiPartBlockStateBuilder builder = getMultipartBuilder(block);
+    private void registerEntityRenderedBlock(CachedOutput cache, Block block, String textureName) {
+        // These blocks use RenderShape.INVISIBLE; their BER selects the tiered item and hook.
+        // A multipart containing item/generated models nests ModelBaker.compute calls and
+        // deadlocks the parallel model cache in 26.3. All states can share empty geometry.
+        String modelPath = "block/empty_" + textureName;
+        JsonObject textures = new JsonObject();
+        textures.addProperty("particle", modLoc("block/" + textureName));
+        JsonObject model = new JsonObject();
+        model.add("textures", textures);
+        model.add("elements", new JsonArray());
+        saves.add(DataProvider.saveStable(cache, model,
+                models.json(Identifier.fromNamespaceAndPath(MPG.MODID, modelPath))));
 
-        builder.part()
-                .modelFile(models().getExistingFile(modLoc(baseModelPath)))
-                .addModel()
-                .condition(MPGBlockData.TYPES, 0)
-                .end();
+        JsonObject variant = new JsonObject();
+        variant.addProperty("model", modLoc(modelPath));
+        JsonObject variants = new JsonObject();
+        variants.add("", variant);
+        JsonObject blockState = new JsonObject();
+        blockState.add("variants", variants);
+        save(cache, block, blockState);
+    }
 
-        for (int type = 1; type <= 8; type++) {
-            builder.part()
-                    .modelFile(models().getExistingFile(modLoc(typedModelPrefix + type)))
-                    .addModel()
-                    .condition(MPGBlockData.TYPES, type)
-                    .end();
-        }
+    private static String modLoc(String path) {
+        return Identifier.fromNamespaceAndPath(MPG.MODID, path).toString();
+    }
+
+    private void save(CachedOutput cache, Block block, JsonObject json) {
+        Identifier id = BuiltInRegistries.BLOCK.getKey(block);
+        saves.add(DataProvider.saveStable(cache, json, blockStates.json(id)));
     }
 
     private static int yRotFromFacing(Direction facing) {

@@ -9,7 +9,7 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.core.component.DataComponents;
@@ -99,18 +99,18 @@ public final class MPGEventLogic {
         ItemStack head;
         if (target instanceof Player playerTarget) {
             head = new ItemStack(Items.PLAYER_HEAD);
-            head.set(DataComponents.PROFILE, new ResolvableProfile(playerTarget.getGameProfile()));
-        } else if (target.getType() == EntityType.WITHER_SKELETON) {
+            head.set(DataComponents.PROFILE, ResolvableProfile.createResolved(playerTarget.getGameProfile()));
+        } else if (target.getType() == EntityTypes.WITHER_SKELETON) {
             head = new ItemStack(Items.WITHER_SKELETON_SKULL);
-        } else if (target.getType() == EntityType.SKELETON) {
+        } else if (target.getType() == EntityTypes.SKELETON) {
             head = new ItemStack(Items.SKELETON_SKULL);
-        } else if (target.getType() == EntityType.ZOMBIE) {
+        } else if (target.getType() == EntityTypes.ZOMBIE) {
             head = new ItemStack(Items.ZOMBIE_HEAD);
-        } else if (target.getType() == EntityType.CREEPER) {
+        } else if (target.getType() == EntityTypes.CREEPER) {
             head = new ItemStack(Items.CREEPER_HEAD);
-        } else if (target.getType() == EntityType.PIGLIN || target.getType() == EntityType.PIGLIN_BRUTE) {
+        } else if (target.getType() == EntityTypes.PIGLIN || target.getType() == EntityTypes.PIGLIN_BRUTE) {
             head = new ItemStack(Items.PIGLIN_HEAD);
-        } else if (target.getType() == EntityType.ENDER_DRAGON) {
+        } else if (target.getType() == EntityTypes.ENDER_DRAGON) {
             head = new ItemStack(Items.DRAGON_HEAD);
         } else {
             return Optional.empty();
@@ -123,7 +123,7 @@ public final class MPGEventLogic {
             return;
         }
         findKiller(target, source.getEntity()).ifPresent(player -> {
-            createBeheadingDrop(target, player).ifPresent(target::spawnAtLocation);
+            createBeheadingDrop(target, player).ifPresent(drop -> target.spawnAtLocation(level, drop));
             List<ItemEntity> freshDrops = level.getEntitiesOfClass(ItemEntity.class,
                     target.getBoundingBox().inflate(2.0D), item -> item.tickCount <= 1);
             multiplyDrops(player, freshDrops, multiplier);

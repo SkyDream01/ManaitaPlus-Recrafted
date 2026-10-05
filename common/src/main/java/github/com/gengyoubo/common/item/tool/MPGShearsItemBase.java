@@ -6,24 +6,25 @@ import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPText;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Unit;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -35,11 +36,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestroy, IMPGDoubling {
-    public MPGShearsItemBase(int durability) {
-        super(new Item.Properties().stacksTo(1).durability(durability).fireResistant());
+    public MPGShearsItemBase(Item.Properties props, int durability) {
+        // The TOOL component is now what vanilla's shears behaviour runs on; UNBREAKABLE
+        // keeps the legacy negative-durability "never breaks" behaviour (its vanilla
+        // tooltip line is hidden to keep the previous tooltip).
+        super(props.stacksTo(1).durability(durability).fireResistant()
+                .component(DataComponents.TOOL, ShearsItem.createToolProperties())
+                .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                .component(DataComponents.TOOLTIP_DISPLAY,
+                        TooltipDisplay.DEFAULT.withHidden(DataComponents.UNBREAKABLE, true)));
     }
 
     @Override
@@ -57,7 +65,7 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
         BlockPos pos = context.getClickedPos();
         BlockState state = level.getBlockState(pos);
         if (applyGrowPlantAction(context, pos, state)) {
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
         }
         return super.useOn(context);
     }
@@ -78,23 +86,23 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
         level.setBlockAndUpdate(pos, maxAgeState);
         level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, maxAgeState));
         if (player != null) {
-            itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(context.getHand()));
+            itemStack.hurtAndBreak(1, player, context.getHand().asEquipmentSlot());
         }
         return true;
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player,
-                                                            @NotNull InteractionHand hand) {
+    public @NotNull InteractionResult use(@NotNull Level level, Player player,
+                                          @NotNull InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (!level.isClientSide) {
+        if (!level.isClientSide()) {
             if (player.isShiftKeyDown()) {
                 setRange(itemStack, (getRange(itemStack) + 2) % 21, player);
             } else {
                 addToolEnchantments(level, player, itemStack);
             }
         }
-        return InteractionResultHolder.pass(itemStack);
+        return InteractionResult.PASS;
     }
 
     private void addToolEnchantments(Level level, Player player, ItemStack itemStack) {
@@ -137,12 +145,13 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
+                                @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                @NotNull TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, tooltip, flag);
         int range = getRange(stack);
-        tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+        tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                 text("mode.manaita_tool") + ": " + range + "x" + range + "x" + range)));
-        tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+        tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                 text("mode.doubling") + ":" + (isDoubling(stack) ? text("info.on") : text("info.off")))));
     }
 
@@ -165,7 +174,11 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
     }
 
     protected void showMessage(Player player, Component message) {
-        player.displayClientMessage(message, messageUsesOverlay());
+        if (messageUsesOverlay()) {
+            player.sendOverlayMessage(message);
+        } else {
+            player.sendSystemMessage(message);
+        }
     }
 
     protected boolean messageUsesOverlay() {

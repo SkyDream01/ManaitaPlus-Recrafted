@@ -1,0 +1,68 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "manaita_plus_general:manaita_plus_general_type",
+    "entries": [
+      {
+        "threshold": 1,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.1"
+        }
+      },
+      {
+        "threshold": 2,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.2"
+        }
+      },
+      {
+        "threshold": 3,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.3"
+        }
+      },
+      {
+        "threshold": 4,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.4"
+        }
+      },
+      {
+        "threshold": 5,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.5"
+        }
+      },
+      {
+        "threshold": 6,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.6"
+        }
+      },
+      {
+        "threshold": 7,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.7"
+        }
+      },
+      {
+        "threshold": 8,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_general:item/crafting/crafting_manaita.8"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "manaita_plus_general:item/block_crafting_manaita"
+    }
+  }
+}

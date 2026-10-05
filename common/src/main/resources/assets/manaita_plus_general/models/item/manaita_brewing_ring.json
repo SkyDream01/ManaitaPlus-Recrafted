@@ -2,55 +2,5 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "manaita_plus_general:item/brewing/manaita_brewing_ring.0"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.125
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.1"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.25
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.2"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.375
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.3"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.5
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.4"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.625
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.5"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.75
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.6"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.875
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.7"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 1.0
-      },
-      "model": "manaita_plus_general:item/brewing/manaita_brewing_ring.8"
-    }
-  ]
+  }
 }

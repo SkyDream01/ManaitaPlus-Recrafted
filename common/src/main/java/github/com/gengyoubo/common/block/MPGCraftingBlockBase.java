@@ -68,7 +68,7 @@ public abstract class MPGCraftingBlockBase extends BaseEntityBlock {
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
                                                          @NotNull BlockPos pos, @NotNull Player player,
                                                          @NotNull BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         player.openMenu(state.getMenuProvider(level, pos));

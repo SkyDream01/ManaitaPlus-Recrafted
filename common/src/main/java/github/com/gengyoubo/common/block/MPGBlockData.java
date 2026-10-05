@@ -3,7 +3,7 @@ package github.com.gengyoubo.common.block;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -11,9 +11,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 public class MPGBlockData {
     public static final IntegerProperty TYPES = IntegerProperty.create("types", 0, 8);
     public static final IntegerProperty HOOK = IntegerProperty.create("hook", 0, 8);
-    public static final DirectionProperty WALL = DirectionProperty.create(
-            "wall", Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public static final EnumProperty<Direction> WALL = EnumProperty.create(
+            "wall", Direction.class, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST, Direction.UP, Direction.DOWN);
+    public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
 
     public static final VoxelShape shapeS = Block.box(7, 12, 0, 9, 14, 2);
     public static final VoxelShape shapeN = Block.box(7, 12, 14, 9, 14, 16);

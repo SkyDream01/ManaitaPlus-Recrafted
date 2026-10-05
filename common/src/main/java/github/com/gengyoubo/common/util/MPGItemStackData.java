@@ -44,12 +44,12 @@ public final class MPGItemStackData {
 
     public static int getInt(ItemStack stack, String key) {
         CompoundTag tag = getTag(stack);
-        return tag != null ? tag.getInt(key) : 0;
+        return tag != null ? tag.getIntOr(key, 0) : 0;
     }
 
     public static boolean getBoolean(ItemStack stack, String key) {
         CompoundTag tag = getTag(stack);
-        return tag != null && tag.getBoolean(key);
+        return tag != null && tag.getBooleanOr(key, false);
     }
 
     public static boolean contains(ItemStack stack, String key) {

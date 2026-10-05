@@ -6,12 +6,8 @@
     " % "
   ],
   "key": {
-    "&": {
-      "tag": "manaita_plus_general:manaita_block_eq"
-    },
-    "%": {
-      "item": "manaita_plus_general:manaita_hook"
-    }
+    "&": "#manaita_plus_general:manaita_block_eq",
+    "%": "manaita_plus_general:manaita_hook"
   },
   "result": {
     "count": 1,

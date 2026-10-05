@@ -45,6 +45,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public void onClientTick(ClientTickEvent.Post event) {
-        MPGClientEventLogic.tickDevWorldAutoLoad(FMLEnvironment.production, MPG.LOGGER);
+        // FMLEnvironment.production is now the isProduction() accessor in 26.3.
+        MPGClientEventLogic.tickDevWorldAutoLoad(FMLEnvironment.isProduction(), MPG.LOGGER);
     }
 }

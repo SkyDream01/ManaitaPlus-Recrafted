@@ -61,7 +61,7 @@ public abstract class MPGFurnaceBlockBase extends AbstractFurnaceBlock {
     protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level,
                                                          @NotNull BlockPos pos, @NotNull Player player,
                                                          @NotNull BlockHitResult hitResult) {
-        if (level.isClientSide) {
+        if (level.isClientSide()) {
             return InteractionResult.SUCCESS;
         }
         openContainer(level, pos, player);

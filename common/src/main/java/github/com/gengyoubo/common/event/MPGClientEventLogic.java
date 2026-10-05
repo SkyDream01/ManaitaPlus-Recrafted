@@ -3,6 +3,7 @@ package github.com.gengyoubo.common.event;
 import github.com.gengyoubo.common.item.data.IMPGKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.LevelStorageException;
@@ -14,6 +15,9 @@ import java.util.List;
 
 /** Loader-neutral client event actions. */
 public final class MPGClientEventLogic {
+    private static final EquipmentSlot[] ARMOR_SLOTS = {
+            EquipmentSlot.FEET, EquipmentSlot.LEGS, EquipmentSlot.CHEST, EquipmentSlot.HEAD
+    };
     private static boolean autoLoadRequested;
     private static boolean autoLoadCheckLogged;
 
@@ -35,7 +39,9 @@ public final class MPGClientEventLogic {
     }
 
     public static void handleArmorKey(Player player) {
-        player.getInventory().armor.forEach(stack -> invokeClient(stack, player));
+        for (EquipmentSlot slot : ARMOR_SLOTS) {
+            invokeClient(player.getItemBySlot(slot), player);
+        }
     }
 
     private static void invokeClient(ItemStack stack, Player player) {
@@ -49,7 +55,7 @@ public final class MPGClientEventLogic {
             return;
         }
         Minecraft minecraft = Minecraft.getInstance();
-        if (minecraft.level != null || !(minecraft.screen instanceof TitleScreen)) {
+        if (minecraft.level != null || !(minecraft.gui.screen() instanceof TitleScreen)) {
             return;
         }
         if (!autoLoadCheckLogged) {
@@ -82,7 +88,7 @@ public final class MPGClientEventLogic {
     }
 
     private static void logFirstWorld(Minecraft minecraft, List<LevelSummary> summaries, Logger logger) {
-        if (minecraft.level != null || !(minecraft.screen instanceof TitleScreen) || summaries.isEmpty()) {
+        if (minecraft.level != null || !(minecraft.gui.screen() instanceof TitleScreen) || summaries.isEmpty()) {
             return;
         }
         logger.info("Dev auto-loading first world: {}", summaries.getFirst().getLevelId());

@@ -13,12 +13,8 @@
     "000"
   ],
   "key": {
-    "0": {
-      "item": "minecraft:cobblestone"
-    },
-    "1": {
-      "item": "minecraft:furnace"
-    }
+    "0": "minecraft:cobblestone",
+    "1": "minecraft:furnace"
   },
   "result": {
     "count": 1,

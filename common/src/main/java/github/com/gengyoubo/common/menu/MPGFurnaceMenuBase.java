@@ -12,7 +12,7 @@ import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.RecipePropertySet;
 import org.jetbrains.annotations.NotNull;
 
 public class MPGFurnaceMenuBase extends AbstractFurnaceMenu {
@@ -22,7 +22,7 @@ public class MPGFurnaceMenuBase extends AbstractFurnaceMenu {
 
     protected MPGFurnaceMenuBase(MenuType<?> menuType, int containerId, Inventory inventory,
                                  Container container, ContainerData data) {
-        super(menuType, RecipeType.SMELTING, RecipeBookType.FURNACE,
+        super(menuType, RecipePropertySet.FURNACE_INPUT, RecipeBookType.FURNACE,
                 containerId, inventory, container, data);
         replaceResultSlot(inventory);
     }

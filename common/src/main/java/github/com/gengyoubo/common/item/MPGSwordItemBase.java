@@ -5,55 +5,72 @@ import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPText;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.SwordItem;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 /** Shared Manaita sword modes and player-only execution attack. */
-public abstract class MPGSwordItemBase extends SwordItem implements IMPGKey, IMPGDoubling {
+public abstract class MPGSwordItemBase extends Item implements IMPGKey, IMPGDoubling {
     private static final int MAX_ATTACK_AREA = 27;
+    // Replaces the deleted nested Tier: same values, with the netherite-ingot repair
+    // Ingredient mapped onto the vanilla netherite repair tag (exactly netherite_ingot).
+    private static final ToolMaterial MANAITA_SWORD_MATERIAL = new ToolMaterial(
+            // enchantmentValue 1 replaces the old zero: Enchantable now rejects
+            // non-positive values, and 1 keeps isEnchantable() true as before.
+            BlockTags.INCORRECT_FOR_NETHERITE_TOOL, -1, Float.MAX_VALUE, Float.MAX_VALUE, 1,
+            ItemTags.NETHERITE_TOOL_MATERIALS);
 
-    protected MPGSwordItemBase() {
-        super(new ItemManaitaSwordTier(), new Item.Properties().fireResistant());
+    protected MPGSwordItemBase(Item.Properties props) {
+        // 0/0 attack baselines keep the old base damage and swing speed (the sword used to
+        // register no attribute modifiers); the material's max bonus still applies.
+        // UNBREAKABLE restores the old uses = -1 "never breaks" behaviour, with its vanilla
+        // tooltip line hidden to keep the previous tooltip.
+        super(props.fireResistant()
+                .sword(MANAITA_SWORD_MATERIAL, 0.0F, 0.0F)
+                .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                .component(DataComponents.TOOLTIP_DISPLAY,
+                        TooltipDisplay.DEFAULT.withHidden(DataComponents.UNBREAKABLE, true)));
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, @NotNull Level level, @NotNull Entity entity,
-                              int slot, boolean selected) {
-        super.inventoryTick(stack, level, entity, slot, selected);
+    public void inventoryTick(ItemStack stack, @NotNull ServerLevel level, @NotNull Entity entity,
+                              @Nullable EquipmentSlot slot) {
+        super.inventoryTick(stack, level, entity, slot);
         stack.setPopTime(0);
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
-                                @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(modeLine("mode.doubling", isDoubling(stack)));
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
+                                @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                @NotNull TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, tooltip, flag);
+        tooltip.accept(modeLine("mode.doubling", isDoubling(stack)));
         int area = getAttackArea(stack);
-        tooltip.add(Component.literal(MPText.manaita_mode.formatting(
+        tooltip.accept(Component.literal(MPText.manaita_mode.formatting(
                 translate("mode.attack_area") + ": " + area + "x" + area)));
-        tooltip.add(modeLine("mode.attack_friendly_mob", attacksFriendlyMobs(stack)));
-        tooltip.add(Component.empty());
-        tooltip.add(Component.literal(MPText.manaita_infinity.formatting(translate("info.attack"))));
+        tooltip.accept(modeLine("mode.attack_friendly_mob", attacksFriendlyMobs(stack)));
+        tooltip.accept(Component.empty());
+        tooltip.accept(Component.literal(MPText.manaita_infinity.formatting(translate("info.attack"))));
     }
 
     @Override
@@ -83,7 +100,7 @@ public abstract class MPGSwordItemBase extends SwordItem implements IMPGKey, IMP
 
     /** Called only from player attack hooks; mobs receive the normal weapon attack without execution. */
     public final void performPlayerAttack(Player player, ItemStack stack, LivingEntity primaryTarget) {
-        if (player.level().isClientSide) {
+        if (player.level().isClientSide()) {
             return;
         }
 
@@ -169,9 +186,13 @@ public abstract class MPGSwordItemBase extends SwordItem implements IMPGKey, IMP
     }
 
     private void showModeMessage(Player player, ItemStack stack, String mode, String value) {
-        player.displayClientMessage(Component.literal(MPText.manaita_mode.formatting(
-                stack.getDisplayName().getString() + " " + translate(mode) + ": " + value)),
-                keyMessageUsesOverlay());
+        Component message = Component.literal(MPText.manaita_mode.formatting(
+                stack.getDisplayName().getString() + " " + translate(mode) + ": " + value));
+        if (keyMessageUsesOverlay()) {
+            player.sendOverlayMessage(message);
+        } else {
+            player.sendSystemMessage(message);
+        }
     }
 
     protected boolean keyMessageUsesOverlay() {
@@ -185,37 +206,5 @@ public abstract class MPGSwordItemBase extends SwordItem implements IMPGKey, IMP
 
     protected static String translate(String key) {
         return Component.translatable(key).getString();
-    }
-
-    public static final class ItemManaitaSwordTier implements Tier {
-        @Override
-        public int getUses() {
-            return -1;
-        }
-
-        @Override
-        public float getSpeed() {
-            return Float.MAX_VALUE;
-        }
-
-        @Override
-        public float getAttackDamageBonus() {
-            return Float.MAX_VALUE;
-        }
-
-        @Override
-        public int getEnchantmentValue() {
-            return 0;
-        }
-
-        @Override
-        public @NotNull Ingredient getRepairIngredient() {
-            return Ingredient.of(Items.NETHERITE_INGOT);
-        }
-
-        @Override
-        public @NotNull TagKey<Block> getIncorrectBlocksForDrops() {
-            return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
-        }
     }
 }

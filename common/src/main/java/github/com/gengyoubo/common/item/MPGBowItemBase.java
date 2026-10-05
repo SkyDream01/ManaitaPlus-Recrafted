@@ -4,27 +4,36 @@ import github.com.gengyoubo.common.item.data.IMPGDoubling;
 import github.com.gengyoubo.common.item.data.IMPGKey;
 import github.com.gengyoubo.common.util.MPText;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 /** Loader-neutral bow data, text and key handling. */
 public abstract class MPGBowItemBase extends Item implements IMPGKey, IMPGDoubling {
-    protected MPGBowItemBase(int durability) {
-        super(new Properties().durability(durability).fireResistant());
+    protected MPGBowItemBase(Item.Properties props, int durability) {
+        // UNBREAKABLE keeps the legacy negative-durability "never breaks" behaviour (its
+        // vanilla tooltip line is hidden to keep the previous tooltip).
+        super(props.durability(durability).fireResistant()
+                .component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+                .component(DataComponents.TOOLTIP_DISPLAY,
+                        TooltipDisplay.DEFAULT.withHidden(DataComponents.UNBREAKABLE, true)));
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context,
-                                List<Component> tooltip, @NotNull TooltipFlag flag) {
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull Item.TooltipContext context,
+                                @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip,
+                                @NotNull TooltipFlag flag) {
         String state = isDoubling(stack) ? translate("info.on") : translate("info.off");
-        tooltip.add(Component.literal(MPText.manaita_mode.formatting(translate("mode.doubling") + ":" + state)));
-        tooltip.add(Component.literal(MPText.manaita_infinity.formatting(translate("info.attack"))));
+        tooltip.accept(Component.literal(MPText.manaita_mode.formatting(translate("mode.doubling") + ":" + state)));
+        tooltip.accept(Component.literal(MPText.manaita_infinity.formatting(translate("info.attack"))));
     }
 
     @Override
@@ -44,7 +53,12 @@ public abstract class MPGBowItemBase extends Item implements IMPGKey, IMPGDoubli
                 MPText.manaita_mode.formatting(translate("item.manaita_bow.name")),
                 ChatFormatting.RESET, ChatFormatting.RESET, translate("mode.doubling"),
                 doubling ? translate("info.on") : translate("info.off"));
-        player.displayClientMessage(Component.literal(message), keyMessageUsesOverlay());
+        Component messageComponent = Component.literal(message);
+        if (keyMessageUsesOverlay()) {
+            player.sendOverlayMessage(messageComponent);
+        } else {
+            player.sendSystemMessage(messageComponent);
+        }
     }
 
     protected boolean keyMessageUsesOverlay() {

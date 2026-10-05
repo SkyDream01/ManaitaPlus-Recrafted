@@ -4,10 +4,6 @@ import github.com.gengyoubo.MPG.menu.MPGBrewingStandMenu;
 import github.com.gengyoubo.common.client.gui.MPGBrewingStandScreenBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-
-@OnlyIn(Dist.CLIENT)
 public class BrewingStandScreen extends MPGBrewingStandScreenBase<MPGBrewingStandMenu> {
     public BrewingStandScreen(MPGBrewingStandMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

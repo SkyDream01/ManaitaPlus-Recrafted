@@ -1,25 +1,32 @@
 package github.com.gengyoubo.MPG.item;
 
+import net.minecraft.world.item.Item;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.state.level.PlayerRenderState;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.TooltipContext;
+import net.minecraft.world.item.component.TooltipDisplay;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import github.com.gengyoubo.MPG.entity.MPGLightningBolt;
@@ -34,12 +41,13 @@ import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPText;
 import github.com.gengyoubo.MPG.util.MPUtils;
 
-import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaLightningBolt;
 
-public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling {
+// SwordItem is deleted in 26.3: the sword behaviour is now Item.Properties#sword below.
+public class MPGGodSwordItem extends Item implements IMPGKey, IMPGDoubling {
     public static final IClientItemExtensions CLIENT_EXTENSIONS = new IClientItemExtensions() {
         @Nullable
         @Override
@@ -51,28 +59,45 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
         }
 
         @Override
-        public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
-            if (player.isUsingItem() && player.getUseItemRemainingTicks() > 0 && player.getUsedItemHand() == (arm == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND)) {
+        public boolean applyForgeHandTransform(PoseStack poseStack, PlayerRenderState playerRenderState, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+            // The live LocalPlayer is gone from this hook in 26.3; the render state carries the
+            // same using-item information the old checks read.
+            AvatarRenderState avatarRenderState = playerRenderState.avatarRenderState;
+            if (avatarRenderState != null && avatarRenderState.isUsingItem
+                    && playerRenderState.firstPersonHandsAndItems.useItemRemainingTicks > 0
+                    && avatarRenderState.useItemHand == (arm == HumanoidArm.LEFT ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND)) {
                 int side = arm == HumanoidArm.RIGHT ? 1 : -1;
                 double f = Mth.sin(swingProcess * swingProcess * Mth.PI);
                 double f1 = Mth.sin(Mth.sqrt(swingProcess) * Mth.PI);
                 poseStack.translate(side * 0.56, -0.52 + equipProcess * -0.6, -0.72);
                 poseStack.translate(side * -0.1414214, 0.08, 0.1414214);
-                poseStack.mulPose(Axis.XP.rotationDegrees((float) (-102.25F - f1 * 80.0F)));
-                poseStack.mulPose(Axis.YP.rotationDegrees((float) (side * 13.365F - f * 20.0F)));
-                poseStack.mulPose(Axis.ZP.rotationDegrees((float) (side * 78.050003F - f1 * 20.0F)));
+                // PoseStack#mulPose(Axis#rotationDegrees) is now PoseStack#rotateDegrees.
+                poseStack.rotateDegrees(Axis.XP, (float) (-102.25F - f1 * 80.0F));
+                poseStack.rotateDegrees(Axis.YP, (float) (side * 13.365F - f * 20.0F));
+                poseStack.rotateDegrees(Axis.ZP, (float) (side * 78.050003F - f1 * 20.0F));
                 return true;
             }
             return false;
         }
     };
 
-    public MPGGodSwordItem() {
-        super(new MPGToolTier(), new Item.Properties().fireResistant());
+    public MPGGodSwordItem(Item.Properties props) {
+        // 3.0F/-2.4F are the old SwordItem attack damage and swing speed baselines (the material's
+        // max bonus still applies); the tier's uses = -1 durability keeps the sword unbreakable,
+        // exactly like the old SwordItem(Tier, Properties) constructor.
+        super(props.fireResistant()
+                .sword(new MPGToolTier().material(), 3.0F, -2.4F));
     }
 
 
 
+
+    @Override
+    public boolean canPerformAction(@NotNull ItemInstance stack, @NotNull ItemAbility itemAbility) {
+        // SwordItem used to answer yes for SWORD_SWEEP (DEFAULT_SWORD_ACTIONS); it is the only
+        // surviving sword ability in 26.3.
+        return itemAbility == ItemAbilities.SWORD_SWEEP;
+    }
 
     @Override
     public boolean onDroppedByPlayer(ItemStack item, Player player) {
@@ -82,7 +107,7 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
     }
 
     @Override
-    public void inventoryTick(@NotNull ItemStack p_41404_, @NotNull Level p_41405_, @NotNull Entity p_41406_, int p_41407_, boolean p_41408_) {
+    public void inventoryTick(@NotNull ItemStack p_41404_, @NotNull ServerLevel p_41405_, @NotNull Entity p_41406_, @Nullable EquipmentSlot p_41407_) {
         if (p_41406_ instanceof  Player player) {
             player.getAbilities().mayfly = true;
             player.setHealth(player.getMaxHealth());
@@ -105,14 +130,16 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
     }
 
     @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level p_41432_, Player player, @NotNull InteractionHand p_41434_) {
+    public @NotNull InteractionResult use(Level p_41432_, Player player, @NotNull InteractionHand p_41434_) {
         ItemStack itemstack = player.getItemInHand(p_41434_);
         player.startUsingItem(p_41434_);
-        if (!p_41432_.isClientSide) {
+        if (!p_41432_.isClientSide()) {
             Random random = new Random();
             Vec3 position = player.position();
             for (int i = 0; i < 100; i++) {
-                MPGLightningBolt bolt = ManaitaLightningBolt.get().create(p_41432_);
+                // EntityType#create(Level) is gone in 26.3; TRIGGERED is the vanilla reason for
+                // effect-spawned entities such as lightning.
+                MPGLightningBolt bolt = ManaitaLightningBolt.get().create(p_41432_, EntitySpawnReason.TRIGGERED);
                 if (bolt != null) {
                     float angle = random.nextFloat() * 62.831852F;
                     double distance = random.nextGaussian() * 100.0D;
@@ -127,16 +154,17 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
             }
         }
         MPUtils.godKill(player,isRemove(itemstack),player.isShiftKeyDown());
-        return InteractionResultHolder.pass(itemstack);
+        // InteractionResultHolder is deleted in 26.3: pass maps to InteractionResult.PASS.
+        return InteractionResult.PASS;
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack p_41421_, @NotNull TooltipContext context, @NotNull List<Component> p_41423_, @NotNull TooltipFlag p_41424_) {
-        super.appendHoverText(p_41421_, context, p_41423_, p_41424_);
-        p_41423_.add(Component.literal(MPText.manaita_mode.formatting(I18n.get("mode.doubling") + ":" + (isDoubling(p_41421_) ? I18n.get("info.on") : I18n.get("info.off")))));
-        p_41423_.add(Component.literal(MPText.manaita_mode.formatting(I18n.get("mode.remove.name") + ":" + (isRemove(p_41421_) ? I18n.get("info.on") : I18n.get("info.off")))));
-        p_41423_.add(Component.empty());
-        p_41423_.add(Component.literal(MPText.manaita_enchantment.formatting(I18n.get("info.item.manaita_sword_god.1"))));
+    public void appendHoverText(@NotNull ItemStack p_41421_, @NotNull TooltipContext context, @NotNull TooltipDisplay p_41422_, @NotNull Consumer<Component> p_41423_, @NotNull TooltipFlag p_41424_) {
+        super.appendHoverText(p_41421_, context, p_41422_, p_41423_, p_41424_);
+        p_41423_.accept(Component.literal(MPText.manaita_mode.formatting(I18n.get("mode.doubling") + ":" + (isDoubling(p_41421_) ? I18n.get("info.on") : I18n.get("info.off")))));
+        p_41423_.accept(Component.literal(MPText.manaita_mode.formatting(I18n.get("mode.remove.name") + ":" + (isRemove(p_41421_) ? I18n.get("info.on") : I18n.get("info.off")))));
+        p_41423_.accept(Component.empty());
+        p_41423_.accept(Component.literal(MPText.manaita_enchantment.formatting(I18n.get("info.item.manaita_sword_god.1"))));
     }
 
     @Override
@@ -150,8 +178,10 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
     }
 
     @Override
-    public @NotNull UseAnim getUseAnimation(@NotNull ItemStack p_41452_) {
-        return UseAnim.CUSTOM;
+    public @NotNull ItemUseAnimation getUseAnimation(@NotNull ItemStack p_41452_) {
+        // UseAnim.CUSTOM is gone in 26.3: NONE means "no vanilla arm transform", while the custom
+        // pose comes from CLIENT_EXTENSIONS (applyForgeHandTransform/getArmPose) as before.
+        return ItemUseAnimation.NONE;
     }
 
     @Override
@@ -159,12 +189,10 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
         return true;
     }
 
-    @Override
-    public boolean isEnchantable(@NotNull ItemStack p_41456_) {
-        return true;
-    }
+    // Item#isEnchantable is gone in 26.3; Item.Properties#sword already wires the ENCHANTABLE
+    // component (enchantment value 0), which keeps ItemStack#isEnchantable() returning true.
 
-// --娉ㄩ噴鎺夋鏌?START (2026/4/24 23:35):
+// --娉ㄩ噴鎺夋鏌?START (2026/4/24 23:35):
 //    public void onManaitaKeyPress(ItemStack itemStack, Player player) {
 //        if (player.isShiftKeyDown()) {
 //            boolean remove = !isRemove(itemStack);
@@ -174,7 +202,7 @@ public class MPGGodSwordItem extends SwordItem implements IMPGKey, IMPGDoubling 
 //            setDoubling(itemStack, doubling);
 //        }
 //    }
-// --娉ㄩ噴鎺夋鏌?STOP (2026/4/24 23:35)
+// --娉ㄩ噴鎺夋鏌?STOP (2026/4/24 23:35)
 
     @Override
     public void onManaitaKeyPress(ItemStack itemStack) {

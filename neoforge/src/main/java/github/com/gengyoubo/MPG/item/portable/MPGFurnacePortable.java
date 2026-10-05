@@ -1,5 +1,6 @@
 package github.com.gengyoubo.MPG.item.portable;
 
+import net.minecraft.world.item.Item;
 import github.com.gengyoubo.MPG.core.MPGBlockCore;
 import github.com.gengyoubo.MPG.core.MPGBlockEntityCore;
 import github.com.gengyoubo.MPG.menu.MPGFurnaceMenu;
@@ -13,8 +14,8 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class MPGFurnacePortable extends MPGPortableItem {
-    public MPGFurnacePortable() {
-        super("item.portableFurnace.");
+    public MPGFurnacePortable(Item.Properties props) {
+        super(props, "item.portableFurnace.");
     }
 
     @Override

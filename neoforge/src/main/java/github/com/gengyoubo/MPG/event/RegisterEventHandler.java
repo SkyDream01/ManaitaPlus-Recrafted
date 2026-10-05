@@ -1,20 +1,22 @@
 package github.com.gengyoubo.MPG.event;
 
+import net.neoforged.api.distmarker.Dist;
+
 import com.mojang.blaze3d.platform.InputConstants;
+import com.mojang.serialization.MapCodec;
 import github.com.gengyoubo.MPG.MPG;
 import github.com.gengyoubo.MPG.core.*;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.client.renderer.item.ItemPropertyFunction;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
-import net.neoforged.api.distmarker.Dist;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.ItemOwner;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
-import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
@@ -29,34 +31,16 @@ import github.com.gengyoubo.MPG.item.MPGGodSwordItem;
 import github.com.gengyoubo.MPG.entity.RenderManaitaArrow;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
-import github.com.gengyoubo.common.util.MPGTypeHelper;
+import org.jetbrains.annotations.Nullable;
 
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaArrow;
 import static github.com.gengyoubo.MPG.core.MPGEntityCore.ManaitaLightningBolt;
 
-@EventBusSubscriber(modid = MPG.MODID, value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = MPG.MODID, value = Dist.CLIENT)
 public class RegisterEventHandler {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            ClientEventHandler.register();
-            acceptTypePropertyFunction(
-                    MPGBlockCore.CraftingBlockItem.get(),
-                    MPGBlockCore.FurnaceBlockItem.get(),
-                    MPGBlockCore.BrewingBlockItem.get(),
-                    MPGBlockCore.HookBlockItem.get(),
-                    MPGItemCore.ManaitaCraftingPortable.get(),
-                    MPGItemCore.ManaitaFurnacePortable.get(),
-                    MPGItemCore.ManaitaBrewingPortable.get()
-            );
-            if (MPGItemCore.isCuriosLoaded()) {
-                acceptTypePropertyFunction(
-                        MPGItemCore.ManaitaCraftingRing.get(),
-                        MPGItemCore.ManaitaFurnaceRing.get(),
-                        MPGItemCore.ManaitaBrewingRing.get()
-                );
-            }
-        });
+        event.enqueueWork(ClientEventHandler::register);
     }
 
     @SubscribeEvent
@@ -71,9 +55,9 @@ public class RegisterEventHandler {
         event.registerEntityRenderer(ManaitaLightningBolt.get(), MPLightningBoltRenderer::new);
         event.registerEntityRenderer(ManaitaArrow.get(), RenderManaitaArrow::new);
 
-        BlockEntityRenderers.register(MPGBlockEntityCore.FURNACE_BLOCK_ENTITY.get(), RenderFurnaceManaitaBlockEntity::new);
-        BlockEntityRenderers.register(MPGBlockEntityCore.BREWING_BLOCK_ENTITY.get(), RenderBrewingManaitaBlockEntity::new);
-        BlockEntityRenderers.register(MPGBlockEntityCore.CRAFTING_BLOCK_ENTITY.get(), RenderCraftingManaitaBlockEntity::new);
+        event.registerBlockEntityRenderer(MPGBlockEntityCore.FURNACE_BLOCK_ENTITY.get(), RenderFurnaceManaitaBlockEntity::new);
+        event.registerBlockEntityRenderer(MPGBlockEntityCore.BREWING_BLOCK_ENTITY.get(), RenderBrewingManaitaBlockEntity::new);
+        event.registerBlockEntityRenderer(MPGBlockEntityCore.CRAFTING_BLOCK_ENTITY.get(), RenderCraftingManaitaBlockEntity::new);
     }
 
     @SubscribeEvent
@@ -84,21 +68,41 @@ public class RegisterEventHandler {
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event)
     {
-        MPGKeyBoardCore.MESSAGE_KEY = new KeyMapping("key.manaita", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 88, "key.categories.misc");
-        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 86, "key.categories.misc");
-        MPGKeyBoardCore.PAXEL_KEY = new KeyMapping("key.manaita.doubling", KeyConflictContext.IN_GAME, InputConstants.Type.KEYSYM, 67, "key.categories.misc");
+        // KeyMapping now takes a KeyMapping.Category instead of the KeyConflictContext/category string
+        // pair; IN_GAME was the default conflict context, so dropping it keeps the old behavior.
+        MPGKeyBoardCore.MESSAGE_KEY = new KeyMapping("key.manaita", InputConstants.Type.KEYBOARD, 88, KeyMapping.Category.MISC);
+        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", InputConstants.Type.KEYBOARD, 86, KeyMapping.Category.MISC);
+        MPGKeyBoardCore.PAXEL_KEY = new KeyMapping("key.manaita.doubling", InputConstants.Type.KEYBOARD, 67, KeyMapping.Category.MISC);
         event.register(MPGKeyBoardCore.MESSAGE_KEY);
         event.register(MPGKeyBoardCore.MESSAGE_ARMOR_KEY);
         event.register(MPGKeyBoardCore.PAXEL_KEY);
     }
 
-    @SuppressWarnings("deprecation")
-    private static void acceptTypePropertyFunction(Item... items) {
-        ResourceLocation location = ResourceLocation.fromNamespaceAndPath(MPG.MODID, MPGNBTData.Type);
-        ItemPropertyFunction typePropertyFunction = (stack, level, entity, seed) ->
-                MPGTypeHelper.toModelPredicate(MPGItemStackData.getInt(stack, MPGNBTData.ItemType));
-        for (Item item : items) {
-            ItemProperties.register(item, location, typePropertyFunction);
+    /**
+     * ItemProperties/ItemPropertyFunction are gone in 26.3; item model predicates are now
+     * range-select item model properties registered by id and referenced from the item model
+     * definitions ({@code assets/<ns>/items/<item_id>.json}, {@code minecraft:range_dispatch}).
+     * Expected property id: {@code manaita_plus_general:manaita_plus_general_type}, a float
+     * 0..8 read from the custom_data key "ManaitaPlusGeneralType".
+     */
+    @SubscribeEvent
+    public static void onRegisterItemModelProperty(RegisterRangeSelectItemModelPropertyEvent event) {
+        event.register(Identifier.fromNamespaceAndPath(MPG.MODID, MPGNBTData.Type), ManaitaTypeProperty.CODEC);
+    }
+
+    /** Range-select property exposing the custom_data "ManaitaPlusGeneralType" value (0..8). */
+    private record ManaitaTypeProperty() implements RangeSelectItemModelProperty {
+        private static final ManaitaTypeProperty INSTANCE = new ManaitaTypeProperty();
+        private static final MapCodec<ManaitaTypeProperty> CODEC = MapCodec.unit(INSTANCE);
+
+        @Override
+        public float get(ItemStack itemStack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
+            return MPGItemStackData.getInt(itemStack, MPGNBTData.ItemType);
+        }
+
+        @Override
+        public MapCodec<? extends RangeSelectItemModelProperty> type() {
+            return CODEC;
         }
     }
 }

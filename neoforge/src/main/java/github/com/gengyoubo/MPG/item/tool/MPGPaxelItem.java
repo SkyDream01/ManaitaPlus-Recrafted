@@ -1,19 +1,24 @@
 package github.com.gengyoubo.MPG.item.tool;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -24,17 +29,18 @@ import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.util.MPText;
 import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class MPGPaxelItem extends ManaitaPlusLegacyToolBase {
     public static final TagKey<Block> MINEABLE =
-            BlockTags.create(ResourceLocation.withDefaultNamespace("mineable"));
-    public MPGPaxelItem() {
-        super(MINEABLE, MPGToolProfile.PAXEL);
+            // BlockTags#create is private in 26.3; TagKey.create keeps the same minecraft:mineable tag.
+            TagKey.create(Registries.BLOCK, Identifier.withDefaultNamespace("mineable"));
+    public MPGPaxelItem(Item.Properties props) {
+        super(props, MINEABLE, MPGToolProfile.PAXEL);
     }
 
     @Override
-    public boolean canPerformAction(ItemStack stack, net.neoforged.neoforge.common.ItemAbility toolAction) {
+    public boolean canPerformAction(ItemInstance stack, net.neoforged.neoforge.common.ItemAbility toolAction) {
         return true;
     }
 
@@ -54,15 +60,15 @@ public class MPGPaxelItem extends ManaitaPlusLegacyToolBase {
     }
 
     @Override
-    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        super.appendHoverText(stack, context, tooltip, flag);
-        tooltip.add(Component.empty());
-        tooltip.add(Component.literal(MPText.manaita_infinity.formatting(I18n.get("info.attack"))));
+    public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull TooltipDisplay display, @NotNull Consumer<Component> tooltip, @NotNull TooltipFlag flag) {
+        super.appendHoverText(stack, context, display, tooltip, flag);
+        tooltip.accept(Component.empty());
+        tooltip.accept(Component.literal(MPText.manaita_infinity.formatting(I18n.get("info.attack"))));
     }
 
     @Override
-    public void inventoryTick(ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slot, boolean selected) {
-        super.inventoryTick(stack, level, entity, slot, selected);
+    public void inventoryTick(ItemStack stack, @NotNull ServerLevel level, @NotNull Entity entity, @Nullable EquipmentSlot slot) {
+        super.inventoryTick(stack, level, entity, slot);
         stack.setPopTime(0);
     }
 
@@ -73,6 +79,9 @@ public class MPGPaxelItem extends ManaitaPlusLegacyToolBase {
                 ManaitaPlusLegacyToolActionHelper.applyAxeActions(context, pos, state)
                         | ManaitaPlusLegacyToolActionHelper.applyGrowPlantAction(context, pos, state)
                         | ManaitaPlusLegacyToolActionHelper.applyShovelAction(context, pos, state));
-        return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
+        // InteractionResult.sidedSuccess is gone in 26.3.
+        return changed
+                ? (context.getLevel().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER)
+                : InteractionResult.PASS;
     }
 }

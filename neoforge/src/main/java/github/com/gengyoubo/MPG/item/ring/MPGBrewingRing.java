@@ -1,5 +1,6 @@
 package github.com.gengyoubo.MPG.item.ring;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -10,6 +11,10 @@ import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 
 public class MPGBrewingRing extends MPGBrewingPortable implements ICurioItem {
+    public MPGBrewingRing(Item.Properties props) {
+        super(props);
+    }
+
     @Override
     public @NotNull Component getName(@NotNull ItemStack stack) {
         return Component.translatable("item.ringBrewing." + MPGItemStackData.getInt(stack, MPGNBTData.ItemType) + ".name");

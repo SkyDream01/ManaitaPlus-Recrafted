@@ -13,3 +13,5 @@ neoforge/build
 neoforge/run
 /forge/src/main/resources/.cache/
 /fabric/src/main/resources/.cache/
+.ref/
+/neoforge/src/generated/resources/.cache/

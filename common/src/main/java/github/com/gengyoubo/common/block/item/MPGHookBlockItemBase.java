@@ -3,7 +3,7 @@ package github.com.gengyoubo.common.block.item;
 import github.com.gengyoubo.common.block.MPGBlockData;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -17,6 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -25,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 public class MPGHookBlockItemBase extends BlockItem {
     private final Class<? extends Block> hookBlockClass;
 
-    public MPGHookBlockItemBase(Block block, Class<? extends Block> hookBlockClass) {
-        super(block, new Properties().fireResistant());
+    public MPGHookBlockItemBase(Block block, Item.Properties properties, Class<? extends Block> hookBlockClass) {
+        super(block, properties.fireResistant());
         this.hookBlockClass = hookBlockClass;
     }
 
@@ -64,7 +65,7 @@ public class MPGHookBlockItemBase extends BlockItem {
         BlockState placedState = level.getBlockState(pos);
         if (placedState.is(state.getBlock())) {
             placedState = updateBlockStateFromTag(pos, level, itemStack, placedState);
-            updateCustomBlockEntityTag(pos, level, player, itemStack, placedState);
+            updateCustomBlockEntityTag(level, player, pos, itemStack);
             placedState.getBlock().setPlacedBy(level, pos, placedState, player, itemStack);
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, pos, itemStack);
@@ -81,7 +82,7 @@ public class MPGHookBlockItemBase extends BlockItem {
         if (player == null || !player.getAbilities().instabuild) {
             itemStack.shrink(1);
         }
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     protected SoundType getPlacementSoundType(BlockState state, Level level, BlockPos pos, Player player) {

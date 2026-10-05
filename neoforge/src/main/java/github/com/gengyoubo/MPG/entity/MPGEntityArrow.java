@@ -6,7 +6,7 @@ import github.com.gengyoubo.common.entity.MPGEntityArrowBase;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.entity.PartEntity;
 

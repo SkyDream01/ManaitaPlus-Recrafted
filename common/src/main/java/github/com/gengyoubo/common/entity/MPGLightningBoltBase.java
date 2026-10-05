@@ -1,6 +1,5 @@
 package github.com.gengyoubo.common.entity;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -8,6 +7,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.NotNull;
 
 /** Shared visual-only lightning lifecycle used by the god sword. */
@@ -18,7 +19,6 @@ public abstract class MPGLightningBoltBase extends Entity {
 
     protected MPGLightningBoltBase(EntityType<?> type, Level level) {
         super(type, level);
-        noCulling = true;
         life = 2;
         seed = random.nextLong();
         flashes = random.nextInt(3) + 1;
@@ -66,10 +66,10 @@ public abstract class MPGLightningBoltBase extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(@NotNull CompoundTag tag) {
+    protected void readAdditionalSaveData(@NotNull ValueInput input) {
     }
 
     @Override
-    protected void addAdditionalSaveData(@NotNull CompoundTag tag) {
+    protected void addAdditionalSaveData(@NotNull ValueOutput output) {
     }
 }

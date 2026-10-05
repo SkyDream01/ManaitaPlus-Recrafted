@@ -1,8 +1,9 @@
 package github.com.gengyoubo.MPG.item.tool;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.context.UseOnContext;
 import org.jetbrains.annotations.NotNull;
 import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyTaggedToolItem;
@@ -10,19 +11,25 @@ import github.com.gengyoubo.MPG.item.tool.base.ManaitaPlusLegacyToolActionHelper
 import github.com.gengyoubo.common.item.tool.MPGToolProfile;
 
 public class MPGAxeItem extends ManaitaPlusLegacyTaggedToolItem {
-    public MPGAxeItem() {
-        super(BlockTags.MINEABLE_WITH_AXE, MPGToolProfile.AXE);
+    public MPGAxeItem(Item.Properties props) {
+        super(props, BlockTags.MINEABLE_WITH_AXE, MPGToolProfile.AXE);
     }
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         int range = getRange(context.getItemInHand()) >> 1;
         boolean changed = ManaitaPlusLegacyToolActionHelper.applyInRange(context, range, (pos, state) -> ManaitaPlusLegacyToolActionHelper.applyAxeActions(context, pos, state));
-        return changed ? InteractionResult.sidedSuccess(context.getLevel().isClientSide) : InteractionResult.PASS;
+        // InteractionResult.sidedSuccess is gone in 26.3.
+        return changed
+                ? (context.getLevel().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER)
+                : InteractionResult.PASS;
     }
 
     @Override
-    public boolean canPerformAction(@NotNull ItemStack stack, net.neoforged.neoforge.common.@NotNull ItemAbility toolAction) {
-        return net.neoforged.neoforge.common.ItemAbilities.DEFAULT_AXE_ACTIONS.contains(toolAction);
+    public boolean canPerformAction(@NotNull ItemInstance stack, net.neoforged.neoforge.common.@NotNull ItemAbility toolAction) {
+        // DEFAULT_AXE_ACTIONS is gone in 26.3 (strip/scrape/wax-off are data-driven now) and no
+        // stock ItemAbility is left for it to match, so every queried ability is rejected just
+        // like the old set lookup did.
+        return false;
     }
 }

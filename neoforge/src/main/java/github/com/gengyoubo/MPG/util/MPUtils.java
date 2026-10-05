@@ -15,8 +15,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.entity.projectile.DragonFireball;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
+import net.minecraft.world.entity.projectile.hurtingprojectile.DragonFireball;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -56,7 +56,6 @@ public class MPUtils {
             List<Entity> tntities = new ArrayList<>();
             EntitiesWrapper wrapper = ENTITY_CACHE.get();
             wrapper.addIterable(server.getAllEntities());
-            wrapper.addIterable(server.getPartEntities());
             Entity[] entities = wrapper.getEntities();
             for (int i = 0; i < wrapper.size(); i++) {
                 Entity entity = entities[i];
@@ -68,7 +67,6 @@ public class MPUtils {
                 if (!shiftKeyDown && target.getType().getCategory() != MobCategory.MONSTER) continue;
                 attack(target, player,remove);
             }
-            server.getPartEntities().clear();
             wrapper.reset();
             for (Entity tntity : tntities) {
                 if (tntity instanceof ItemEntity item) {
@@ -171,16 +169,16 @@ public class MPUtils {
 
 
     public static void popResource(Level p_49841_, BlockPos p_49842_, ItemStack p_49843_) {
-        double d0 = (double) EntityType.ITEM.getHeight() / 2.0D;
-        double d1 = (double)p_49842_.getX() + 0.5D + Mth.nextDouble(p_49841_.random, -0.25D, 0.25D);
-        double d2 = (double)p_49842_.getY() + 0.5D + Mth.nextDouble(p_49841_.random, -0.25D, 0.25D) - d0;
-        double d3 = (double)p_49842_.getZ() + 0.5D + Mth.nextDouble(p_49841_.random, -0.25D, 0.25D);
+        double d0 = (double) EntityTypes.ITEM.getHeight() / 2.0D;
+        double d1 = (double)p_49842_.getX() + 0.5D + Mth.nextDouble(p_49841_.getRandom(), -0.25D, 0.25D);
+        double d2 = (double)p_49842_.getY() + 0.5D + Mth.nextDouble(p_49841_.getRandom(), -0.25D, 0.25D) - d0;
+        double d3 = (double)p_49842_.getZ() + 0.5D + Mth.nextDouble(p_49841_.getRandom(), -0.25D, 0.25D);
         popResource(p_49841_, () -> new ItemEntity(p_49841_, d1, d2, d3, p_49843_), p_49843_);
     }
 
 
     private static void popResource(Level p_152441_, Supplier<ItemEntity> p_152442_, ItemStack p_152443_) {
-        if (!p_152441_.isClientSide && !p_152443_.isEmpty()) {
+        if (!p_152441_.isClientSide() && !p_152443_.isEmpty()) {
             ItemEntity itementity = p_152442_.get();
             itementity.setDefaultPickUpDelay();
             p_152441_.addFreshEntity(itementity);
@@ -188,7 +186,9 @@ public class MPUtils {
     }
 
     public static boolean isManaitaArmor(Player player) {
-        for (ItemStack itemStack : player.getInventory().armor) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR) continue;
+            ItemStack itemStack = player.getItemBySlot(slot);
             if (itemStack == null || !(itemStack.getItem() instanceof MPGArmor))
                 return false;
         }
@@ -196,7 +196,9 @@ public class MPUtils {
     }
 
     public static boolean isManaitaArmorPart(Player player) {
-        for (ItemStack itemStack : player.getInventory().armor) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (slot.getType() != EquipmentSlot.Type.HUMANOID_ARMOR) continue;
+            ItemStack itemStack = player.getItemBySlot(slot);
             if (itemStack != null && itemStack.getItem() instanceof MPGArmor)
                 return true;
         }
@@ -261,19 +263,19 @@ public class MPUtils {
     public static boolean setBlock(Level level,BlockPos p_46605_, BlockState p_46606_,int p_46607_ ) {
         if (level.isOutsideBuildHeight(p_46605_)) {
             return false;
-        } else if (!level.isClientSide && level.isDebug()) {
+        } else if (!level.isClientSide() && level.isDebug()) {
             return false;
         } else {
             LevelChunk levelchunk = level.getChunkAt(p_46605_);
 
             p_46605_ = p_46605_.immutable(); // Forge - prevent mutable BlockPos leaks
             net.neoforged.neoforge.common.util.BlockSnapshot blockSnapshot = null;
-            if (level.captureBlockSnapshots && !level.isClientSide) {
+            if (level.captureBlockSnapshots && !level.isClientSide()) {
                 blockSnapshot = net.neoforged.neoforge.common.util.BlockSnapshot.create(level.dimension(), level, p_46605_, p_46607_);
                 level.capturedBlockSnapshots.add(blockSnapshot);
             }
 
-            BlockState blockstate = levelchunk.setBlockState(p_46605_, p_46606_, false);
+            BlockState blockstate = levelchunk.setBlockState(p_46605_, p_46606_, p_46607_);
             if (blockstate == null) {
                 if (blockSnapshot != null) level.capturedBlockSnapshots.remove(blockSnapshot);
                 return false;
@@ -300,7 +302,7 @@ public class MPUtils {
                     serverPlayer.connection.send(new ClientboundBlockUpdatePacket(pos, serverLevel.getFluidState(pos).createLegacyBlock()));
                 }
 
-                boolean removed = blockState.onDestroyedByPlayer(level, pos, player, false, level.getFluidState(pos));
+                boolean removed = blockState.onDestroyedByPlayer(level, pos, player, stack, false, level.getFluidState(pos));
                 if (removed)
                     block.destroy(level, pos, blockState);
 
@@ -368,7 +370,7 @@ public class MPUtils {
 
     public static void chat(Player player, Component message) {
         if (player != null) {
-            player.displayClientMessage(message, false);
+            player.sendSystemMessage(message);
         }
     }
 }

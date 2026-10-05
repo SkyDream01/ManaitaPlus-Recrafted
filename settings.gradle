@@ -1,15 +1,24 @@
 pluginManagement {
     repositories {
-        maven { url = 'https://maven.fabricmc.net/' }
-        maven { url = 'https://maven.architectury.dev/' }
-        maven { url = 'https://files.minecraftforge.net/maven/' }
         gradlePluginPortal()
+        mavenCentral()
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases'
+            content {
+                includeGroup 'net.neoforged'
+            }
+        }
     }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
 rootProject.name = 'manaita_plus_general'
 
+// The 26.3 port currently targets NeoForge only; the fabric/forge module
+// sources stay in the tree but are not part of the build.
 include 'common'
-include 'fabric'
-include 'forge'
 include 'neoforge'

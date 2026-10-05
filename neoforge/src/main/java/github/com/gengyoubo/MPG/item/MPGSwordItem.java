@@ -1,17 +1,23 @@
 package github.com.gengyoubo.MPG.item;
 
+import net.minecraft.world.item.Item;
 import github.com.gengyoubo.common.item.MPGSwordItemBase;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemInstance;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.ItemAbility;
 import org.jetbrains.annotations.NotNull;
 
 public class MPGSwordItem extends MPGSwordItemBase {
+    public MPGSwordItem(Item.Properties props) {
+        super(props);
+    }
+
     @Override
-    public boolean canPerformAction(@NotNull ItemStack stack, @NotNull ItemAbility itemAbility) {
+    public boolean canPerformAction(@NotNull ItemInstance stack, @NotNull ItemAbility itemAbility) {
         return true;
     }
 

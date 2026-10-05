@@ -1,11 +1,5 @@
 plugins {
-    id 'dev.architectury.loom' version '1.17-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.5-SNAPSHOT'
-    id 'com.gradleup.shadow' version '9.4.3' apply false
-}
-
-architectury {
-    minecraft = project.minecraft_version
+    id 'base'
 }
 
 allprojects {
@@ -14,51 +8,31 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
+    apply plugin: 'java-library'
     apply plugin: 'maven-publish'
 
     base {
-        // Set up a suffixed format for the mod jar names, e.g. `example-fabric`.
+        // Set up a suffixed format for the mod jar names, e.g. `example-neoforge`.
         archivesName = "$rootProject.archives_name-$project.name"
-    }
-
-    repositories {
-        maven { url = 'https://maven.blamejared.com/' }
-        maven { url = 'https://maven.terraformersmc.com/releases/' }
-        maven { url = 'https://maven.ladysnake.org/releases' }
-        maven { url = 'https://maven.theillusivec4.top/' }
-        maven { url = 'https://cursemaven.com' }
-        mavenCentral()
-    }
-
-    loom {
-        silentMojangMappingsLicense()
-    }
-
-    dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.officialMojangMappings()
     }
 
     java {
         toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
+            languageVersion = JavaLanguageVersion.of(25)
         }
-
-        // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-        // if it is present.
-        // If you remove this line, sources will not be generated.
         withSourcesJar()
-
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
+        it.options.release = 25
         it.options.encoding = 'UTF-8'
         it.options.compilerArgs += ['-Xmaxerrs', '1000', '-Xmaxwarns', '1000']
+    }
+
+    repositories {
+        mavenCentral()
+        maven { url = 'https://maven.blamejared.com/' }
+        maven { url = 'https://maven.theillusivec4.top/' }
     }
 
     // Configure Maven publishing.

@@ -22,8 +22,8 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 public class MPGHookBlockBase extends Block {
-    public MPGHookBlockBase() {
-        super(Properties.of().noOcclusion());
+    public MPGHookBlockBase(Properties properties) {
+        super(properties);
         registerDefaultState(stateDefinition.any()
                 .setValue(MPGBlockData.FACING, Direction.NORTH)
                 .setValue(MPGBlockData.TYPES, 0));

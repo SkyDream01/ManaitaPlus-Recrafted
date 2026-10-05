@@ -9,8 +9,10 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.crafting.RecipeAccess;
+import net.minecraft.world.item.crafting.RecipePropertySet;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -29,8 +31,11 @@ public class MPBrewingStandBlockEntity extends MPGBrewingStandBlockEntityBase {
     protected void finishBrew(Level level, double x, double y, double z, NonNullList<ItemStack> items) {
         net.neoforged.neoforge.event.EventHooks.onPotionBrewed(items);
         ItemStack ingredient = items.get(3);
-        if (ingredient.hasCraftingRemainingItem()) {
-            ItemStack remainder = ingredient.getCraftingRemainingItem().copy();
+        // ItemStack#hasCraftingRemainingItem/getCraftingRemainingItem are gone in 26.3;
+        // the remainder now lives on the item as an ItemStackTemplate.
+        ItemStackTemplate craftingRemainder = ingredient.getItem().getCraftingRemainder();
+        if (craftingRemainder != null) {
+            ItemStack remainder = craftingRemainder.create();
             ingredient.shrink(1);
             if (ingredient.isEmpty()) {
                 ingredient = remainder;
@@ -44,8 +49,9 @@ public class MPBrewingStandBlockEntity extends MPGBrewingStandBlockEntityBase {
     }
 
     @Override
-    protected boolean isPotionInput(PotionBrewing potionBrewing, ItemStack stack) {
-        return potionBrewing.isInput(stack) || stack.is(Items.GLASS_BOTTLE);
+    protected boolean isPotionInput(RecipeAccess recipeAccess, ItemStack stack) {
+        // PotionBrewing is gone in 26.3; the recipe property sets describe the potion inputs.
+        return recipeAccess.propertySet(RecipePropertySet.BREWING_INPUTS).test(stack) || stack.is(Items.GLASS_BOTTLE);
     }
 
     @Override

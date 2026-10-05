@@ -80,7 +80,9 @@ public class Networking {
 
     public static void sendToServer(Object packet) {
         if (packet instanceof net.minecraft.network.protocol.common.custom.CustomPacketPayload payload) {
-            PacketDistributor.sendToServer(payload);
+            // PacketDistributor#sendToServer moved to the client-only ClientPacketDistributor in 26.3;
+            // this method is only ever called from client code.
+            net.neoforged.neoforge.client.network.ClientPacketDistributor.sendToServer(payload);
         }
     }
 

@@ -1,15 +1,18 @@
 package github.com.gengyoubo.MPG.item.armor;
 
+import net.minecraft.world.item.Item;
 import github.com.gengyoubo.common.item.armor.MPGArmorItemBase;
+import net.minecraft.world.item.equipment.ArmorType;
 
 public class MPGArmor extends MPGArmorItemBase {
-    protected MPGArmor(Type type) {
-        super(MANAITA_ARMOR_MATERIAL, type);
+    // ArmorItem.Type is deleted in 26.3; ArmorType (net.minecraft.world.item.equipment) takes its place.
+    protected MPGArmor(Item.Properties props, ArmorType type) {
+        super(props, MANAITA_ARMOR_MATERIAL, type);
     }
 
     public static class Helmet extends MPGArmorItemBase.Helmet {
-        public Helmet() {
-            super(MANAITA_ARMOR_MATERIAL);
+        public Helmet(Item.Properties props) {
+            super(props, MANAITA_ARMOR_MATERIAL);
         }
 
         public String getArmorTexture() {
@@ -19,8 +22,8 @@ public class MPGArmor extends MPGArmorItemBase {
     }
 
     public static class Chestplate extends MPGArmorItemBase.Chestplate {
-        public Chestplate() {
-            super(MANAITA_ARMOR_MATERIAL);
+        public Chestplate(Item.Properties props) {
+            super(props, MANAITA_ARMOR_MATERIAL);
         }
 
         public String getArmorTexture() {
@@ -29,8 +32,8 @@ public class MPGArmor extends MPGArmorItemBase {
     }
 
     public static class Leggings extends MPGArmorItemBase.Leggings {
-        public Leggings() {
-            super(MANAITA_ARMOR_MATERIAL);
+        public Leggings(Item.Properties props) {
+            super(props, MANAITA_ARMOR_MATERIAL);
         }
 
         public String getArmorTexture() {
@@ -40,8 +43,8 @@ public class MPGArmor extends MPGArmorItemBase {
     }
 
     public static class Boots extends MPGArmorItemBase.Boots {
-        public Boots() {
-            super(MANAITA_ARMOR_MATERIAL);
+        public Boots(Item.Properties props) {
+            super(props, MANAITA_ARMOR_MATERIAL);
         }
 
         public String getArmorTexture() {

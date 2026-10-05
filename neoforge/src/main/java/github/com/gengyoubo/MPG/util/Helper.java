@@ -1,16 +1,12 @@
 package github.com.gengyoubo.MPG.util;
 
-import cpw.mods.modlauncher.Launcher;
-import cpw.mods.modlauncher.api.NamedPath;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import net.neoforged.fml.loading.ModDirTransformerDiscoverer;
 import sun.misc.Unsafe;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.lang.module.ResolvedModule;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URLDecoder;
@@ -150,43 +146,14 @@ public class Helper {
         return URLDecoder.decode(file, StandardCharsets.UTF_8);
     }
 
+    /**
+     * 26.3: FML 12 dropped ModLauncher entirely ({@code ModDirTransformerDiscoverer} and
+     * {@code Launcher.moduleLayerHandler} no longer exist), so there is no transformer discovery list or
+     * module layer left to scrub this jar from. The cleanup this method used to perform is obsolete;
+     * it is kept as a no-op so existing call sites stay valid.
+     */
     @SuppressWarnings({"ConstantConditions", "unchecked", "rawtypes"})
     public static void coexistenceCoreAndMod() {
-        List<NamedPath> found = Helper.getFieldValue(ModDirTransformerDiscoverer.class, "found");
-        if (found == null) {
-            LOGGER.warn("Skipping coexistenceCoreAndMod cleanup because ModDirTransformerDiscoverer.found is not available yet");
-            return;
-        }
-        found.removeIf(namedPath -> Helper.getJarPath(Helper.class).equals(namedPath.paths()[0].toString()));
-
-        Object moduleLayerHandler = Helper.getFieldValue(Launcher.INSTANCE, "moduleLayerHandler");
-        if (moduleLayerHandler == null) {
-            LOGGER.warn("Skipping coexistenceCoreAndMod cleanup because moduleLayerHandler is not available yet");
-            return;
-        }
-        Map<?, ?> completedLayers = Helper.getFieldValue(moduleLayerHandler, "completedLayers");
-        if (completedLayers == null) {
-            LOGGER.warn("Skipping coexistenceCoreAndMod cleanup because completedLayers is not available yet");
-            return;
-        }
-        completedLayers.values().forEach(layerInfo -> {
-            ModuleLayer layer = Helper.getFieldValue(layerInfo, "layer");
-            if (layer == null) {
-                return;
-            }
-
-            layer.modules().forEach(module -> {
-                if (module.getName().equals(Helper.class.getModule().getName())) {
-                    Set<ResolvedModule> modules = new HashSet<>(Helper.getFieldValue(layer.configuration(), "modules"));
-                    Map<String, ResolvedModule> nameToModule = new HashMap(Helper.getFieldValue(layer.configuration(), "nameToModule"));
-
-                    modules.remove(nameToModule.remove(Helper.class.getModule().getName()));
-
-                    Helper.setFieldValue(layer.configuration(), "modules", modules);
-                    Helper.setFieldValue(layer.configuration(), "nameToModule", nameToModule);
-                }
-            });
-        });
     }
 
 }

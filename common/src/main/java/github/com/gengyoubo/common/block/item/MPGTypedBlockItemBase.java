@@ -4,7 +4,7 @@ import github.com.gengyoubo.common.block.MPGBlockData;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
 import github.com.gengyoubo.common.util.MPGTypeHelper;
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -86,7 +86,7 @@ public abstract class MPGTypedBlockItemBase extends BlockItem {
         BlockState placedState = level.getBlockState(pos);
         if (placedState.is(state.getBlock())) {
             placedState = updateBlockStateFromTag(pos, level, itemStack, placedState);
-            updateCustomBlockEntityTag(pos, level, player, itemStack, placedState);
+            updateCustomBlockEntityTag(level, player, pos, itemStack);
             placedState.getBlock().setPlacedBy(level, pos, placedState, player, itemStack);
             if (player instanceof ServerPlayer serverPlayer) {
                 CriteriaTriggers.PLACED_BLOCK.trigger(serverPlayer, pos, itemStack);
@@ -104,7 +104,7 @@ public abstract class MPGTypedBlockItemBase extends BlockItem {
             itemStack.shrink(1);
         }
 
-        return InteractionResult.sidedSuccess(level.isClientSide);
+        return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.SUCCESS_SERVER;
     }
 
     @Override

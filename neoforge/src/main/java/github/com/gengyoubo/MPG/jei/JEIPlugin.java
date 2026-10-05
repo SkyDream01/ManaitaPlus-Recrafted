@@ -20,7 +20,7 @@ import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
 import mezz.jei.api.registration.*;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -30,10 +30,10 @@ import java.util.List;
 
 @JeiPlugin
 public class JEIPlugin implements IModPlugin {
-    private static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(MPG.MODID, "jei_plugin");
+    private static final Identifier UID = Identifier.fromNamespaceAndPath(MPG.MODID, "jei_plugin");
 
     @Override
-    public @NotNull ResourceLocation getPluginUid() {
+    public @NotNull Identifier getPluginUid() {
         return UID;
     }
 
@@ -71,13 +71,15 @@ public class JEIPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(MPGBlockCore.CraftingBlockItem.get().getDefaultInstance(), RecipeTypes.CRAFTING);
-        registration.addRecipeCatalyst(MPGItemCore.ManaitaCraftingPortable.get().getDefaultInstance(), RecipeTypes.CRAFTING);
-        registration.addRecipeCatalyst(MPGItemCore.ManaitaSource.get().getDefaultInstance(), MPGSourceCopyRecipeCategory.TYPE);
-        registration.addRecipeCatalyst(MPGBlockCore.FurnaceBlockItem.get().getDefaultInstance(), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(MPGItemCore.ManaitaFurnacePortable.get().getDefaultInstance(), RecipeTypes.SMELTING);
-        registration.addRecipeCatalyst(MPGBlockCore.BrewingBlockItem.get().getDefaultInstance(), RecipeTypes.BREWING);
-        registration.addRecipeCatalyst(MPGItemCore.ManaitaBrewingPortable.get().getDefaultInstance(), RecipeTypes.BREWING);
+        // JEI 31.9 deprecates addRecipeCatalyst for removal; addCraftingStation is the
+        // replacement (same behavior, recipe type now comes first).
+        registration.addCraftingStation(RecipeTypes.CRAFTING, MPGBlockCore.CraftingBlockItem.get());
+        registration.addCraftingStation(RecipeTypes.CRAFTING, MPGItemCore.ManaitaCraftingPortable.get());
+        registration.addCraftingStation(MPGSourceCopyRecipeCategory.TYPE, MPGItemCore.ManaitaSource.get());
+        registration.addCraftingStation(RecipeTypes.SMELTING, MPGBlockCore.FurnaceBlockItem.get());
+        registration.addCraftingStation(RecipeTypes.SMELTING, MPGItemCore.ManaitaFurnacePortable.get());
+        registration.addCraftingStation(RecipeTypes.BREWING, MPGBlockCore.BrewingBlockItem.get());
+        registration.addCraftingStation(RecipeTypes.BREWING, MPGItemCore.ManaitaBrewingPortable.get());
     }
 
     @Override

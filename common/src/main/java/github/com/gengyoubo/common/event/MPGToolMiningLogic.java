@@ -82,7 +82,7 @@ public final class MPGToolMiningLogic {
                 : List.of();
 
         block.playerWillDestroy(level, pos, state, player);
-        if (!level.destroyBlock(pos, false, player)) {
+        if (!level.destroyBlock(pos, false, player, 3)) {
             return false;
         }
 

@@ -2,55 +2,5 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "manaita_plus_general:block/hook/fixed_hook_wooden"
-  },
-  "overrides": [
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.125
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_stone"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.25
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_iron"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.375
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_gold"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.5
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_diamond"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.625
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_emerald"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.75
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_redstone"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 0.875
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_netherite"
-    },
-    {
-      "predicate": {
-        "manaita_plus_general:manaita_plus_general_type": 1.0
-      },
-      "model": "manaita_plus_general:block/hook/fixed_hook_netherite"
-    }
-  ]
+  }
 }
