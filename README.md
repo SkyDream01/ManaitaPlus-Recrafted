@@ -1,6 +1,6 @@
 # ManaitaPlusGeneral
 
-A faithful modern port of ManaitaPlus from Minecraft 1.7.10.
+An unofficial port of ManaitaPlusGeneral to Minecraft 26.3, based on the original Manaita Plus mod for Minecraft 1.7.10.
 
 ## Regarding Source Code Prior to Version 3.0
 This is the source code repository for version 3.0 and later. If you want to view the source code repository for versions prior to 3.0, please follow this link:
