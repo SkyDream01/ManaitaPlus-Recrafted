@@ -150,8 +150,5 @@
   "item.ringBrewing.5.name": "钻石砧板酿造台戒指",
   "item.ringBrewing.6.name": "绿宝石砧板酿造台戒指",
   "item.ringBrewing.7.name": "红石砧板酿造台戒指",
-  "item.ringBrewing.8.name": "下界合金砧板酿造台戒指",
-  
-  "message.manaita_plus_general.update.available": "更好的砧板经典版有可用更新。当前版本：%s，最新版本：%s",
-  "message.manaita_plus_general.update.current": "更好的砧板经典版已是最新版本。当前版本：%s，最新版本：%s"
+  "item.ringBrewing.8.name": "下界合金砧板酿造台戒指"
 }

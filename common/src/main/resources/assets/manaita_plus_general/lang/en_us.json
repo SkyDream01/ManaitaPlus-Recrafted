@@ -145,7 +145,5 @@
   "key.manaita.doubling": "Cutting Board Doubling",
   "key.manaita.baubles": "Cutting Board Accessories",
   "enchantments.fortune": "Fortune",
-  "enchantments.silktouch": "Silktouch",
-  "message.manaita_plus_general.update.available": "ManaitaPlusGeneral is out of date! Current: %s, Latest: %s",
-  "message.manaita_plus_general.update.current": "ManaitaPlusGeneral is up to date (current: %s)"
+  "enchantments.silktouch": "Silktouch"
 }
