@@ -18,7 +18,6 @@ plugins {
 
 rootProject.name = 'manaita_plus_general'
 
-// The 26.3 port currently targets NeoForge only; the fabric/forge module
-// sources stay in the tree but are not part of the build.
+// The 26.3 port targets NeoForge. Shared sources are bundled into its jar.
 include 'common'
 include 'neoforge'

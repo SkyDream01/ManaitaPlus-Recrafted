@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: GPL-3.0-only
 package github.com.gengyoubo.MPG.item;
 
 import github.com.gengyoubo.common.item.data.IMPGOffhandKey;

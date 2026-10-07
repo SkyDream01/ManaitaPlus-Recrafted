@@ -159,7 +159,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
-        MPGArmorItemBase.syncArmorState(event.getEntity());
+        MPGArmorItemBase.syncArmorState(event.getEntity(), MPUtils.isManaita(event.getEntity()));
         MPGShieldItem.tickFloating(event.getEntity());
     }
 

@@ -2,6 +2,14 @@
 
 An unofficial port of ManaitaPlusGeneral to Minecraft 26.3, based on the original Manaita Plus mod for Minecraft 1.7.10.
 
+## Licensing
+
+The original code and its ports are available under MIT. Newly developed
+features, including the Cutting Board Shield, are available under GNU GPL v3
+only (`GPL-3.0-only`). Existing Baubles-derived material and other pre-existing
+assets retain their separate Creative Commons terms. See [LICENSING.md](LICENSING.md)
+for the exact scope and the license texts.
+
 ## Regarding Source Code Prior to Version 3.0
 This is the source code repository for version 3.0 and later. If you want to view the source code repository for versions prior to 3.0, please follow this link:
 https://github.com/gengyoubo/ManaitaPlusGeneral
@@ -12,10 +20,6 @@ This workspace now targets **Minecraft 26.3 / NeoForge 26.3.0.48-beta** (Java 25
 built with ModDevGradle. `common` holds the loader-independent game logic and
 `neoforge` holds the NeoForge platform code; the shared classes are bundled into
 the platform jar.
-
-The `fabric` and `forge` source trees are kept for reference but are no longer
-part of the build — they still target Minecraft 1.21.1 and would need their own
-port.
 
 Notable 26.3 API migrations baked into this port:
 - `ResourceLocation` -> `Identifier`, `GuiGraphics` -> `GuiGraphicsExtractor`,
@@ -39,7 +43,7 @@ Java 25 is required.
 .\gradlew.bat build
 ```
 
-The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusGeneral-neoforge-3.1.0.jar`.
+The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusGeneral-neoforge-3.1.1.jar`.
 
 The cutting board shield can be held in either hand. It creates an absolute-domain cube of
 1×1×1, 3×3×3, 5×5×5, or 7×7×7 around its holder. The domain protects players inside from

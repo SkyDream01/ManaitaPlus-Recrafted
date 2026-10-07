@@ -75,7 +75,8 @@ public class MPGArmorItemBase extends Item {
     private static final String HELMET_REGENERATION_TAG = "manaita_plus_general.helmet_regeneration";
     private static final String HELMET_WATER_BREATHING_TAG = "manaita_plus_general.helmet_water_breathing";
     private static final String HELMET_NIGHT_VISION_TAG = "manaita_plus_general.helmet_night_vision";
-    private static final String CHESTPLATE_FLIGHT_TAG = "manaita_plus_general.chestplate_flight";
+    // Keep the old key so existing saves still identify flight granted by the chestplate.
+    private static final String FLIGHT_GRANTED_TAG = "manaita_plus_general.chestplate_flight";
     private static final String CHESTPLATE_FALL_TAG = "manaita_plus_general.chestplate_fall";
     private static final String CHESTPLATE_BIG_FALL_TAG = "manaita_plus_general.chestplate_big_fall";
     private static final String LEGGINGS_INVISIBILITY_TAG = "manaita_plus_general.leggings_invisibility";
@@ -103,6 +104,10 @@ public class MPGArmorItemBase extends Item {
     }
 
     public static void syncArmorState(Player player) {
+        syncArmorState(player, false);
+    }
+
+    public static void syncArmorState(Player player, boolean hasGodSword) {
         ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
         ItemStack chestplate = player.getItemBySlot(EquipmentSlot.CHEST);
         ItemStack leggings = player.getItemBySlot(EquipmentSlot.LEGS);
@@ -115,6 +120,7 @@ public class MPGArmorItemBase extends Item {
                 removeHelmetEffects(player);
             }
             syncChestplate(player, chestplate);
+            syncFlight(player, chestplate.getItem() instanceof Chestplate || hasGodSword);
             syncLeggings(player, leggings);
             syncBoots(player, boots);
         }
@@ -156,27 +162,40 @@ public class MPGArmorItemBase extends Item {
         if (chestplate.getItem() instanceof Chestplate) {
             removeHarmfulEffects(player);
             syncChestplateLandingSound(player);
-            if (!player.isCreative() && !player.isSpectator()) {
-                player.addTag(CHESTPLATE_FLIGHT_TAG);
-            }
-            if (!player.getAbilities().mayfly) {
-                player.getAbilities().mayfly = true;
-                updateAbilities(player);
-            }
             return;
         }
 
-        if (player.entityTags().contains(CHESTPLATE_FLIGHT_TAG)) {
-            player.removeTag(CHESTPLATE_FLIGHT_TAG);
-            if (!player.isCreative() && !player.isSpectator()
-                    && !MPGEntityData.manaita.accept(player)) {
-                player.getAbilities().mayfly = false;
-                player.getAbilities().flying = false;
-                updateAbilities(player);
-            }
-        }
         player.removeTag(CHESTPLATE_FALL_TAG);
         player.removeTag(CHESTPLATE_BIG_FALL_TAG);
+    }
+
+    private static void syncFlight(Player player, boolean hasFlightItem) {
+        // Older versions saved the sword's invulnerability flag as a scoreboard tag.
+        // Use it only to reclaim flight that those versions granted, then discard it.
+        boolean legacySwordFlight = MPGEntityData.manaita.accept(player);
+        MPGEntityData.manaita.remove(player);
+        boolean grantedByUs = player.entityTags().contains(FLIGHT_GRANTED_TAG) || legacySwordFlight;
+
+        if (player.isCreative() || player.isSpectator()) {
+            player.removeTag(FLIGHT_GRANTED_TAG);
+            return;
+        }
+
+        if (hasFlightItem) {
+            if (!player.getAbilities().mayfly) {
+                player.getAbilities().mayfly = true;
+                grantedByUs = true;
+                updateAbilities(player);
+            }
+            if (grantedByUs) {
+                player.addTag(FLIGHT_GRANTED_TAG);
+            }
+        } else if (grantedByUs) {
+            player.removeTag(FLIGHT_GRANTED_TAG);
+            player.getAbilities().mayfly = false;
+            player.getAbilities().flying = false;
+            updateAbilities(player);
+        }
     }
 
     private static void syncChestplateLandingSound(Player player) {

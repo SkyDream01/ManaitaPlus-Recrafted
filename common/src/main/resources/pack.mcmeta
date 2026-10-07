@@ -1,6 +1,7 @@
 {
   "pack": {
     "description": "manaita_plus resources",
-    "pack_format": 34
+    "min_format": { "major": 97, "minor": 1 },
+    "max_format": 121
   }
 }

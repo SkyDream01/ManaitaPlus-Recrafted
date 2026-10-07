@@ -101,7 +101,6 @@ public class MPGGodSwordItem extends Item implements IMPGKey, IMPGDoubling {
 
     @Override
     public boolean onDroppedByPlayer(ItemStack item, Player player) {
-        MPGEntityData.manaita.remove(player);
         Networking.sendToSameLevelPlayers(player.level(), new MPGChangeEntityDataPayload(player.getId(), -MPGEntityData.death.getFlag()));
         return super.onDroppedByPlayer(item, player);
     }
@@ -109,10 +108,8 @@ public class MPGGodSwordItem extends Item implements IMPGKey, IMPGDoubling {
     @Override
     public void inventoryTick(@NotNull ItemStack p_41404_, @NotNull ServerLevel p_41405_, @NotNull Entity p_41406_, @Nullable EquipmentSlot p_41407_) {
         if (p_41406_ instanceof  Player player) {
-            player.getAbilities().mayfly = true;
             player.setHealth(player.getMaxHealth());
         }
-        MPGEntityData.manaita.add(p_41406_);
     }
 
     @Override

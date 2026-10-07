@@ -8,7 +8,6 @@ import github.com.gengyoubo.common.network.payload.MPGKeyPressPayload;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -49,8 +48,6 @@ public class ClientEventHandler {
     @SubscribeEvent
     public void onClientTick(ClientTickEvent.Post event) {
         migrateLegacyBindings();
-        // FMLEnvironment.production is now the isProduction() accessor in 26.3.
-        MPGClientEventLogic.tickDevWorldAutoLoad(FMLEnvironment.isProduction(), MPG.LOGGER);
     }
 
     private static void migrateLegacyBindings() {

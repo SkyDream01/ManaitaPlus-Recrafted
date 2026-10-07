@@ -3,6 +3,7 @@ package github.com.gengyoubo.MPG.util;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 
 import github.com.gengyoubo.MPG.item.armor.MPGArmor;
+import github.com.gengyoubo.MPG.item.MPGGodSwordItem;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -164,7 +165,12 @@ public class MPUtils {
 
 
     public static boolean isManaita(Player player) {
-        return MPGEntityData.manaita.accept(player);
+        for (ItemStack stack : player.getInventory().getNonEquipmentItems()) {
+            if (stack.getItem() instanceof MPGGodSwordItem) {
+                return true;
+            }
+        }
+        return player.getOffhandItem().getItem() instanceof MPGGodSwordItem;
     }
 
 

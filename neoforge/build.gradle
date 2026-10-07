@@ -79,6 +79,13 @@ tasks.named('sourcesJar', Jar).configure {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+// Ship the license scope and GPL text with both binary and source releases.
+tasks.withType(Jar).configureEach {
+    from(rootProject.file('LICENSE')) { into 'META-INF' }
+    from(rootProject.file('LICENSING.md')) { into 'META-INF' }
+    from(rootProject.file('LICENSES/GPL-3.0-only.txt')) { into 'META-INF/LICENSES' }
+}
+
 processResources {
     def props = [
         minecraft_version       : rootProject.minecraft_version,
