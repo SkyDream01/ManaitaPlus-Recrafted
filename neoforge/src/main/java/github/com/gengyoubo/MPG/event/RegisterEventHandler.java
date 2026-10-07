@@ -68,11 +68,14 @@ public class RegisterEventHandler {
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event)
     {
-        // KeyMapping now takes a KeyMapping.Category instead of the KeyConflictContext/category string
-        // pair; IN_GAME was the default conflict context, so dropping it keeps the old behavior.
-        MPGKeyBoardCore.MESSAGE_KEY = new KeyMapping("key.manaita", InputConstants.Type.KEYBOARD, 88, KeyMapping.Category.MISC);
-        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", InputConstants.Type.KEYBOARD, 86, KeyMapping.Category.MISC);
-        MPGKeyBoardCore.PAXEL_KEY = new KeyMapping("key.manaita.doubling", InputConstants.Type.KEYBOARD, 67, KeyMapping.Category.MISC);
+        KeyMapping.Category manaitaCategory = new KeyMapping.Category(
+                Identifier.fromNamespaceAndPath(MPG.MODID, "manaita"));
+        event.registerCategory(manaitaCategory);
+        // Minecraft 26.3 uses SDL scancodes for keyboard mappings; the old GLFW numeric
+        // values (88/86/67) no longer represent X/V/C here.
+        MPGKeyBoardCore.MESSAGE_KEY = new KeyMapping("key.manaita", InputConstants.Type.KEYBOARD, InputConstants.KEY_X, manaitaCategory);
+        MPGKeyBoardCore.MESSAGE_ARMOR_KEY = new KeyMapping("key.manaita.armor", InputConstants.Type.KEYBOARD, InputConstants.KEY_V, manaitaCategory);
+        MPGKeyBoardCore.PAXEL_KEY = new KeyMapping("key.manaita.doubling", InputConstants.Type.KEYBOARD, InputConstants.KEY_C, manaitaCategory);
         event.register(MPGKeyBoardCore.MESSAGE_KEY);
         event.register(MPGKeyBoardCore.MESSAGE_ARMOR_KEY);
         event.register(MPGKeyBoardCore.PAXEL_KEY);

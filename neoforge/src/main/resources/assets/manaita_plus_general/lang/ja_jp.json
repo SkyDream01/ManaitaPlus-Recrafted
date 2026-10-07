@@ -125,6 +125,7 @@
   "mode.jump": "ジャンプレベル",
   "mode.autojump": "自動ジャンプ",
 
+  "key.category.manaita_plus_general.manaita":"まな板モード",
   "key.manaita":"まな板",
   "key.manaita.armor":"まな板の防具",
   "key.manaita.doubling":"まな板倍化機能",
