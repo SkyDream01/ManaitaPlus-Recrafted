@@ -41,6 +41,14 @@ Java 25 is required.
 
 The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusGeneral-neoforge-3.0.0.jar`.
 
+The cutting board shield can be held in either hand. It creates an absolute-domain cube of
+1×1×1, 3×3×3, 5×5×5, or 7×7×7 around its holder. The domain protects players inside from
+all damage, including void and `/kill`, intercepts incoming projectiles, and ejects hostile mobs.
+Players inside can fire projectiles outward. There is no need to raise the shield. Press the cutting board mode key (X by default) to cycle the
+range, or sneak and press it to toggle floating. Floating is enabled by default: holding the
+shield grants Slow Falling, and sneaking in midair holds altitude. The shield has no durability
+or shield-disable cooldown.
+
 Useful tasks: `.\gradlew.bat :neoforge:runClient`, `.\gradlew.bat :neoforge:runData`
 (client-side model/blockstate generation) and `.\gradlew.bat :neoforge:runDataServer`
 (loot tables).

@@ -1,6 +1,7 @@
 package github.com.gengyoubo.common.event;
 
 import github.com.gengyoubo.common.item.data.IMPGKey;
+import github.com.gengyoubo.common.item.data.IMPGOffhandKey;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -28,6 +29,11 @@ public final class MPGClientEventLogic {
         ItemStack stack = player.getMainHandItem();
         if (!(stack.getItem() instanceof IMPGKey keyItem) || keyItem.usesStandardModeKey()) {
             invokeClient(stack, player);
+        }
+        ItemStack offhand = player.getOffhandItem();
+        if (!(stack.getItem() instanceof IMPGOffhandKey)
+                && offhand.getItem() instanceof IMPGOffhandKey) {
+            invokeClient(offhand, player);
         }
     }
 

@@ -73,6 +73,7 @@ public class MPG {
                 output.accept(MPGItemCore.ManaitaSwordGod.get());
                 output.accept(MPGItemCore.ManaitaSword.get());
                 output.accept(MPGItemCore.ManaitaBow.get());
+                output.accept(MPGItemCore.ManaitaShield.get());
                 output.accept(MPGItemCore.ManaitaShovel.get());
                 output.accept(MPGItemCore.ManaitaPickaxe.get());
                 output.accept(MPGItemCore.ManaitaAxe.get());

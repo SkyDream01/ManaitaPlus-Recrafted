@@ -12,6 +12,8 @@ public final class MPGNBTData {
     public static final String DigUnderPlayer = "DigUnderPlayer";
     public static final String AttackArea = "AttackArea";
     public static final String AttackFriendlyMob = "AttackFriendlyMob";
+    public static final String ShieldRange = "ShieldRange";
+    public static final String ShieldFloating = "ShieldFloating";
     public static final String Remove = "Remove";
 
     private MPGNBTData() {

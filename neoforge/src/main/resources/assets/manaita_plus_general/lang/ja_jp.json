@@ -104,6 +104,11 @@
   "info.armor": "無限の加護",
   "info.attack": "無限の力と無限の資源",
   "info.enchantment": "エンチャント",
+  "item.manaita_plus_general.manaita_shield": "まな板の盾",
+  "mode.shield_range": "防御範囲",
+  "mode.shield_floating": "浮遊モード",
+  "info.shield": "絶対領域 · 全てのダメージを無効化",
+  "info.shield_barrier": "飛び道具を遮断 · 敵対Mobを弾く",
   "info.on":"開ける",
   "info.off": "シャットダウン",
 

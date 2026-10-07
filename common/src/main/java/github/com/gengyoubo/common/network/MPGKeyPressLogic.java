@@ -1,6 +1,7 @@
 package github.com.gengyoubo.common.network;
 
 import github.com.gengyoubo.common.item.data.IMPGKey;
+import github.com.gengyoubo.common.item.data.IMPGOffhandKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -34,6 +35,11 @@ public final class MPGKeyPressLogic {
         ItemStack stack = player.getMainHandItem();
         if (!(stack.getItem() instanceof IMPGKey keyItem) || keyItem.usesStandardModeKey()) {
             invoke(stack, player);
+        }
+        ItemStack offhand = player.getOffhandItem();
+        if (!(stack.getItem() instanceof IMPGOffhandKey)
+                && offhand.getItem() instanceof IMPGOffhandKey) {
+            invoke(offhand, player);
         }
     }
 

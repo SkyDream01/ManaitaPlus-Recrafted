@@ -2,6 +2,7 @@ package github.com.gengyoubo.MPG.event;
 
 import github.com.gengyoubo.MPG.MPG;
 import github.com.gengyoubo.MPG.MPGConfig;
+import github.com.gengyoubo.MPG.item.MPGShieldItem;
 import github.com.gengyoubo.MPG.util.MPUtils;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.event.MPGEventLogic;
@@ -9,6 +10,7 @@ import github.com.gengyoubo.common.event.MPGToolMiningLogic;
 import github.com.gengyoubo.common.item.data.IMPGDestroy;
 import github.com.gengyoubo.common.item.armor.MPGArmorItemBase;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,10 +22,12 @@ import net.neoforged.neoforge.event.entity.living.LivingDropsEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingFallEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.ProjectileImpactEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 /**
  * Villager trades are data-driven in MC 26.3 ({@code villager_trade}/{@code trade_set} registries),
@@ -94,7 +98,7 @@ public class EventHandler {
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        if (MPGArmorItemBase.hasManaitaBoots(player)) {
+        if (MPGShieldItem.protects(player) || MPGArmorItemBase.hasManaitaBoots(player)) {
             event.setCanceled(true);
             MPGEventLogic.resetPlayerFallState(player);
         } else if (MPGArmorItemBase.hasManaitaChestplate(player) || MPUtils.isManaita(player)) {
@@ -104,6 +108,13 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLivingIncomingDamage(LivingIncomingDamageEvent event) {
+        if (MPGShieldItem.protects(event.getEntity())) {
+            event.setCanceled(true);
+            if (event.getEntity() instanceof Player player) {
+                MPGEventLogic.resetPlayerDamageState(player);
+            }
+            return;
+        }
         if (event.getEntity() instanceof Player player
                 && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
             event.setCanceled(true);
@@ -113,6 +124,13 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent.Pre event) {
+        if (MPGShieldItem.protects(event.getEntity())) {
+            event.setNewDamage(0.0F);
+            if (event.getEntity() instanceof Player player) {
+                MPGEventLogic.resetPlayerDamageState(player);
+            }
+            return;
+        }
         if (event.getEntity() instanceof Player player
                 && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
             event.setNewDamage(0.0F);
@@ -122,6 +140,16 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
+        if (MPGShieldItem.protects(event.getEntity())) {
+            event.setCanceled(true);
+            if (event.getEntity() instanceof Player player) {
+                MPGEventLogic.resetPlayerDamageState(player);
+            } else {
+                event.getEntity().setHealth(event.getEntity().getMaxHealth());
+                event.getEntity().deathTime = 0;
+            }
+            return;
+        }
         if (event.getEntity() instanceof Player player
                 && (MPGArmorItemBase.shouldCancelDamage(player, event.getSource()) || MPUtils.isManaita(player))) {
             event.setCanceled(true);
@@ -132,6 +160,34 @@ public class EventHandler {
     @SubscribeEvent
     public static void onPlayerTick(PlayerTickEvent.Post event) {
         MPGArmorItemBase.syncArmorState(event.getEntity());
+        MPGShieldItem.tickFloating(event.getEntity());
+    }
+
+    @SubscribeEvent
+    public static void onEntityTickPre(EntityTickEvent.Pre event) {
+        if (event.getEntity() instanceof Projectile projectile
+                && MPGShieldItem.blockProjectile(projectile,
+                        projectile.getBoundingBox().getCenter().add(projectile.getDeltaMovement()))) {
+            event.setCanceled(true);
+        } else {
+            MPGShieldItem.repelHostile(event.getEntity());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onEntityTickPost(EntityTickEvent.Post event) {
+        if (event.getEntity() instanceof Projectile projectile) {
+            MPGShieldItem.blockProjectile(projectile, projectile.getBoundingBox().getCenter());
+        } else {
+            MPGShieldItem.repelHostile(event.getEntity());
+        }
+    }
+
+    @SubscribeEvent
+    public static void onProjectileImpact(ProjectileImpactEvent event) {
+        if (MPGShieldItem.blockProjectile(event.getProjectile(), event.getRayTraceResult().getLocation())) {
+            event.setCanceled(true);
+        }
     }
 
     // addCustomTrades(VillagerTradesEvent) removed: VillagerTrades.ItemListing and the

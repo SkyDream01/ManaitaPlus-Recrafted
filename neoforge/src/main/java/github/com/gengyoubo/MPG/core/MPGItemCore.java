@@ -18,6 +18,7 @@ public class MPGItemCore {
     public static final DeferredItem<? extends Item> ManaitaSwordGod = ITEMS.registerItem(GOD_SWORD, MPGGodSwordItem::new);
     public static final DeferredItem<? extends Item> ManaitaSword = ITEMS.registerItem(SWORD, MPGSwordItem::new);
     public static final DeferredItem<? extends Item> ManaitaBow = ITEMS.registerItem(BOW, MPGBowItem::new);
+    public static final DeferredItem<? extends Item> ManaitaShield = ITEMS.registerItem(SHIELD, MPGShieldItem::new);
     public static final DeferredItem<? extends Item> ManaitaShovel = ITEMS.registerItem(SHOVEL, MPGShovelItem::new);
     public static final DeferredItem<? extends Item> ManaitaPickaxe = ITEMS.registerItem(PICKAXE, MPGPickaxeItem::new);
     public static final DeferredItem<? extends Item> ManaitaAxe = ITEMS.registerItem(AXE, MPGAxeItem::new);
