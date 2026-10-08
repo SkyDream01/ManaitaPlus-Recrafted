@@ -32,7 +32,7 @@ public class EventRegisterHandler {
         // owning mod id and would silently drop the entry).
         event.createReloadableRegistryObjects(new RegistrySetBuilder()
                 .add(Registries.LOOT_TABLE, new MPGLootTable()),
-                Set.of("minecraft", "manaita_plus_general"));
+                Set.of("minecraft", "manaita_plus_recrafted"));
     }
 
     // ExistingFileHelper no longer exists in 26.3, so the model providers only take the PackOutput.

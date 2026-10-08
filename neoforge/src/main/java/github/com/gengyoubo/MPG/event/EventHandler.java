@@ -3,6 +3,9 @@ package github.com.gengyoubo.MPG.event;
 import github.com.gengyoubo.MPG.MPG;
 import github.com.gengyoubo.MPG.MPGConfig;
 import github.com.gengyoubo.MPG.item.MPGShieldItem;
+import github.com.gengyoubo.MPG.item.MPGBucketItem;
+import github.com.gengyoubo.MPG.network.Networking;
+import github.com.gengyoubo.common.network.payload.MPGBucketCornerPayload;
 import github.com.gengyoubo.MPG.util.MPUtils;
 import github.com.gengyoubo.common.entity.MPGEntityData;
 import github.com.gengyoubo.common.event.MPGEventLogic;
@@ -33,7 +36,7 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  * Villager trades are data-driven in MC 26.3 ({@code villager_trade}/{@code trade_set} registries),
  * so the old {@code VillagerTradesEvent} hook (addCustomTrades) is gone. The manaita weaponsmith
  * trades are now shipped as datapack entries instead; see
- * {@code data/manaita_plus_general/villager_trade/manaita/*.json} and
+ * {@code data/manaita_plus_recrafted/villager_trade/manaita/*.json} and
  * {@code data/minecraft/tags/villager_trade/weaponsmith/level_5.json}.
  */
 @EventBusSubscriber(modid = MPG.MODID)
@@ -45,9 +48,19 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
+        Player player = event.getEntity();
+        ItemStack stack = player.getMainHandItem();
+        ItemStack batchStack = MPGBucketItem.activeBatchStack(player);
+        if (batchStack != null) {
+            if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START
+                    && event.getLevel().isClientSide()) {
+                Networking.sendToServer(new MPGBucketCornerPayload(MPGBucketItem.cornerPosition(
+                        event.getLevel(), player, event.getPos(), event.getFace(), batchStack)));
+            }
+            event.setCanceled(true);
+            return;
+        }
         if (event.getAction() == PlayerInteractEvent.LeftClickBlock.Action.START) {
-            Player player = event.getEntity();
-            ItemStack stack = player.getMainHandItem();
             if (stack.getItem() instanceof IMPGDestroy destroyItem && !destroyItem.canHarvest(stack)) {
                 event.setCanceled(true);
                 return;

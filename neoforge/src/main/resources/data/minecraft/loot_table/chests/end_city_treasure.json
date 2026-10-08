@@ -13,7 +13,7 @@
             "type": "minecraft:set_count",
             "count": 1
           },
-          "name": "manaita_plus_general:manaita_bow"
+          "name": "manaita_plus_recrafted:manaita_bow"
         }
       ],
       "rolls": 1

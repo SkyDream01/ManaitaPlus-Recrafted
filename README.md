@@ -1,14 +1,13 @@
-# ManaitaPlusGeneral
+# Manaita Plus: Recrafted (MPR)
 
-An unofficial port of ManaitaPlusGeneral to Minecraft 26.3, based on the original Manaita Plus mod for Minecraft 1.7.10.
+An unofficial port of Manaita Plus to Minecraft 26.3, based on ManaitaPlusGeneral.
 
 ## Licensing
 
-The original code and its ports are available under MIT. Newly developed
-features, including the Cutting Board Shield, are available under GNU GPL v3
-only (`GPL-3.0-only`). Existing Baubles-derived material and other pre-existing
-assets retain their separate Creative Commons terms. See [LICENSING.md](LICENSING.md)
-for the exact scope and the license texts.
+MPR contributions are licensed under GNU GPL version 3 only (`GPL-3.0-only`).
+Original ManaitaPlusGeneral code retains its MIT license. Separately licensed
+third-party assets keep their existing terms. See [LICENSING.md](LICENSING.md)
+for the component boundaries and license texts.
 
 ## Regarding Source Code Prior to Version 3.0
 This is the source code repository for version 3.0 and later. If you want to view the source code repository for versions prior to 3.0, please follow this link:
@@ -31,7 +30,7 @@ Notable 26.3 API migrations baked into this port:
 - Block entities save through `ValueInput`/`ValueOutput`; brewing is recipe-based
   (`RecipeType.BREWING`) instead of the deleted `PotionBrewing`.
 - Item visuals use model *definitions* in `assets/<ns>/items/<id>.json`
-  (`minecraft:range_dispatch` on the `manaita_plus_general:manaita_plus_general_type`
+  (`minecraft:range_dispatch` on the `manaita_plus_recrafted:manaita_plus_recrafted_type`
   property) instead of the removed `overrides`/`ItemProperties` predicates.
 - Villager trades are data-driven (`data/<ns>/villager_trade/...`).
 
@@ -43,7 +42,7 @@ Java 25 is required.
 .\gradlew.bat build
 ```
 
-The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusGeneral-neoforge-3.1.1.jar`.
+The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusRecrafted-neoforge-3.1.2.jar`.
 
 The cutting board shield can be held in either hand. It creates an absolute-domain cube of
 1×1×1, 3×3×3, 5×5×5, or 7×7×7 around its holder. The domain protects players inside from
@@ -52,6 +51,18 @@ Players inside can fire projectiles outward. There is no need to raise the shiel
 range, or sneak and press it to toggle floating. Floating is enabled by default: holding the
 shield grants Slow Falling, and sneaking in midair holds altitude. The shield has no durability
 or shield-disable cooldown.
+
+The cutting board bucket stores up to 1,000 source blocks of one bucketable
+fluid. Press the mode key to cycle its collection cube size (1, 3, 5, 7, 9,
+or 11 blocks per side); sneak and press the mode key to cycle between collecting,
+releasing one source block, and batch releasing. Collection uses the targeted
+block as the center of the cube's top layer. Single release works like a normal
+bucket. For batch release, left-click to select the first corner and right-click
+the opposite corner. A translucent preview appears before any fluid is released.
+Either corner can be clicked again to update the preview; press the mode key to
+confirm. The selected cuboid may be up to 32 blocks on each side and 1,000
+blocks total. Only source blocks can be collected, and each
+successfully placed source consumes one stored bucket.
 
 Useful tasks: `.\gradlew.bat :neoforge:runClient`, `.\gradlew.bat :neoforge:runData`
 (client-side model/blockstate generation) and `.\gradlew.bat :neoforge:runDataServer`

@@ -37,7 +37,7 @@ public class MPGSourceCopyRecipeCategory implements IRecipeCategory<MPGSourceCop
 
     @Override
     public @NotNull Component getTitle() {
-        return Component.translatable("jei.manaita_plus_general.source_copying");
+        return Component.translatable("jei.manaita_plus_recrafted.source_copying");
     }
 
     @Override

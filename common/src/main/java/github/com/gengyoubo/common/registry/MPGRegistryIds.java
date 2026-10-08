@@ -11,6 +11,7 @@ public final class MPGRegistryIds {
     public static final String GOD_SWORD = "manaita_sword_god";
     public static final String BOW = "manaita_bow";
     public static final String SHIELD = "manaita_shield";
+    public static final String BUCKET = "manaita_bucket";
     public static final String AXE = "manaita_axe";
     public static final String HOE = "manaita_hoe";
     public static final String PAXEL = "manaita_paxel";

@@ -1,0 +1,11 @@
+{
+  "wants": {
+    "count": 64,
+    "id": "manaita_plus_recrafted:block_crafting_manaita"
+  },
+  "gives": {
+    "id": "manaita_plus_recrafted:manaita_bow"
+  },
+  "max_uses": 1,
+  "xp": 0
+}

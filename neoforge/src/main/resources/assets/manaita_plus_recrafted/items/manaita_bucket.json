@@ -1,0 +1,15 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "manaita_plus_recrafted:manaita_bucket_fill",
+    "entries": [
+      {"threshold": 1, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_water"}},
+      {"threshold": 2, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_water_full"}},
+      {"threshold": 3, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_lava"}},
+      {"threshold": 4, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_lava_full"}},
+      {"threshold": 5, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_other"}},
+      {"threshold": 6, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_other_full"}}
+    ],
+    "fallback": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/manaita_bucket"}
+  }
+}

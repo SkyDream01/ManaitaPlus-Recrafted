@@ -11,6 +11,6 @@ public class MPGToolTier extends MPGToolTierBase {
         // The old repair Ingredient listed the three Manaita block items directly; ToolMaterial
         // repairs by tag instead, so the items moved into the manaita_tool_repairable item tag.
         super(() -> TagKey.create(Registries.ITEM,
-                Identifier.fromNamespaceAndPath("manaita_plus_general", "manaita_tool_repairable")));
+                Identifier.fromNamespaceAndPath("manaita_plus_recrafted", "manaita_tool_repairable")));
     }
 }

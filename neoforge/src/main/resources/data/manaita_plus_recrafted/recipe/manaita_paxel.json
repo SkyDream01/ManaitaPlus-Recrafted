@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "abc",
+    " d ",
+    " e "
+  ],
+  "key": {
+    "a": "manaita_plus_recrafted:manaita_shovel",
+    "b": "manaita_plus_recrafted:manaita_pickaxe",
+    "c": "manaita_plus_recrafted:manaita_axe",
+    "d": "manaita_plus_recrafted:manaita_hook",
+    "e": "manaita_plus_recrafted:manaita_sword"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaita_plus_recrafted:manaita_paxel"
+  }
+}

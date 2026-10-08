@@ -1,0 +1,68 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "manaita_plus_recrafted:manaita_plus_recrafted_type",
+    "entries": [
+      {
+        "threshold": 1,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_stone"
+        }
+      },
+      {
+        "threshold": 2,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_iron"
+        }
+      },
+      {
+        "threshold": 3,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_gold"
+        }
+      },
+      {
+        "threshold": 4,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_diamond"
+        }
+      },
+      {
+        "threshold": 5,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_emerald"
+        }
+      },
+      {
+        "threshold": 6,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_redstone"
+        }
+      },
+      {
+        "threshold": 7,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_netherite"
+        }
+      },
+      {
+        "threshold": 8,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:block/hook/fixed_hook_netherite"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "manaita_plus_recrafted:item/block_hook_manaita"
+    }
+  }
+}

@@ -41,7 +41,7 @@ public class MPG {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MANAITA_PLUS_TAB = CREATIVE_MODE_TAB_TYPES.register("manaita_plus_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> MPGBlockCore.CraftingBlockItem.get().getDefaultInstance())
-            .title(Component.translatable("itemGroup.ManaitaPlusTab"))
+            .title(Component.translatable("itemGroup.manaita_plus_recrafted"))
             .displayItems((parameters, output) -> {
                 acceptMPGType(MPGBlockCore.CraftingBlockItem.get(), output, 8);
                 acceptMPGType(MPGBlockCore.FurnaceBlockItem.get(), output, 8);
@@ -60,6 +60,7 @@ public class MPG {
                 output.accept(MPGItemCore.ManaitaSword.get());
                 output.accept(MPGItemCore.ManaitaBow.get());
                 output.accept(MPGItemCore.ManaitaShield.get());
+                output.accept(MPGItemCore.ManaitaBucket.get());
                 output.accept(MPGItemCore.ManaitaShovel.get());
                 output.accept(MPGItemCore.ManaitaPickaxe.get());
                 output.accept(MPGItemCore.ManaitaAxe.get());

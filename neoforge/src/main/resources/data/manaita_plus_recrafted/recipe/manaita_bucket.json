@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#B#",
+    " # "
+  ],
+  "key": {
+    "#": "#manaita_plus_recrafted:manaita_block_eq",
+    "B": "minecraft:bucket"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaita_plus_recrafted:manaita_bucket"
+  }
+}

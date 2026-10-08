@@ -62,9 +62,9 @@ public class MPGArmorItemBase extends Item {
             // Repair used to be () -> Ingredient.EMPTY; the record wants a repair tag and
             // an unpopulated tag repairs nothing, exactly like before.
             TagKey.create(Registries.ITEM,
-                    Identifier.fromNamespaceAndPath("manaita_plus_general", "manaita_armor_repairable")),
+                    Identifier.fromNamespaceAndPath("manaita_plus_recrafted", "manaita_armor_repairable")),
             ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(
-                    "manaita_plus_general", "manaita_armor"))
+                    "manaita_plus_recrafted", "manaita_armor"))
     );
 
     private static final int FAST_REGENERATION_DURATION = 60;
@@ -72,18 +72,18 @@ public class MPGArmorItemBase extends Item {
     private static final double[] BOOTS_JUMP_STRENGTH = {
             0.0D, 0.4635D, 0.6175D, 0.6850D, 0.8030D, 0.9095D, 1.0075D, 1.0985D, 1.1850D
     };
-    private static final String HELMET_REGENERATION_TAG = "manaita_plus_general.helmet_regeneration";
-    private static final String HELMET_WATER_BREATHING_TAG = "manaita_plus_general.helmet_water_breathing";
-    private static final String HELMET_NIGHT_VISION_TAG = "manaita_plus_general.helmet_night_vision";
+    private static final String HELMET_REGENERATION_TAG = "manaita_plus_recrafted.helmet_regeneration";
+    private static final String HELMET_WATER_BREATHING_TAG = "manaita_plus_recrafted.helmet_water_breathing";
+    private static final String HELMET_NIGHT_VISION_TAG = "manaita_plus_recrafted.helmet_night_vision";
     // Keep the old key so existing saves still identify flight granted by the chestplate.
-    private static final String FLIGHT_GRANTED_TAG = "manaita_plus_general.chestplate_flight";
-    private static final String CHESTPLATE_FALL_TAG = "manaita_plus_general.chestplate_fall";
-    private static final String CHESTPLATE_BIG_FALL_TAG = "manaita_plus_general.chestplate_big_fall";
-    private static final String LEGGINGS_INVISIBILITY_TAG = "manaita_plus_general.leggings_invisibility";
+    private static final String FLIGHT_GRANTED_TAG = "manaita_plus_recrafted.chestplate_flight";
+    private static final String CHESTPLATE_FALL_TAG = "manaita_plus_recrafted.chestplate_fall";
+    private static final String CHESTPLATE_BIG_FALL_TAG = "manaita_plus_recrafted.chestplate_big_fall";
+    private static final String LEGGINGS_INVISIBILITY_TAG = "manaita_plus_recrafted.leggings_invisibility";
     private static final Identifier BOOTS_SPEED_MODIFIER_ID = Identifier.fromNamespaceAndPath(
-            "manaita_plus_general", "boots_speed");
+            "manaita_plus_recrafted", "boots_speed");
     private static final Identifier BOOTS_JUMP_MODIFIER_ID = Identifier.fromNamespaceAndPath(
-            "manaita_plus_general", "boots_jump");
+            "manaita_plus_recrafted", "boots_jump");
 
     protected MPGArmorItemBase(Item.Properties props, ArmorMaterial material, ArmorType type) {
         // humanoidArmor always wires durability components now; UNBREAKABLE keeps the old

@@ -1,0 +1,68 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "property": "manaita_plus_recrafted:manaita_plus_recrafted_type",
+    "entries": [
+      {
+        "threshold": 1,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.1"
+        }
+      },
+      {
+        "threshold": 2,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.2"
+        }
+      },
+      {
+        "threshold": 3,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.3"
+        }
+      },
+      {
+        "threshold": 4,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.4"
+        }
+      },
+      {
+        "threshold": 5,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.5"
+        }
+      },
+      {
+        "threshold": 6,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.6"
+        }
+      },
+      {
+        "threshold": 7,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.7"
+        }
+      },
+      {
+        "threshold": 8,
+        "model": {
+          "type": "minecraft:model",
+          "model": "manaita_plus_recrafted:item/brewing/brewing_manaita.8"
+        }
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "manaita_plus_recrafted:item/block_brewing_manaita"
+    }
+  }
+}

@@ -8,7 +8,7 @@ public enum MPGEntityData {
     death,
     remove;
 
-    public static final String KEY = "manaita_plus_general_type";
+    public static final String KEY = "manaita_plus_recrafted_type";
     private final int flag = 1 << ordinal();
 
     public void add(Entity entity) {

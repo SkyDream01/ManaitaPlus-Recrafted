@@ -56,7 +56,7 @@ public class MPGShieldItem extends ShieldItem implements IMPGOffhandKey {
 
     @Override
     public Component getName(ItemStack stack) {
-        return Component.literal(MPText.manaita_infinity.formatting(text("item.manaita_plus_general.manaita_shield")));
+        return Component.literal(MPText.manaita_infinity.formatting(text("item.manaita_plus_recrafted.manaita_shield")));
     }
 
     public static int range(ItemStack stack) {

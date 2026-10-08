@@ -1,0 +1,26 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "manaita_plus_recrafted:easy_mode",
+        "value": true
+      }
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "000",
+    "1 1",
+    "000"
+  ],
+  "key": {
+    "0": "minecraft:diamond_block",
+    "1": "minecraft:furnace"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaita_plus_recrafted:block_furnace_manaita"
+  }
+}

@@ -58,8 +58,8 @@ public class JEIPlugin implements IModPlugin {
         List<MPGSourceCopyRecipe> recipes = createSourceCopyRecipes();
         registration.addRecipes(MPGSourceCopyRecipeCategory.TYPE, recipes);
         registration.addItemStackInfo(MPGItemCore.ManaitaSource.get().getDefaultInstance(),
-                Component.translatable("jei.manaita_plus_general.source.info.1"),
-                Component.translatable("jei.manaita_plus_general.source.info.2", MPGConfig.source_doubling_value));
+                Component.translatable("jei.manaita_plus_recrafted.source.info.1"),
+                Component.translatable("jei.manaita_plus_recrafted.source.info.2", MPGConfig.source_doubling_value));
     }
 
     @Override

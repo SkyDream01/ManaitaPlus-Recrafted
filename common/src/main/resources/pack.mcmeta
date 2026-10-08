@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "manaita_plus resources",
+    "description": "Manaita Plus: Recrafted resources",
     "min_format": { "major": 97, "minor": 1 },
     "max_format": 121
   }

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#&#",
+    " # "
+  ],
+  "key": {
+    "#": "#manaita_plus_recrafted:manaita_block_eq",
+    "&": "manaita_plus_recrafted:manaita_hook"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaita_plus_recrafted:manaita_shield"
+  }
+}

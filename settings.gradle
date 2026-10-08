@@ -16,7 +16,7 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
 }
 
-rootProject.name = 'manaita_plus_general'
+rootProject.name = 'manaita_plus_recrafted'
 
 // The 26.3 port targets NeoForge. Shared sources are bundled into its jar.
 include 'common'

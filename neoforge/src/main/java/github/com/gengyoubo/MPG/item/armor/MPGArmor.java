@@ -16,7 +16,7 @@ public class MPGArmor extends MPGArmorItemBase {
         }
 
         public String getArmorTexture() {
-            return "manaita_plus_general:textures/models/armor/manaita_armor_layer_1.png";
+            return "manaita_plus_recrafted:textures/models/armor/manaita_armor_layer_1.png";
         }
 
     }
@@ -27,7 +27,7 @@ public class MPGArmor extends MPGArmorItemBase {
         }
 
         public String getArmorTexture() {
-            return "manaita_plus_general:textures/models/armor/manaita_armor_layer_1.png";
+            return "manaita_plus_recrafted:textures/models/armor/manaita_armor_layer_1.png";
         }
     }
 
@@ -37,7 +37,7 @@ public class MPGArmor extends MPGArmorItemBase {
         }
 
         public String getArmorTexture() {
-            return "manaita_plus_general:textures/models/armor/manaita_armor_layer_2.png";
+            return "manaita_plus_recrafted:textures/models/armor/manaita_armor_layer_2.png";
         }
 
     }
@@ -48,7 +48,7 @@ public class MPGArmor extends MPGArmorItemBase {
         }
 
         public String getArmorTexture() {
-            return "manaita_plus_general:textures/models/armor/manaita_armor_layer_2.png";
+            return "manaita_plus_recrafted:textures/models/armor/manaita_armor_layer_2.png";
         }
 
         @Override

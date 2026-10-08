@@ -1,6 +1,0 @@
-{
-  "parent": "item/handheld",
-  "textures": {
-    "layer0": "manaita_plus_general:item/equipment/manaita_sword_god"
-  }
-}

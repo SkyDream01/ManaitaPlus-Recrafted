@@ -137,7 +137,7 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
         MPGItemStackData.putInt(itemStack, MPGNBTData.Range, normalizedRange);
         if (player != null) {
             showMessage(player, Component.literal(MPText.manaita_mode.formatting(
-                    "[" + text("item.manaita_plus_general.manaita_shears") + "] "
+                    "[" + text("item.manaita_plus_recrafted.manaita_shears") + "] "
                             + text("mode.range.name") + ": " + normalizedRange + "x"
                             + normalizedRange + "x" + normalizedRange)));
         }
@@ -164,7 +164,7 @@ public class MPGShearsItemBase extends ShearsItem implements IMPGKey, IMPGDestro
     public void onManaitaKeyPressOnClient(ItemStack itemStack, Player player) {
         boolean doubling = toggleDoubling(itemStack);
         showMessage(player, Component.literal(MPText.manaita_mode.formatting(String.format(
-                "[%s] %s: %s", text("item.manaita_plus_general.manaita_shears"),
+                "[%s] %s: %s", text("item.manaita_plus_recrafted.manaita_shears"),
                 text("mode.doubling"), doubling ? text("info.on") : text("info.off")))));
     }
 

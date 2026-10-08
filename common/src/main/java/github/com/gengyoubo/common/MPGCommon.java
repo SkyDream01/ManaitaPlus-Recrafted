@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Shared Architectury bootstrap used by supported platform modules. */
 public final class MPGCommon {
-    public static final String MOD_ID = "manaita_plus_general";
+    public static final String MOD_ID = "manaita_plus_recrafted";
     private static final AtomicBoolean INITIALIZED = new AtomicBoolean();
 
     private MPGCommon() {

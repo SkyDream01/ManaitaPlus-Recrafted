@@ -16,7 +16,7 @@ import java.util.concurrent.CompletableFuture;
 
 /** 26.3: item model predicates/overrides are gone. Item visuals are now picked by an item model
  * definition in {@code assets/<ns>/items/<item_id>.json} dispatching on the custom
- * {@code manaita_plus_general:manaita_plus_general_type} property (registered as a
+ * {@code manaita_plus_recrafted:manaita_plus_recrafted_type} property (registered as a
  * {@code RangeSelectItemModelProperty} in RegisterEventHandler, returning the raw tier 0..8).
  * This provider keeps generating the plain {@code models/item/*.json} models and now emits the
  * {@code items/<id>.json} range dispatch definitions that replace the old
@@ -118,7 +118,7 @@ public class MPItemModelProvider implements DataProvider {
     private void registerItemDefinition(CachedOutput cache, String name, JsonArray entries) {
         JsonObject dispatch = new JsonObject();
         dispatch.addProperty("type", "minecraft:range_dispatch");
-        dispatch.addProperty("property", modLoc("manaita_plus_general_type"));
+        dispatch.addProperty("property", modLoc("manaita_plus_recrafted_type"));
         dispatch.add("entries", entries);
         dispatch.add("fallback", modelRef(modLoc("item/" + name)));
 

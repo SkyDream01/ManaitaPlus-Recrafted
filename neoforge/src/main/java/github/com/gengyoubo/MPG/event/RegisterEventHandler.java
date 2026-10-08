@@ -28,6 +28,7 @@ import github.com.gengyoubo.MPG.blockEntity.RenderCraftingManaitaBlockEntity;
 import github.com.gengyoubo.MPG.blockEntity.RenderFurnaceManaitaBlockEntity;
 import github.com.gengyoubo.MPG.entity.MPLightningBoltRenderer;
 import github.com.gengyoubo.MPG.item.MPGGodSwordItem;
+import github.com.gengyoubo.MPG.item.MPGBucketItem;
 import github.com.gengyoubo.MPG.entity.RenderManaitaArrow;
 import github.com.gengyoubo.common.util.MPGItemStackData;
 import github.com.gengyoubo.common.util.MPGNBTData;
@@ -85,15 +86,16 @@ public class RegisterEventHandler {
      * ItemProperties/ItemPropertyFunction are gone in 26.3; item model predicates are now
      * range-select item model properties registered by id and referenced from the item model
      * definitions ({@code assets/<ns>/items/<item_id>.json}, {@code minecraft:range_dispatch}).
-     * Expected property id: {@code manaita_plus_general:manaita_plus_general_type}, a float
-     * 0..8 read from the custom_data key "ManaitaPlusGeneralType".
+     * Expected property id: {@code manaita_plus_recrafted:manaita_plus_recrafted_type}, a float
+     * 0..8 read from the custom_data key "ManaitaPlusRecraftedType".
      */
     @SubscribeEvent
     public static void onRegisterItemModelProperty(RegisterRangeSelectItemModelPropertyEvent event) {
         event.register(Identifier.fromNamespaceAndPath(MPG.MODID, MPGNBTData.Type), ManaitaTypeProperty.CODEC);
+        event.register(Identifier.fromNamespaceAndPath(MPG.MODID, "manaita_bucket_fill"), BucketFillProperty.CODEC);
     }
 
-    /** Range-select property exposing the custom_data "ManaitaPlusGeneralType" value (0..8). */
+    /** Range-select property exposing the custom_data "ManaitaPlusRecraftedType" value (0..8). */
     private record ManaitaTypeProperty() implements RangeSelectItemModelProperty {
         private static final ManaitaTypeProperty INSTANCE = new ManaitaTypeProperty();
         private static final MapCodec<ManaitaTypeProperty> CODEC = MapCodec.unit(INSTANCE);
@@ -101,6 +103,22 @@ public class RegisterEventHandler {
         @Override
         public float get(ItemStack itemStack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
             return MPGItemStackData.getInt(itemStack, MPGNBTData.ItemType);
+        }
+
+        @Override
+        public MapCodec<? extends RangeSelectItemModelProperty> type() {
+            return CODEC;
+        }
+    }
+
+    /** Seven visual states for the cutting board bucket. */
+    private record BucketFillProperty() implements RangeSelectItemModelProperty {
+        private static final BucketFillProperty INSTANCE = new BucketFillProperty();
+        private static final MapCodec<BucketFillProperty> CODEC = MapCodec.unit(INSTANCE);
+
+        @Override
+        public float get(ItemStack itemStack, @Nullable ClientLevel level, @Nullable ItemOwner owner, int seed) {
+            return MPGBucketItem.visualState(itemStack);
         }
 
         @Override

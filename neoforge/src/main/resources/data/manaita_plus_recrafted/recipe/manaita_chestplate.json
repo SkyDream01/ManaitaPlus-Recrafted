@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "#manaita_plus_recrafted:manaita_block_eq"
+  },
+  "result": {
+    "count": 1,
+    "id": "manaita_plus_recrafted:manaita_chestplate"
+  }
+}

@@ -7,11 +7,13 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import github.com.gengyoubo.common.network.MPGKeyPressLogic;
 import github.com.gengyoubo.common.network.payload.MPGChangeEntityDataPayload;
+import github.com.gengyoubo.common.network.payload.MPGBucketCornerPayload;
 import github.com.gengyoubo.common.network.payload.MPGDestroyBlockPayload;
 import github.com.gengyoubo.common.network.payload.MPGKeyPressPayload;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.minecraft.server.level.ServerPlayer;
+import github.com.gengyoubo.MPG.item.MPGBucketItem;
 
 public class Networking {
     public static final String VERSION = "1.0";
@@ -19,6 +21,7 @@ public class Networking {
     public static void registerMessage(RegisterPayloadHandlersEvent event) {
         PayloadRegistrar registrar = event.registrar(VERSION);
         registrar.playToServer(MPGKeyPressPayload.TYPE, MPGKeyPressPayload.STREAM_CODEC, Networking::handleKeyPress);
+        registrar.playToServer(MPGBucketCornerPayload.TYPE, MPGBucketCornerPayload.STREAM_CODEC, Networking::handleBucketCorner);
         registrar.playToClient(MPGDestroyBlockPayload.TYPE, MPGDestroyBlockPayload.STREAM_CODEC, Networking::handleDestroyBlock);
         registrar.playToClient(MPGChangeEntityDataPayload.TYPE, MPGChangeEntityDataPayload.STREAM_CODEC, Networking::handleChangeEntityData);
     }
@@ -27,6 +30,14 @@ public class Networking {
         context.enqueueWork(() -> {
             if (!context.flow().isClientbound() && context.player() instanceof ServerPlayer player) {
                 MPGKeyPressLogic.handle(player, payload.keyCode());
+            }
+        });
+    }
+
+    private static void handleBucketCorner(MPGBucketCornerPayload payload, IPayloadContext context) {
+        context.enqueueWork(() -> {
+            if (!context.flow().isClientbound() && context.player() instanceof ServerPlayer player) {
+                MPGBucketItem.selectFirstCorner(player, payload.pos());
             }
         });
     }
