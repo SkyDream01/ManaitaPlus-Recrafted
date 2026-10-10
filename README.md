@@ -52,17 +52,30 @@ range, or sneak and press it to toggle floating. Floating is enabled by default:
 shield grants Slow Falling, and sneaking in midair holds altitude. The shield has no durability
 or shield-disable cooldown.
 
-The cutting board bucket stores up to 1,000 source blocks of one bucketable
-fluid. Press the mode key to cycle its collection cube size (1, 3, 5, 7, 9,
+The cutting board bucket stores up to 10,000 buckets of one type: a bucketable
+fluid, powder snow, sulfur cubes, or milk. Press the mode key to cycle its collection cube size (1, 3, 5, 7, 9,
 or 11 blocks per side); sneak and press the mode key to cycle between collecting,
 releasing one source block, and batch releasing. Collection uses the targeted
 block as the center of the cube's top layer. Single release works like a normal
 bucket. For batch release, left-click to select the first corner and right-click
 the opposite corner. A translucent preview appears before any fluid is released.
 Either corner can be clicked again to update the preview; press the mode key to
-confirm. The selected cuboid may be up to 32 blocks on each side and 1,000
-blocks total. Only source blocks can be collected, and each
-successfully placed source consumes one stored bucket.
+confirm. The selected cuboid may be up to 32 blocks on each side and 10,000
+blocks total. Fluid collection only accepts source blocks; powder snow also
+supports area collection and release. Each successful placement consumes one
+stored bucket. Right-click an adult, unprimed sulfur cube to collect it, retaining
+its name, health, and absorbed block. Sulfur cubes are released one at a time,
+and a bucket containing them skips batch-release mode. Powder snow and sulfur
+cubes each have matching partial and full bucket textures. Milk is collected by
+right-clicking adult cows, mooshrooms, or goats. At size 1, only the clicked
+animal is milked. Larger ranges collect one bucket from each adult milk animal
+in the same collection cube, using the clicked animal's feet as the center of
+its top layer. The mode key also adjusts the range when milk is stored, and
+collection stops when the bucket is full. A milk-filled bucket switches
+between collection and drinking modes; hold right-click in drinking mode to
+consume one stored bucket and clear status effects, keeping the cutting board
+bucket itself. Milk cannot be released individually or in a region and also has
+matching partial and full textures. Drinking the last bucket returns to collection mode.
 
 Useful tasks: `.\gradlew.bat :neoforge:runClient`, `.\gradlew.bat :neoforge:runData`
 (client-side model/blockstate generation) and `.\gradlew.bat :neoforge:runDataServer`

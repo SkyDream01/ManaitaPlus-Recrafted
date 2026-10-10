@@ -22,6 +22,8 @@ public final class MPGNBTData {
     public static final String BucketDimension = "BucketDimension";
     public static final String BucketFluid = "BucketFluid";
     public static final String BucketAmount = "BucketAmount";
+    public static final String BucketContent = "BucketContent";
+    public static final String BucketEntities = "BucketEntities";
     public static final String Remove = "Remove";
 
     private MPGNBTData() {

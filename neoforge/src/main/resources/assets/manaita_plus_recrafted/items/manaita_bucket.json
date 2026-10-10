@@ -8,7 +8,13 @@
       {"threshold": 3, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_lava"}},
       {"threshold": 4, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_lava_full"}},
       {"threshold": 5, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_other"}},
-      {"threshold": 6, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_other_full"}}
+      {"threshold": 6, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_other_full"}},
+      {"threshold": 7, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_powder_snow"}},
+      {"threshold": 8, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_powder_snow_full"}},
+      {"threshold": 9, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_sulfur_cube"}},
+      {"threshold": 10, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_sulfur_cube_full"}},
+      {"threshold": 11, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_milk"}},
+      {"threshold": 12, "model": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/bucket/manaita_bucket_milk_full"}}
     ],
     "fallback": {"type": "minecraft:model", "model": "manaita_plus_recrafted:item/manaita_bucket"}
   }
