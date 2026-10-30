@@ -42,7 +42,7 @@ Java 25 is required.
 .\gradlew.bat build
 ```
 
-The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusRecrafted-neoforge-3.1.2.jar`.
+The NeoForge jar is written to `neoforge/build/libs/ManaitaPlusRecrafted-neoforge-3.1.3.jar`.
 
 The cutting board shield can be held in either hand. It creates an absolute-domain cube of
 1×1×1, 3×3×3, 5×5×5, or 7×7×7 around its holder. The domain protects players inside from
